@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="Label" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Assets/TextMesh%20Pro/Fonts/NotoSansCJK-Regular-1.otf?fileID=12800000&amp;guid=2e912f04ef5dc8f4cb581516eb2730a8&amp;type=3#NotoSansCJK-Regular-1&apos;); -unity-font-style: normal; -unity-text-align: upper-center;" />
+</ui:UXML>
