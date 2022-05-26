@@ -9,30 +9,26 @@ public class SongsInf : MonoBehaviour
     public TMP_Text Origin;
     public Image Icon;
     public bool IsAdvanced;
+    public  AudioClip PreBGM;
+    public bool[] Difficulty;
 
-    //临时先用这个，为了测试效果，以后要改，老子累了
-    AudioSource audioSource;
-
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.loop = true;
-        audioSource.playOnAwake = false;
-    }
-
-    public void ApplyInf(string musicName,string author,string origin,string version,Sprite icon,bool isAdvanced,AudioClip preBGM)
+    public void ApplyInf(string musicName,string author,string origin,string version,Sprite icon,bool isAdvanced,AudioClip preBGM,bool[] allowedDifficulty)
     {
         MusicName.text = musicName;
         Author.text = string.Format("{0} - {1}",version, author);
         Origin.text = origin;
         Icon.sprite = icon;
         IsAdvanced = isAdvanced;
-        audioSource.clip = preBGM;
+        PreBGM = preBGM;
+        Difficulty = allowedDifficulty;
 
     }
 
+    /// <summary>
+    /// 点击后，把左侧详细信息更新为所选的铺面
+    /// </summary>
     public void OnClick()
     {
-        audioSource.Play();
+        MenuCtrl.menuCtrl.OnSelected(this);
     }
 }

@@ -80,6 +80,10 @@ public class Core
         /// </summary>
         public string PreviewBGM = "Pre";
         /// <summary>
+        /// 可用的难度。按照Easy Normal Hard Luantic的顺序。
+        /// </summary>
+        public bool[] AllowedDifficulty = { false, true, false, false };
+        /// <summary>
         /// 是否为高级符卡。
         /// </summary>
         public bool IsAdvanced = false;

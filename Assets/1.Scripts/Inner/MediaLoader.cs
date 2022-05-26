@@ -25,7 +25,7 @@ public class MediaLoader
     {
         //缓存路径
         string filepath = string.Format("{0}/{1}/{2}.ogg", Core.UnityButNotAssets,types.ToString(), FileName);
-
+        //音频文件存在
         if(File.Exists(filepath))
         {
             //从本地读取资源
@@ -58,7 +58,7 @@ public class MediaLoader
         //缓存路径
         string filepath = string.Format("{0}/{1}/{2}.png", Core.UnityButNotAssets, types.ToString(), FileName);
 
-
+        //图片文件存在
         if (File.Exists(filepath))
         {
             //从本地读取资源

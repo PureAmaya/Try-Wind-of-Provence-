@@ -7,11 +7,16 @@ using UnityEngine;
 /// </summary>
 public class Settings 
 {
-   /*dialog 的 log等级 和 save等级
-    * 是否允许高级符卡的加载
-    * 
-    * 
-    * 
-    * 
-    */
+    /// <summary>
+    /// 总音量
+    /// </summary>
+    public static float MasterVol = 1f;
+    /// <summary>
+    /// BGM preBGM音量
+    /// </summary>
+    public static float BGMvol = 0.7f;
+    /// <summary>
+    /// 音效音量
+    /// </summary>
+    public static float SoundEffectsVol = 0.7f;
 }

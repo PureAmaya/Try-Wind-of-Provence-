@@ -426,6 +426,8 @@ MonoBehaviour:
   Origin: {fileID: 8609633475737536074}
   Icon: {fileID: 8609633476537153367}
   IsAdvanced: 0
+  PreBGM: {fileID: 0}
+  Difficulty: 
 --- !u!82 &-5921438804234301863
 AudioSource:
   m_ObjectHideFlags: 0
@@ -723,7 +725,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: dd29ed5f7998b1f43a4d7939d6312ea8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
