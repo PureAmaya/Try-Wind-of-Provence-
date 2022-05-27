@@ -11,7 +11,7 @@ public class PublicUI : MonoBehaviour
     public EventSystem eventSystem;
 
     AudioSource BGMPlayer;
-    AudioSource PreMusicPlayer;
+    AudioSource preMusicPlayer;
     AudioSource SEPlayer;
 
 
@@ -27,15 +27,15 @@ public class PublicUI : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         BGMPlayer = audioSources[0];
         SEPlayer = audioSources[1];
-        PreMusicPlayer = audioSources[2];
+        preMusicPlayer = audioSources[2];
 
         //修正组件
         BGMPlayer.loop = false;
         BGMPlayer.playOnAwake = false;
         SEPlayer.loop = false;
         SEPlayer.playOnAwake = false;
-        PreMusicPlayer.loop = true;
-        PreMusicPlayer.playOnAwake = false;
+        preMusicPlayer.loop = true;
+        preMusicPlayer.playOnAwake = false;
     }
 
     /// <summary>
@@ -50,14 +50,14 @@ public class PublicUI : MonoBehaviour
     /// <summary>
     /// 应用音量
     /// </summary>
-    /// <param name="index">0=BGM&preBGM 1=SE  其他值：静音</param>
+    /// <param name="index">0=BGM与preBGM 1=SE  其他值：静音</param>
     public void ApplyVolume(int index)
     {
         switch (index)
         {
             case 0:
-                PreMusicPlayer.volume = Settings.MasterVol * Settings.BGMvol;
-                BGMPlayer.volume = PreMusicPlayer.volume;
+                preMusicPlayer.volume = Settings.MasterVol * Settings.BGMvol;
+                BGMPlayer.volume = preMusicPlayer.volume;
                 break;
 
             case 1:
@@ -68,7 +68,7 @@ public class PublicUI : MonoBehaviour
                 Settings.MasterVol = 0f;
                 SEPlayer.volume = 0f;
                 BGMPlayer.volume = 0f;
-                PreMusicPlayer.volume = 0f;
+                preMusicPlayer.volume = 0f;
                 break;
 
 
@@ -94,11 +94,11 @@ public class PublicUI : MonoBehaviour
     public void PlayPreBGM(AudioClip audioClip)
     {
         //先停止之前的bgm
-        PreMusicPlayer.Stop();
+        preMusicPlayer.Stop();
         //更换已有的clip
-        PreMusicPlayer.clip = audioClip;
+        preMusicPlayer.clip = audioClip;
         //播放
-        PreMusicPlayer.Play();
+        preMusicPlayer.Play();
 
 
         //这里应该有淡入效果的

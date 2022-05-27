@@ -7,74 +7,73 @@ using UnityEngine.UI;
 public class MenuCtrl : MonoBehaviour
 {
     /// <summary>
-    /// Ã½Ìå¼ÓÔØÆ÷
+    /// å£°æ˜ä¸€ä¸ªåª’ä½“åŠ è½½å™¨
     /// </summary>
-    MediaLoader mediaLoader = new();
+   private readonly MediaLoader mediaLoader = new();
     /// <summary>
-    /// Ô¤ÉèµÄÒôÀÖ/·û¿¨ ¿¨Æ¬
+    /// é¢„è®¾ã€‚æ­Œæ›²ä¿¡æ¯çš„å¡ç‰‡
     /// </summary>
     public GameObject songsInf;
-    public Transform ManifestParent;
+    public Transform manifestParent;
 
     public static MenuCtrl menuCtrl;
 
-    [Header("×ó²àĞÅÏ¢ÏÔÊ¾")]
-    public TMP_Text MusicName;
-    public Image MusicIcon;
+    [Header("å·¦ä¾§ä¿¡æ¯Ê¾")]
+    public TMP_Text musicName;
+    public Image musicIcon;
     
 
     private void Awake()
     {
         menuCtrl = this;
 
-        CreateList();
+        CreateManifest();
     }
    
     /// <summary>
-    /// ´´½¨ÁĞ±í
+    /// åˆ›å»ºæ¸…å•
     /// </summary>
-    [ContextMenu("»ñÈ¡ÁĞ±í")]
-    public void CreateList()
+    [ContextMenu("åˆ›å»ºæ¸…å•")]
+    public void CreateManifest()
     {
-        //ÏÈÇå³ıÒÔºóÁĞ±í
-        ClearList();
-        //»ñÈ¡²¢¼ÓÔØÁĞ±í£¬Ë³±ãÉè¶¨EventSystemµÄFirstSelected²ÎÊı
+        //å…ˆæ¸…æ¥šæ¸…å•
+        ClearManifest();
+        //è·å–æ¸…å•åˆ—è¡¨ï¼Œå¹¶åŠ è½½æ‰€éœ€çš„èµ„æºï¼Œå¹¶æŒ‡å®šEventSystemçš„FirstSelectedå‚æ•°
         StartCoroutine(Load());      
     }
 
 
     /// <summary>
-    /// ÆÌÃæ±»Ñ¡¶¨¡£Õ¹Ê¾ĞÅÏ¢Óë²¥·ÅpreBGM
+    /// é€‰æ‹©åæ’­æ”¾preBGMï¼Œå¹¶åœ¨å·¦ä¾§æ˜¾ç¤ºä¿¡æ¯
     /// </summary>
     public void OnSelected(SongsInf songsInf)
     {
-        //b²¥·ÅÑ¡¶¨µÄÆÌÃæµÄÔ¤ÀÀBGM
+        //æ’­æ”¾preBGM
        PublicUI.publicUI.PlayPreBGM(songsInf.PreBGM);
-        //Õ¹Ê¾ËõÂÔÍ¼
-        MusicIcon.sprite = songsInf.Icon.sprite;
-        //Õ¹Ê¾Ãû³Æ
-        MusicName.text = songsInf.MusicName.text;
+        //æ›´æ–°å·¦ä¾§ä¿¡æ¯
+        musicIcon.sprite = songsInf.Icon.sprite;
+        musicName.text = songsInf.MusicName.text;
     }
 
     /// <summary>
-    /// ´Ó±¾µØ¼ÓÔØ×ÊÔ´£¨ÓÃÓÚÁĞ±í£©
+    /// è·å–æ¸…å•åˆ—è¡¨ï¼Œå¹¶åŠ è½½æ‰€éœ€çš„èµ„æºï¼Œå¹¶æŒ‡å®šEventSystemçš„FirstSelectedå‚æ•°
     /// </summary>
     /// <returns></returns>
     IEnumerator Load()
     {
-        //ÏÈ´Ó±¾µØ¶ÁÈ¡ÎÄ¼ş¡£
+        //è·å–æ¸…å•åˆ—è¡¨
         var list = Core.ManifestList();
 
-        //´´½¨¿¨Æ¬£¬²¢Ïò¿¨Æ¬ÖĞĞ´ÈëĞÅÏ¢
+        //è·å–æ¸…å•
         for (int i = 0; i < list.Count; i++)
         {
-            //µÃµ½Ã½ÌåÎÄ¼ş£¨Í¼±êºÍÔ¤ÀÀbgm£©
+            //åŠ è½½åª’ä½“èµ„æº.iconå’ŒpreBGM
            yield return StartCoroutine(mediaLoader.LoadSound(Core.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].PreviewBGM)));
            yield return StartCoroutine(mediaLoader.LoadImage(Core.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
 
-            GameObject go = Instantiate(songsInf, ManifestParent, false);
-            go.transform.SetParent(ManifestParent);
-            go.GetComponent<SongsInf>().ApplyInf(list[0].MusicName, list[0].Author, list[0].Origin, list[0].Version, mediaLoader.sprite, list[0].IsAdvanced, mediaLoader.audioClip,list[0].AllowedDifficulty);
+            GameObject go = Instantiate(songsInf, manifestParent, false);
+            go.transform.SetParent(manifestParent);
+            go.GetComponent<SongsInf>().ApplyInf(list[0].MusicName, list[0].Author, list[0].Origin, list[0].Version, mediaLoader.Sprite, list[0].IsAdvanced, mediaLoader.AudioClip,list[0].AllowedDifficulty);
        
         
             if(i == 0)
@@ -85,15 +84,15 @@ public class MenuCtrl : MonoBehaviour
     }
 
     /// <summary>
-    /// Çå³ıÁĞ±í
+    /// æ¸…æ¥šæ¸…å•
     /// </summary>
-    [ContextMenu("Çå³ıÁĞ±í")]
-    public void ClearList()
+    [ContextMenu("æ¸…é™¤æ¸…å•")]
+    public void ClearManifest()
     {
 
-        for (int i = ManifestParent.childCount - 1; i >= 0; i--)
+        for (int i = manifestParent.childCount - 1; i >= 0; i--)
         {
-          DestroyImmediate(ManifestParent.GetChild(i).gameObject);
+          DestroyImmediate(manifestParent.GetChild(i).gameObject);
 
         }
     }

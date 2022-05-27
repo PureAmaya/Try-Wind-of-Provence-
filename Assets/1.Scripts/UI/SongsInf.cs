@@ -8,9 +8,9 @@ public class SongsInf : MonoBehaviour
     public TMP_Text Author;
     public TMP_Text Origin;
     public Image Icon;
-    public bool IsAdvanced;
-    public  AudioClip PreBGM;
-    public bool[] Difficulty;
+    [HideInInspector] public bool IsAdvanced;
+    [HideInInspector] public  AudioClip PreBGM;
+    [HideInInspector] public bool[] difficulty;
 
     public void ApplyInf(string musicName,string author,string origin,string version,Sprite icon,bool isAdvanced,AudioClip preBGM,bool[] allowedDifficulty)
     {
@@ -20,7 +20,7 @@ public class SongsInf : MonoBehaviour
         Icon.sprite = icon;
         IsAdvanced = isAdvanced;
         PreBGM = preBGM;
-        Difficulty = allowedDifficulty;
+        difficulty = allowedDifficulty;
 
     }
 

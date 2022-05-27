@@ -9,22 +9,22 @@ using UnityEngine.Networking;
 /// </summary>
 public class MediaLoader
 {
-    public AudioClip audioClip = null;
-    public Sprite sprite = null;
+    public AudioClip AudioClip;
+    public Sprite Sprite;
 
     //所有的se音效也在这里，另外也预留三个audioclip给玩家自定义
 
     /// <summary>
-    /// 
+    /// 加载ogg声音
     /// </summary>
     /// <param name="types"></param>
-    /// <param name="FileName">文件名（不含拓展名）</param>
-    ///  <param name="DirectoryName">专用文件夹名字（支持构建多个文件夹）</param>
+    /// <param name="fileName">文件名（不含拓展名）</param>
     /// <returns></returns>
-    public IEnumerator LoadSound(Core.SubdirectoryTypes types, string FileName)
+    public IEnumerator LoadSound(Core.SubdirectoryTypes types, string fileName)
     {
+
         //缓存路径
-        string filepath = string.Format("{0}/{1}/{2}.ogg", Core.UnityButNotAssets,types.ToString(), FileName);
+        string filepath = string.Format("{0}/{1}/{2}.ogg", Core.UnityButNotAssets,types.ToString(), fileName);
         //音频文件存在
         if(File.Exists(filepath))
         {
@@ -37,7 +37,7 @@ public class MediaLoader
             }
             else
             {
-                audioClip = DownloadHandlerAudioClip.GetContent(uwr);
+                AudioClip = DownloadHandlerAudioClip.GetContent(uwr);
             }
 
         }
@@ -49,14 +49,14 @@ public class MediaLoader
     }
 
     /// <summary>
-    /// 
+    /// 加载png图片
     /// </summary>
     /// <param name="types"></param>
-    /// <param name="FileName">文件名（不含拓展名）</param>
-    public IEnumerator LoadImage(Core.SubdirectoryTypes types, string FileName)
+    /// <param name="fileName">文件名（不含拓展名）</param>
+    public IEnumerator LoadImage(Core.SubdirectoryTypes types, string fileName)
     {
         //缓存路径
-        string filepath = string.Format("{0}/{1}/{2}.png", Core.UnityButNotAssets, types.ToString(), FileName);
+        string filepath = string.Format("{0}/{1}/{2}.png", Core.UnityButNotAssets, types.ToString(), fileName);
 
         //图片文件存在
         if (File.Exists(filepath))
@@ -72,7 +72,7 @@ public class MediaLoader
             else
             {
                 Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
-                sprite = Sprite.Create(texture, new Rect(0f,0f,texture.width,texture.height), Vector2.zero);
+                Sprite = Sprite.Create(texture, new Rect(0f,0f,texture.width,texture.height), Vector2.zero);
             }
 
         }

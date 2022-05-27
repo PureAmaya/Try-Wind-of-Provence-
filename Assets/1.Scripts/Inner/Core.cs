@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -80,7 +79,7 @@ public class Core
         /// </summary>
         public string PreviewBGM = "Pre";
         /// <summary>
-        /// 可用的难度。按照Easy Normal Hard Luantic的顺序。
+        /// 可用的难度。按照Easy Normal Hard Lunatic的顺序。
         /// </summary>
         public bool[] AllowedDifficulty = { false, true, false, false };
         /// <summary>
@@ -129,25 +128,24 @@ public class Core
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="types">子文件夹类型</param>
-    /// <param name="FileName">文件名（不含拓展名）</param>
-    /// <param name="DirectoryName">专用文件夹名字</param>
-    /// /// <param name="Version">规定的最低版本</param>
+    /// <param name="fileName">文件名（不含拓展名）</param>
+    /// <param name="directoryName">专用文件夹名字</param>
     /// <returns></returns>
-    public static T YamlRead<T>(SubdirectoryTypes types, string DirectoryName, string FileName)
+    public static T YamlRead<T>(SubdirectoryTypes types, string directoryName, string fileName)
     {       
         //提前准备文件的路径
-        string Path = string.Format("{0}/{1}/{2}/{3}.yaml", UnityButNotAssets, types.ToString(), DirectoryName,FileName);
+        string path = string.Format("{0}/{1}/{2}/{3}.yaml", UnityButNotAssets, types.ToString(), directoryName,fileName);
 
-        if (File.Exists(Path))
+        if (File.Exists(path))
         {
             //yaml文件的内容
-            string content = File.ReadAllText(string.Format("{0}/{1}/{2}/{3}.yaml", UnityButNotAssets, types.ToString(), DirectoryName, FileName, System.Text.Encoding.UTF8));
+            string content = File.ReadAllText(string.Format("{0}/{1}/{2}/{3}.yaml", UnityButNotAssets, types.ToString(), directoryName, fileName), System.Text.Encoding.UTF8);
 
 
             //如果yaml的版本低于读取规定的版本，则输出一个警告
             if(int.Parse(content.Split("#")[1]) < VersionControl[(int)types])
             {
-                GameDebug.Log(string.Format("当前文件的版本已过时，游玩时可能发生错误。低版本的类别为“{0}”、路径为{1}",types.ToString(),Path), GameDebug.Level.Warning);
+                GameDebug.Log(string.Format("当前文件的版本已过时，游玩时可能发生错误。低版本的类别为“{0}”、路径为{1}",types.ToString(),path), GameDebug.Level.Warning);
             }
 
             Deserializer read = new();
@@ -156,7 +154,7 @@ public class Core
         }
         else
         {
-            Debug.LogError(string.Format("{0} 不存在。", Path));
+            GameDebug.Log(string.Format("{0} 不存在。", path), GameDebug.Level.Error);
             return default;
         }
 
@@ -166,29 +164,28 @@ public class Core
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="types">子文件夹类型</param>
-    /// <param name="FileName">文件名（不含拓展名）</param>
-    /// <param name="DirectoryName">专用文件夹名字</param>
-    /// <param name="Content">yaml内容</param>
-    /// <param name="Version">规定的最低版本</param>
-    public static void YamlWrite<T>(SubdirectoryTypes types, string DirectoryName, string FileName, T Content)
+    /// <param name="fileName">文件名（不含拓展名）</param>
+    /// <param name="directoryName">专用文件夹名字</param>
+    /// <param name="content">yaml内容</param>
+    public static void YamlWrite<T>(SubdirectoryTypes types, string directoryName, string fileName, T content)
     {
         //提前准备好文件夹的路径（不含最终的文件)
-        string Path = string.Format("{0}/{1}/{2}", UnityButNotAssets, types.ToString(), DirectoryName);
+        string path = string.Format("{0}/{1}/{2}", UnityButNotAssets, types.ToString(), directoryName);
         //准备好序列化的yaml内容
         var write = new Serializer();
-        var yaml = write.Serialize(Content);
+        var yaml = write.Serialize(content);
 
 
         //路径不存在不存在就创建相应的文件夹
-        if (!File.Exists(string.Format("{0}/{1}.yaml", Path, FileName)))
+        if (!File.Exists(string.Format("{0}/{1}.yaml", path, fileName)))
         {
-            Directory.CreateDirectory(Path);
+            Directory.CreateDirectory(path);
         }
 
         //直接创建一个新的文件得了，顺便用这个文件流写进去
-        var f = new FileStream(string.Format("{0}/{1}.yaml", Path, FileName), FileMode.Create);
+        var f = new FileStream(string.Format("{0}/{1}.yaml", path, fileName), FileMode.Create);
         StreamWriter sw = new(f, System.Text.Encoding.UTF8);
-        sw.Write(string.Format("#{0}\n# 请不要直接修改本文件\n# 如需修改，请使用游戏自带的编辑器\n\n{1}",VersionControl[(int)types].ToString(), yaml.ToString()));
+        sw.Write(string.Format("#{0}\n# 请不要直接修改本文件\n# 如需修改，请使用游戏自带的编辑器\n\n{1}",VersionControl[(int)types].ToString(), yaml));
         sw.Close();
         f.Close();
     }
@@ -209,7 +206,7 @@ public class Core
             Directory.CreateDirectory(path);
         }
 
-        //得到SepllCards文件夹下的所有子文件夹（就一级）
+        //得到SpellCards文件夹下的所有子文件夹（就一级）
         DirectoryInfo folder = new DirectoryInfo(path);
         return folder.GetDirectories();
     }

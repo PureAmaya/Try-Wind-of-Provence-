@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/AdvancedLoader.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/Core.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/DIalog.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/IPicture.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/IRescource.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/MediaLoader.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/Opening.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/PublicUI.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/SongsInf.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/PureAmaya/General/ExMath.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/PureAmaya/General/UpdateManager.cs" charset="GBK" />
+  </component>
+</project>

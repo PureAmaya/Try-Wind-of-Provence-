@@ -58,7 +58,7 @@ public class GameDebug
         if((int)level >= (int)ConsoleLevel)
         {
             //添加一个识别头。
-            content = string.Format("<{0}> {1}：{2}",level.ToString() ,DateTime.Now.ToString(), content);
+            content = string.Format("<{0}> {1}：{2}",level.ToString() ,DateTime.Now, content);
            //加入到控制台日志中
             ConsoleContents.Add(content);
 

@@ -9,34 +9,34 @@ namespace PureAmaya.General
         /// <summary>
         /// 返回整数类型的绝对值
         /// </summary>
-        /// <param name="Int"></param>
+        /// <param name="index"></param>
         /// <returns></returns>
-        public static int Abs(int Int)
+        public static int Abs(int index)
         {
-            if (Int < 0)
+            if (index < 0)
             {
-                return -Int;
+                return -index;
             }
             else
             {
-                return Int;
+                return index;
             }
         }
 
         /// <summary>
         /// 返回单精度浮点的绝对值
         /// </summary>
-        /// <param name="float"></param>
+        /// <param name="index"></param>
         /// <returns></returns>
-        public static float Abs(float Float)
+        public static float Abs(float index)
         {
-            if (Float < 0)
+            if (index < 0)
             {
-                return -Float;
+                return -index;
             }
             else
             {
-                return Float;
+                return index;
             }
         }
 
@@ -44,18 +44,17 @@ namespace PureAmaya.General
         /// 在给定精度范围内，判断两个浮点数是否相同
         /// </summary>
         /// <param name="precision">判断精度</param>
-        /// <param name="AllowEqual">是否允许差值相等</param>
-        /// <param name="Valve">要比较的值</param>
+        /// <param name="allowEqual">是否允许差值相等</param>
         /// <returns></returns>
-        public static bool Approximation(float precision, float Valve1, float Valve2, bool AllowEqual = true)
+        public static bool Approximation(float precision, float value1, float value2, bool allowEqual = true)
         {
-            switch (AllowEqual)
+            switch (allowEqual)
             {
                 case true:
-                    return Abs(Valve1 - Valve2) <= precision;
+                    return Abs(value1 - value2) <= precision;
 
                 case false:
-                    return Abs(Valve1 - Valve2) < precision;
+                    return Abs(value1 - value2) < precision;
 
             }
 
@@ -85,12 +84,12 @@ namespace PureAmaya.General
         /// <param name="value">比较的值</param>
         /// <param name="min">最小值（含）</param>
         /// <param name="max">最大值（含）</param>
-        /// <param name="FixMinMax">修复最大最小混淆吗</param>
+        /// <param name="fixMinMax">修复最大最小混淆吗</param>
         /// <returns></returns>
-        public static bool InRange(float value, float min, float max, bool FixMinMax = true)
+        public static bool InRange(float value, float min, float max, bool fixMinMax = true)
         {
 
-            switch (FixMinMax)
+            switch (fixMinMax)
             {
                 case true:
                     if (min > max)
@@ -125,11 +124,11 @@ namespace PureAmaya.General
         /// 角度转弧度
         /// </summary>
         /// <param name="angleDeg">角度角</param>
-        /// <param name="UseAccuratePi">使用精确的圆周率</param>
+        /// <param name="useAccuratePi">使用精确的圆周率</param>
         /// <returns></returns>
-        public static float Deg2Rad(float angleDeg, bool UseAccuratePi = false)
+        public static float Deg2Rad(float angleDeg, bool useAccuratePi = false)
         {
-            if (UseAccuratePi)
+            if (useAccuratePi)
             {
                 return 3.14f / 180f * angleDeg;
             }
