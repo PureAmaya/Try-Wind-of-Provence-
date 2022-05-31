@@ -62,14 +62,14 @@ public class MenuCtrl : MonoBehaviour
     IEnumerator Load()
     {
         //获取清单列表
-        var list = Core.ManifestList();
+        var list = YamlAndFormat.ManifestList();
 
         //获取清单
         for (int i = 0; i < list.Count; i++)
         {
             //加载媒体资源.icon和preBGM
-           yield return StartCoroutine(mediaLoader.LoadSound(Core.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].PreviewBGM)));
-           yield return StartCoroutine(mediaLoader.LoadImage(Core.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
+           yield return StartCoroutine(mediaLoader.LoadSound(YamlAndFormat.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].PreviewBGM)));
+           yield return StartCoroutine(mediaLoader.LoadImage(YamlAndFormat.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
 
             GameObject go = Instantiate(songsInf, manifestParent, false);
             go.transform.SetParent(manifestParent);

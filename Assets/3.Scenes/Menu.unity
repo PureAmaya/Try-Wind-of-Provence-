@@ -3484,9 +3484,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   songsInf: {fileID: 8609633476199698109, guid: a6700fb2a85295141bbca784922d7372, type: 3}
-  ManifestParent: {fileID: 612074060}
-  MusicName: {fileID: 722760289}
-  MusicIcon: {fileID: 553616706}
+  manifestParent: {fileID: 612074060}
+  musicName: {fileID: 722760289}
+  musicIcon: {fileID: 553616706}
 --- !u!1 &1964638217
 GameObject:
   m_ObjectHideFlags: 0

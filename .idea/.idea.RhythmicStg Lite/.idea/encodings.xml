@@ -7,6 +7,7 @@
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/IPicture.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/IRescource.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/MediaLoader.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/1.Scripts/Inner/YamlAndFormat.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/Opening.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/PublicUI.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/SongsInf.cs" charset="GBK" />

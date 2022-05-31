@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using YamlDotNet.Serialization;
 
 
-public class Core
+/// <summary>
+/// yaml读写，以及yaml相关的格式化（manifest之类的）
+/// </summary>
+public class YamlAndFormat
 {
     /// <summary>
     /// 预设的子文件夹
@@ -47,49 +51,81 @@ public class Core
     }
 
 
-    #region YAML用的类的定义部分
+    #region YAML用的结构体
     /// <summary>
     /// 用于展示基本信息的清单。不包含弹幕设计(YAML）
     /// </summary>
-    public class Manifest
+    public struct Manifest
     {
         /// <summary>
         /// 应当与所在的文件夹同名。
         /// </summary>
-        public string Name = "Default SpellCard";
+        public string Name;
         /// <summary>
         /// 音乐名称，在游戏中展示。
         /// </summary>
-        public string MusicName = "默认符卡";
+        public string MusicName;
         /// <summary>
         /// 铺面图标（不含拓展名）
         /// </summary>
-        public string Icon = "Icon";
+        public string Icon; 
         /// <summary>
         /// 铺面作者名称。
         /// </summary>
-        public string Author = "RSC玩家";
-
+        public string Author;
         /// <summary>
         /// BGM出处/所属专辑。
         /// </summary>
-        public string Origin = "默认出处";
+        public string Origin;
         /// <summary>
         /// 预览音乐（不含拓展名）
         /// </summary>
-        public string PreviewBGM = "Pre";
+        public string PreviewBGM;
         /// <summary>
         /// 可用的难度。按照Easy Normal Hard Lunatic的顺序。
         /// </summary>
-        public bool[] AllowedDifficulty = { false, true, false, false };
+        public bool[] AllowedDifficulty;
         /// <summary>
         /// 是否为高级符卡。
         /// </summary>
-        public bool IsAdvanced = false;
+        public bool IsAdvanced;
         /// <summary>
         /// 该文件的版本。（用于对自己做的符卡进行版本控制）
         /// </summary>
-        public string Version = "1.0.0";
+        public string Version;
+
+        /// <summary>
+        ///  用于展示基本信息的清单。不包含弹幕设计(YAML）
+        /// </summary>
+        /// <param name="name">铺面名称。用于文件夹命名以及定位</param>
+        /// <param name="musicName">音乐名称。默认在对应的铺面目录下，ogg格式，不包含拓展名</param>
+        /// <param name="icon">音乐缩略图。默认在对应的铺面目录下，png格式，不含拓展名</param>
+        /// <param name="author">铺面作者。</param>
+        /// <param name="origin">音乐来源。</param>
+        /// <param name="previewBGM">预览音乐名称。默认在对应的铺面目录下，ogg格式，不包含拓展名</param>
+        /// <param name="isAdvanced">高级铺面？  dll封装请设置为true</param>
+        /// <param name="version">铺面版本。铺面作者给定的版本</param>
+        /// <param name="difficulties">可用难度。至少设定一个难度,按照Easy Normal Hard Lunatic的顺序.</param>
+        public Manifest(bool[] difficulties, string name = "Default SpellCard", string musicName = "默认符卡",
+            string icon = "Icon", string author = "匿名", string origin = "未知出处", string previewBGM = "Pre",
+            bool isAdvanced = false, string version = "1.0.0")
+        {
+            if (difficulties.Length != 4)
+            {
+                GameDebug.Log(String.Format("{0}难度设定有误。", name), GameDebug.Level.Error);
+            }
+
+            Name = name;
+            MusicName = musicName;
+            Icon = icon;
+            Author = author;
+            Origin = origin;
+            PreviewBGM = previewBGM;
+            IsAdvanced = isAdvanced;
+            Version = version;
+            AllowedDifficulty = difficulties;
+
+        }
     }
 
     #endregion
@@ -185,7 +221,7 @@ public class Core
         //直接创建一个新的文件得了，顺便用这个文件流写进去
         var f = new FileStream(string.Format("{0}/{1}.yaml", path, fileName), FileMode.Create);
         StreamWriter sw = new(f, System.Text.Encoding.UTF8);
-        sw.Write(string.Format("#{0}\n# 请不要直接修改本文件\n# 如需修改，请使用游戏自带的编辑器\n\n{1}",VersionControl[(int)types].ToString(), yaml));
+        sw.Write("#{0}\n# 请不要直接修改本文件\n# 如需修改，请使用游戏自带的编辑器\n\n{1}",VersionControl[(int)types].ToString(), yaml);
         sw.Close();
         f.Close();
     }
@@ -193,12 +229,12 @@ public class Core
     #endregion
 
 
-    #region  内部函数
+    #region  私有函数
     /// <summary>
     /// 读取全部子文件夹，可能包含非法子文件夹，需要对应的代码进行判断
     /// </summary>
     /// <param name="subdirectoryTypes"></param>
-    internal static DirectoryInfo[] ReadAllSubdirectory(SubdirectoryTypes subdirectoryTypes)
+    static DirectoryInfo[] ReadAllSubdirectory(SubdirectoryTypes subdirectoryTypes)
     {
         string path = string.Format("{0}/{1}", UnityButNotAssets, subdirectoryTypes.ToString());
         if (Directory.Exists(path))

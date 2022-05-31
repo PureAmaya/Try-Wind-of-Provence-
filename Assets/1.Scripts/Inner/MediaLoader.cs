@@ -20,11 +20,11 @@ public class MediaLoader
     /// <param name="types"></param>
     /// <param name="fileName">文件名（不含拓展名）</param>
     /// <returns></returns>
-    public IEnumerator LoadSound(Core.SubdirectoryTypes types, string fileName)
+    public IEnumerator LoadSound(YamlAndFormat.SubdirectoryTypes types, string fileName)
     {
 
         //缓存路径
-        string filepath = string.Format("{0}/{1}/{2}.ogg", Core.UnityButNotAssets,types.ToString(), fileName);
+        string filepath = string.Format("{0}/{1}/{2}.ogg", YamlAndFormat.UnityButNotAssets,types.ToString(), fileName);
         //音频文件存在
         if(File.Exists(filepath))
         {
@@ -53,10 +53,10 @@ public class MediaLoader
     /// </summary>
     /// <param name="types"></param>
     /// <param name="fileName">文件名（不含拓展名）</param>
-    public IEnumerator LoadImage(Core.SubdirectoryTypes types, string fileName)
+    public IEnumerator LoadImage(YamlAndFormat.SubdirectoryTypes types, string fileName)
     {
         //缓存路径
-        string filepath = string.Format("{0}/{1}/{2}.png", Core.UnityButNotAssets, types.ToString(), fileName);
+        string filepath = string.Format("{0}/{1}/{2}.png", YamlAndFormat.UnityButNotAssets, types.ToString(), fileName);
 
         //图片文件存在
         if (File.Exists(filepath))
