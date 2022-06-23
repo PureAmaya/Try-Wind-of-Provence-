@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -10,123 +9,63 @@ using YamlDotNet.Serialization;
 /// </summary>
 public class YamlAndFormat
 {
-    /// <summary>
-    /// 预设的子文件夹
-    /// </summary>
-    public enum SubdirectoryTypes
-    {
-        SpellCards,
-        Skins,
-        Settings,
-        PlayerProfile,
-        Log,
-    }
 
+    #region YAML
+    
     /// <summary>
-    /// 版本控制，顺序与SubdirectoryTypes一致
+    /// yaml版本控制，顺序与SubdirectoryTypes一致
     /// </summary>
     readonly static int[] VersionControl = { 1, 1, 1, 1, 1 };
-
-
-    /// <summary>
-    /// Assets上一级的目录
-    /// </summary>
-    /// <returns></returns>
-    internal static string UnityButNotAssets
-    {
-        get
-        {
-            string[] raw = Application.dataPath.Split("/");
-
-            string done = string.Empty;
-            for (int i = 1; i < raw.Length - 1; i++)
-            {
-                //得到从unity开始的路径
-                done = string.Format("{0}/{1}", done, raw[i]);
-            }
-
-            DirectoryInfo directoryInfo = new(done);
-            return directoryInfo.FullName;
-        }
-    }
-
-
-    #region YAML用的结构体
+    
     /// <summary>
     /// 用于展示基本信息的清单。不包含弹幕设计(YAML）
     /// </summary>
-    public struct Manifest
+    public class Manifest
     {
         /// <summary>
-        /// 应当与所在的文件夹同名。
+        /// 关卡名称。用于文件夹命名以及定位
         /// </summary>
-        public string Name;
-        /// <summary>
-        /// 音乐名称，在游戏中展示。
-        /// </summary>
-        public string MusicName;
-        /// <summary>
-        /// 铺面图标（不含拓展名）
-        /// </summary>
-        public string Icon; 
-        /// <summary>
-        /// 铺面作者名称。
-        /// </summary>
-        public string Author;
-        /// <summary>
-        /// BGM出处/所属专辑。
-        /// </summary>
-        public string Origin;
-        /// <summary>
-        /// 预览音乐（不含拓展名）
-        /// </summary>
-        public string PreviewBGM;
-        /// <summary>
-        /// 可用的难度。按照Easy Normal Hard Lunatic的顺序。
-        /// </summary>
-        public bool[] AllowedDifficulty;
-        /// <summary>
-        /// 是否为高级符卡。
-        /// </summary>
-        public bool IsAdvanced;
-        /// <summary>
-        /// 该文件的版本。（用于对自己做的符卡进行版本控制）
-        /// </summary>
-        public string Version;
+        public string Name = "Default Stages";
 
         /// <summary>
-        ///  用于展示基本信息的清单。不包含弹幕设计(YAML）
+        /// 关卡名称。用于对玩家展示
         /// </summary>
-        /// <param name="name">铺面名称。用于文件夹命名以及定位</param>
-        /// <param name="musicName">音乐名称。默认在对应的铺面目录下，ogg格式，不包含拓展名</param>
-        /// <param name="icon">音乐缩略图。默认在对应的铺面目录下，png格式，不含拓展名</param>
-        /// <param name="author">铺面作者。</param>
-        /// <param name="origin">音乐来源。</param>
-        /// <param name="previewBGM">预览音乐名称。默认在对应的铺面目录下，ogg格式，不包含拓展名</param>
-        /// <param name="isAdvanced">高级铺面？  dll封装请设置为true</param>
-        /// <param name="version">铺面版本。铺面作者给定的版本</param>
-        /// <param name="difficulties">可用难度。至少设定一个难度,按照Easy Normal Hard Lunatic的顺序.</param>
-        public Manifest(bool[] difficulties, string name = "Default SpellCard", string musicName = "默认符卡",
-            string icon = "Icon", string author = "匿名", string origin = "未知出处", string previewBGM = "Pre",
-            bool isAdvanced = false, string version = "1.0.0")
-        {
-            if (difficulties.Length != 4)
-            {
-                GameDebug.Log(String.Format("{0}难度设定有误。", name), GameDebug.Level.Error);
-            }
+        public string StageName = "默认关卡";
 
-            Name = name;
-            MusicName = musicName;
-            Icon = icon;
-            Author = author;
-            Origin = origin;
-            PreviewBGM = previewBGM;
-            IsAdvanced = isAdvanced;
-            Version = version;
-            AllowedDifficulty = difficulties;
+        /// <summary>
+        /// 关卡图标。默认在对应的关卡目录下，png格式，不含拓展名
+        /// </summary>
+        public string Icon = "Icon";
 
+        /// <summary>
+        /// 关卡作者名称。
+        /// </summary>
+        public string Author = "不愿透露姓名的大佬";
+
+        /// <summary>
+        /// 简单介绍。右侧关卡选择列表中，对本关卡进行简单的介绍
+        /// </summary>
+        public string ShortInstr = "介绍白给了";
+
+        /// <summary>
+        /// 详细的介绍。在左侧的面板中，对本关卡进行详细的介绍
+        /// </summary>
+        public string Instruction = "404 Not Found";
+
+        /// <summary>
+        /// 可用难度。至少设定一个难度,按照Easy Normal Hard Lunatic的顺序.
+        /// </summary>
+        public bool[] AllowedDifficulty = { false, true, false, false };
+
+        /// <summary>
+        /// 高级关卡？  dll封装请设置为true
+        /// </summary>
+        public bool IsAdvanced = false;
+        /// <summary>
+        /// 该关卡的版本。（用于对自己做的关卡进行版本控制）
+        /// </summary>
+        public string Version = "1.0.0";
         }
-    }
 
     #endregion
 
@@ -136,7 +75,7 @@ public class YamlAndFormat
     /// <returns></returns>
     public static List<Manifest> ManifestList()
     {
-        var all = ReadAllSubdirectory(SubdirectoryTypes.SpellCards);
+        var all = ReadAllSubdirectory(DefaultDirectory.SubdirectoryTypes.Stages);
 
         //储存有效的valid文件
         List<Manifest> valid = new List<Manifest>();
@@ -147,10 +86,11 @@ public class YamlAndFormat
 
             if (File.Exists(string.Format("{0}/Manifest.yaml", item.FullName)))
             {
-                valid.Add(YamlRead<Manifest>(SubdirectoryTypes.SpellCards, item.Name, "Manifest"));
+                valid.Add(YamlRead<Manifest>(DefaultDirectory.SubdirectoryTypes.Stages, item.Name, "Manifest"));
             }
         }
 
+        Debug.Log(valid[0].Name);
         return valid;
     }
 
@@ -167,15 +107,17 @@ public class YamlAndFormat
     /// <param name="fileName">文件名（不含拓展名）</param>
     /// <param name="directoryName">专用文件夹名字</param>
     /// <returns></returns>
-    public static T YamlRead<T>(SubdirectoryTypes types, string directoryName, string fileName)
+    public static T YamlRead<T>(DefaultDirectory.SubdirectoryTypes types, string directoryName, string fileName)
     {       
         //提前准备文件的路径
-        string path = string.Format("{0}/{1}/{2}/{3}.yaml", UnityButNotAssets, types.ToString(), directoryName,fileName);
+        string path = string.Format("{0}/{1}/{2}/{3}.yaml", DefaultDirectory.UnityButNotAssets, types.ToString(), directoryName,fileName);
 
+    
+        
         if (File.Exists(path))
         {
             //yaml文件的内容
-            string content = File.ReadAllText(string.Format("{0}/{1}/{2}/{3}.yaml", UnityButNotAssets, types.ToString(), directoryName, fileName), System.Text.Encoding.UTF8);
+            string content = File.ReadAllText(string.Format("{0}/{1}/{2}/{3}.yaml", DefaultDirectory.UnityButNotAssets, types.ToString(), directoryName, fileName), System.Text.Encoding.UTF8);
 
 
             //如果yaml的版本低于读取规定的版本，则输出一个警告
@@ -203,10 +145,10 @@ public class YamlAndFormat
     /// <param name="fileName">文件名（不含拓展名）</param>
     /// <param name="directoryName">专用文件夹名字</param>
     /// <param name="content">yaml内容</param>
-    public static void YamlWrite<T>(SubdirectoryTypes types, string directoryName, string fileName, T content)
+    public static void YamlWrite<T>(DefaultDirectory.SubdirectoryTypes types, string directoryName, string fileName, T content)
     {
         //提前准备好文件夹的路径（不含最终的文件)
-        string path = string.Format("{0}/{1}/{2}", UnityButNotAssets, types.ToString(), directoryName);
+        string path = string.Format("{0}/{1}/{2}", DefaultDirectory.UnityButNotAssets, types.ToString(), directoryName);
         //准备好序列化的yaml内容
         var write = new Serializer();
         var yaml = write.Serialize(content);
@@ -234,9 +176,9 @@ public class YamlAndFormat
     /// 读取全部子文件夹，可能包含非法子文件夹，需要对应的代码进行判断
     /// </summary>
     /// <param name="subdirectoryTypes"></param>
-    static DirectoryInfo[] ReadAllSubdirectory(SubdirectoryTypes subdirectoryTypes)
+    static DirectoryInfo[] ReadAllSubdirectory(DefaultDirectory.SubdirectoryTypes subdirectoryTypes)
     {
-        string path = string.Format("{0}/{1}", UnityButNotAssets, subdirectoryTypes.ToString());
+        string path = string.Format("{0}/{1}", DefaultDirectory.UnityButNotAssets, subdirectoryTypes.ToString());
         if (Directory.Exists(path))
         {
             Directory.CreateDirectory(path);

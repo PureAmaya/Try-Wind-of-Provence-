@@ -67,13 +67,13 @@ public class MenuCtrl : MonoBehaviour
         //获取清单
         for (int i = 0; i < list.Count; i++)
         {
-            //加载媒体资源.icon和preBGM
-           yield return StartCoroutine(mediaLoader.LoadSound(YamlAndFormat.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].PreviewBGM)));
-           yield return StartCoroutine(mediaLoader.LoadImage(YamlAndFormat.SubdirectoryTypes.SpellCards, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
+            //加载媒体资源.icon
+          // yield return StartCoroutine(mediaLoader.LoadSound(DefaultDirectory.SubdirectoryTypes.Stages, string.Format("{0}/{1}", list[i].Name, list[i].PreviewBGM)));
+           yield return StartCoroutine(mediaLoader.LoadImage(DefaultDirectory.SubdirectoryTypes.Stages, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
 
             GameObject go = Instantiate(songsInf, manifestParent, false);
             go.transform.SetParent(manifestParent);
-            go.GetComponent<SongsInf>().ApplyInf(list[0].MusicName, list[0].Author, list[0].Origin, list[0].Version, mediaLoader.Sprite, list[0].IsAdvanced, mediaLoader.AudioClip,list[0].AllowedDifficulty);
+            go.GetComponent<SongsInf>().ApplyInf(list[0].StageName, list[0].Author, list[0].ShortInstr, list[0].Version, mediaLoader.Sprite, list[0].IsAdvanced, mediaLoader.AudioClip,list[0].AllowedDifficulty);
        
         
             if(i == 0)
