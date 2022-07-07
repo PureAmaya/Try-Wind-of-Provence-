@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using System.Runtime.Serialization;
 
 /// <summary>
 /// 默认设定的文件夹类型
@@ -48,5 +49,7 @@ public static class DefaultDirectory
             return directoryInfo.FullName;
         }
     }
+
+   
 
 }

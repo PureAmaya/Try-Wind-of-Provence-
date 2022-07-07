@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 /// <summary>
@@ -15,41 +16,18 @@ public class MediaLoader
     //所有的se音效也在这里，另外也预留三个audioclip给玩家自定义
 
     /// <summary>
-    /// 加载ogg声音
+    /// 加载外部ogg音频
     /// </summary>
     /// <param name="types"></param>
     /// <param name="fileName">文件名（不含拓展名）</param>
     /// <returns></returns>
-    public IEnumerator LoadSound(DefaultDirectory.SubdirectoryTypes types, string fileName)
+    public IEnumerator LoadSound()
     {
-
-        //缓存路径
-        string filepath = string.Format("{0}/{1}/{2}.ogg", DefaultDirectory.UnityButNotAssets,types.ToString(), fileName);
-        //音频文件存在
-        if(File.Exists(filepath))
-        {
-            //从本地读取资源
-            var uwr = UnityWebRequestMultimedia.GetAudioClip(string.Format("file://{0}", filepath), AudioType.OGGVORBIS);
-            yield return uwr.SendWebRequest();
-            if (uwr.result != UnityWebRequest.Result.Success && uwr.result != UnityWebRequest.Result.InProgress)
-            {
-                GameDebug.Log(uwr.error, GameDebug.Level.Error);
-            }
-            else
-            {
-                AudioClip = DownloadHandlerAudioClip.GetContent(uwr);
-            }
-
-        }
-        else
-        {
-            GameDebug.Log(string.Format("{0}不存在或文件格式不支持", filepath),GameDebug.Level.Error);
-            yield return null;
-        }
+        yield return null;
     }
 
     /// <summary>
-    /// 加载png图片
+    /// 加载外部png图片
     /// </summary>
     /// <param name="types"></param>
     /// <param name="fileName">文件名（不含拓展名）</param>
@@ -81,6 +59,19 @@ public class MediaLoader
             GameDebug.Log(string.Format("{0}不存在或文件格式不支持", filepath), GameDebug.Level.Error);
             yield return null;
         }
+    }
+    
+   /// <summary>
+   /// 加载addressable内的图片
+   /// </summary>
+   /// <returns></returns>
+    public IEnumerator LoadImage(string AddressableKey)
+    {
+     
+        
+        
+        yield return null;
+        
     }
 
 }

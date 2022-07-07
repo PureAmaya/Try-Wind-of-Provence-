@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Stages
+  m_EditorClassIdentifier: 
+  m_GroupName: Stages
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8577ab0ff964cc540b615b0121bef92e
+  m_SerializeEntries:
+  - m_GUID: 8d92c97906a2a8d4f866d8b8d324a2f3
+    m_Address: PureAmaya/Heart Ha Oteage by Airi Suzuki/Assets
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Stages
+  - m_GUID: b1233ab11cbfb974fa0b46da15d4834c
+    m_Address: Manifest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Manifest
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 56301beb81ecee74d8d53df6b5f6ea05, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6a54797274d07794897473b65a531308, type: 2}
+    - {fileID: 11400000, guid: 217264b526e17814aabdeba2b5858983, type: 2}

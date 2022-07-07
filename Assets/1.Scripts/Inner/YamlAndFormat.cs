@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using YamlDotNet.Serialization;
+using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets.Initialization;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 
 
 /// <summary>
@@ -33,7 +37,7 @@ public class YamlAndFormat
         public string StageName = "默认关卡";
 
         /// <summary>
-        /// 关卡图标。默认在对应的关卡目录下，png格式，不含拓展名
+        /// 关卡图标。默认在对应的关卡目录下
         /// </summary>
         public string Icon = "Icon";
 
@@ -53,45 +57,34 @@ public class YamlAndFormat
         public string Instruction = "404 Not Found";
 
         /// <summary>
-        /// 可用难度。至少设定一个难度,按照Easy Normal Hard Lunatic的顺序.
-        /// </summary>
-        public bool[] AllowedDifficulty = { false, true, false, false };
-
-        /// <summary>
-        /// 高级关卡？  dll封装请设置为true
-        /// </summary>
-        public bool IsAdvanced = false;
-        /// <summary>
         /// 该关卡的版本。（用于对自己做的关卡进行版本控制）
         /// </summary>
         public string Version = "1.0.0";
         }
 
     #endregion
+    
+/// <summary>
+/// Manifest加载状态 -1加载失败 0还没加载完 1成功
+/// </summary>
+    public static int ManifestLoadStatue = 0;
+
+/// <summary>
+/// 可以用的所有Manifest文件（以后改成结构体）
+/// </summary>
+public static List<Manifest> AllManifestsReady = new List<Manifest>();
+
 
     /// <summary>
-    /// 从SpellCards文件夹种读取所有的清单文件，用来形成铺面列表
+    /// 获取所有的Manifest，用于得到游戏列表
     /// </summary>
     /// <returns></returns>
-    public static List<Manifest> ManifestList()
+    public static void GetManifestList()
     {
-        var all = ReadAllSubdirectory(DefaultDirectory.SubdirectoryTypes.Stages);
-
-        //储存有效的valid文件
-        List<Manifest> valid = new List<Manifest>();
-
-        //有清单文件就存进去
-        foreach (var item in all)
-        {
-
-            if (File.Exists(string.Format("{0}/Manifest.yaml", item.FullName)))
-            {
-                valid.Add(YamlRead<Manifest>(DefaultDirectory.SubdirectoryTypes.Stages, item.Name, "Manifest"));
-            }
-        }
-
-        Debug.Log(valid[0].Name);
-        return valid;
+        //异步加载所有label为manifest的清单
+        
+        Addressables.LoadAssetsAsync<TextAsset>(new List<object> { "Manifest", "Manifest" }, null,
+            Addressables.MergeMode.Union).Completed += OnCompleteLoadAllManifest;
     }
 
 
@@ -100,7 +93,7 @@ public class YamlAndFormat
 
 
     /// <summary>
-    /// yaml读取
+    /// yaml读取（从yaml文件中读取）
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="types">子文件夹类型</param>
@@ -126,8 +119,8 @@ public class YamlAndFormat
                 GameDebug.Log(string.Format("当前文件的版本已过时，游玩时可能发生错误。低版本的类别为“{0}”、路径为{1}",types.ToString(),path), GameDebug.Level.Warning);
             }
 
-            Deserializer read = new();
-            return read.Deserialize<T>(content);
+
+            return YamlRead<T>(content);
 
         }
         else
@@ -137,6 +130,19 @@ public class YamlAndFormat
         }
 
     }
+
+    /// <summary>
+    /// yaml读取（直接从文本读取）
+    /// </summary>
+    /// <param name="content"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T YamlRead<T>(string content)
+    {
+        Deserializer read = new();
+        return read.Deserialize<T>(content);
+    }
+    
     /// <summary>
     /// yaml写入
     /// </summary>
@@ -172,14 +178,14 @@ public class YamlAndFormat
 
 
     #region  私有函数
-    /// <summary>
-    /// 读取全部子文件夹，可能包含非法子文件夹，需要对应的代码进行判断
-    /// </summary>
-    /// <param name="subdirectoryTypes"></param>
-    static DirectoryInfo[] ReadAllSubdirectory(DefaultDirectory.SubdirectoryTypes subdirectoryTypes)
+   /// <summary>
+   /// 读取子文件夹内的全部子文件夹（外部目录）
+   /// </summary>
+   /// <param name="path">文件夹路径</param>
+   /// <returns></returns>
+    static DirectoryInfo[] ReadAllSubdirectory(string path)
     {
-        string path = string.Format("{0}/{1}", DefaultDirectory.UnityButNotAssets, subdirectoryTypes.ToString());
-        if (Directory.Exists(path))
+        if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
@@ -189,6 +195,36 @@ public class YamlAndFormat
         return folder.GetDirectories();
     }
 
+   /// <summary>
+   /// 回调函数，检查manifest的加载情况
+   /// </summary>
+   /// <param name="asyncOperationHandle"></param>
+   static void OnCompleteLoadAllManifest(AsyncOperationHandle<IList<TextAsset>> asyncOperationHandle) 
+   {
+       switch (asyncOperationHandle.Status)
+       {
+           case AsyncOperationStatus.Failed:
+               GameDebug.Log("部分或所有的Manifest文件读取错误", GameDebug.Level.Error);
+               ManifestLoadStatue = -1;
+               break;
+               case AsyncOperationStatus.None:
+                   GameDebug.Log("不存在任何Manifest。可能没有游戏文件或者加载的游戏文件中Manifest配置错误",GameDebug.Level.Warning);
+                   ManifestLoadStatue = -1;
+                   break;
+               case  AsyncOperationStatus.Succeeded:
+                   GameDebug.Log(string.Format("Manifest加载成功。共有{0}个可玩游戏",asyncOperationHandle.Result.Count.ToString()),GameDebug.Level.Information);
+                   Debug.Log(asyncOperationHandle.Result[0].text);
+                  //string格式化为class/struct
+                   for (int i = 0; i < asyncOperationHandle.Result.Count; i++)
+                   {
+                       AllManifestsReady.Add(YamlRead<Manifest>(asyncOperationHandle.Result[i].text));
+                   }
+
+                   ManifestLoadStatue = 1;
+                   break;
+               
+       }
+   }
     #endregion
 
 }

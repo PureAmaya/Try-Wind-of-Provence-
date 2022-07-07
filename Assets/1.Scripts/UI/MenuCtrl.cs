@@ -19,9 +19,9 @@ public class MenuCtrl : MonoBehaviour
     public static MenuCtrl menuCtrl;
 
     [Header("左侧信息ʾ")]
-    public TMP_Text musicName;
-    public Image musicIcon;
-    
+    public TMP_Text StageName;
+    public Image StageIcon;
+    public TMP_Text StageInstruction;
 
     private void Awake()
     {
@@ -48,11 +48,10 @@ public class MenuCtrl : MonoBehaviour
     /// </summary>
     public void OnSelected(SongsInf songsInf)
     {
-        //播放preBGM
-       PublicUI.publicUI.PlayPreBGM(songsInf.PreBGM);
         //更新左侧信息
-        musicIcon.sprite = songsInf.Icon.sprite;
-        musicName.text = songsInf.MusicName.text;
+        StageIcon.sprite = songsInf.Icon.sprite;
+        StageName.text = songsInf.StagesName.text;
+        StageInstruction.text = songsInf.Instruction;
     }
 
     /// <summary>
@@ -61,19 +60,34 @@ public class MenuCtrl : MonoBehaviour
     /// <returns></returns>
     IEnumerator Load()
     {
+        //开始读取addressable，并得到准确的清单数据
+        YamlAndFormat.GetManifestList();
+        
         //获取清单列表
-        var list = YamlAndFormat.ManifestList();
+        while (true)
+        {
+            if (YamlAndFormat.ManifestLoadStatue == 1)
+            {
+                break;
+            }
+            else
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            
+        }
+        var list = YamlAndFormat.AllManifestsReady;
 
         //获取清单
         for (int i = 0; i < list.Count; i++)
         {
             //加载媒体资源.icon
-          // yield return StartCoroutine(mediaLoader.LoadSound(DefaultDirectory.SubdirectoryTypes.Stages, string.Format("{0}/{1}", list[i].Name, list[i].PreviewBGM)));
-           yield return StartCoroutine(mediaLoader.LoadImage(DefaultDirectory.SubdirectoryTypes.Stages, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
+            yield return StartCoroutine(mediaLoader.LoadImage(DefaultDirectory.SubdirectoryTypes.Stages, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
 
-            GameObject go = Instantiate(songsInf, manifestParent, false);
+            //在右侧创造卡片，并更新信息
+           GameObject go = Instantiate(songsInf, manifestParent, false);
             go.transform.SetParent(manifestParent);
-            go.GetComponent<SongsInf>().ApplyInf(list[0].StageName, list[0].Author, list[0].ShortInstr, list[0].Version, mediaLoader.Sprite, list[0].IsAdvanced, mediaLoader.AudioClip,list[0].AllowedDifficulty);
+            go.GetComponent<SongsInf>().ApplyInf(list[i],mediaLoader.Sprite);
        
         
             if(i == 0)
