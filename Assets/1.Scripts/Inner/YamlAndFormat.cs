@@ -37,9 +37,9 @@ public class YamlAndFormat
         public string StageName = "默认关卡";
 
         /// <summary>
-        /// 关卡图标。默认在对应的关卡目录下
+        /// 关卡图标。默认在对应的关卡目录下，要有拓展名
         /// </summary>
-        public string Icon = "Icon";
+        public string Icon = "Icon.png";
 
         /// <summary>
         /// 关卡作者名称。
@@ -204,16 +204,16 @@ public static List<Manifest> AllManifestsReady = new List<Manifest>();
        switch (asyncOperationHandle.Status)
        {
            case AsyncOperationStatus.Failed:
-               GameDebug.Log("部分或所有的Manifest文件读取错误", GameDebug.Level.Error);
+               GameDebug.Log(string.Format("{0}部分或所有的Manifest文件读取错误",asyncOperationHandle.OperationException), GameDebug.Level.Warning);
                ManifestLoadStatue = -1;
                break;
                case AsyncOperationStatus.None:
-                   GameDebug.Log("不存在任何Manifest。可能没有游戏文件或者加载的游戏文件中Manifest配置错误",GameDebug.Level.Warning);
+                   GameDebug.Log("不存在任何Manifest。可能没有游戏文件或者加载的游戏文件中Manifest错误",GameDebug.Level.Warning);
                    ManifestLoadStatue = -1;
                    break;
                case  AsyncOperationStatus.Succeeded:
                    GameDebug.Log(string.Format("Manifest加载成功。共有{0}个可玩游戏",asyncOperationHandle.Result.Count.ToString()),GameDebug.Level.Information);
-                   Debug.Log(asyncOperationHandle.Result[0].text);
+
                   //string格式化为class/struct
                    for (int i = 0; i < asyncOperationHandle.Result.Count; i++)
                    {

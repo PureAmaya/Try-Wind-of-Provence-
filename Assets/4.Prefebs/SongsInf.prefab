@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8609633475737536077}
   - component: {fileID: 8609633475737536074}
   m_Layer: 5
-  m_Name: Origin
+  m_Name: ShortInstruction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u304B\u3050\u3084\u69D8\u306F\u544A\u3089\u305B\u305F\u3044 -\u30A6\u30EB\u30C8\u30E9\u30ED\u30DE\u30F3\u30C6\u30A3\u30C3\u30AF-"
+  m_text: "\u7A0D\u6709\u5D29\u574F\u7684\u3001\u73A9\u6897\u8F83\u591A\u7684\u5E73\u9762\u5C04\u51FB\u6E38\u620F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 26216fab0443bbf48b81c57fc633a352, type: 2}
   m_sharedMaterial: {fileID: 317546186484929211, guid: 26216fab0443bbf48b81c57fc633a352, type: 2}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.15
+  m_fontSize: 15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -298,7 +298,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8609633476199698109}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -421,13 +421,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1920a2e97c8e9444396df83740c34ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicName: {fileID: 8609633476411739958}
+  StagesName: {fileID: 8609633476411739958}
   Author: {fileID: 8609633474543051382}
-  Origin: {fileID: 8609633475737536074}
+  ShortInstr: {fileID: 8609633475737536074}
   Icon: {fileID: 8609633476537153367}
-  IsAdvanced: 0
-  PreBGM: {fileID: 0}
-  Difficulty: 
+  Instruction: 
 --- !u!82 &-5921438804234301863
 AudioSource:
   m_ObjectHideFlags: 0
@@ -536,7 +534,7 @@ GameObject:
   - component: {fileID: 8609633476411739945}
   - component: {fileID: 8609633476411739958}
   m_Layer: 5
-  m_Name: MusicName
+  m_Name: StageName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -590,7 +588,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u9234\u6728\u611B\u7406 - \u30CF\u30FC\u30C8\u306F\u304A\u624B\u4E0A\u3052"
+  m_text: "\u6E38\u620F\u540D\u5B57"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 26216fab0443bbf48b81c57fc633a352, type: 2}
   m_sharedMaterial: {fileID: 317546186484929211, guid: 26216fab0443bbf48b81c57fc633a352, type: 2}
@@ -617,11 +615,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46.4
+  m_fontSize: 25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 15
+  m_fontSizeMin: 25
   m_fontSizeMax: 70
   m_fontStyle: 1
   m_HorizontalAlignment: 1
@@ -725,7 +723,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd29ed5f7998b1f43a4d7939d6312ea8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cdebcc696bd956419e86c1bd67eb9a5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

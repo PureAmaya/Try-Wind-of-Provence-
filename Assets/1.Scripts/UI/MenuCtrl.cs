@@ -82,12 +82,24 @@ public class MenuCtrl : MonoBehaviour
         for (int i = 0; i < list.Count; i++)
         {
             //加载媒体资源.icon
-            yield return StartCoroutine(mediaLoader.LoadImage(DefaultDirectory.SubdirectoryTypes.Stages, string.Format("{0}/{1}", list[i].Name, list[i].Icon)));
-
+            yield return StartCoroutine(mediaLoader.LoadImage(string.Format("Stages/{0}/{1}/Assets/{2}", list[i].Author,
+                list[i].Name, list[i].Icon)));
+           //不断循环，等到成功读取到媒体资源为止
+            while (true)
+            {
+                if (mediaLoader.ImageLoadStatue == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+            }
             //在右侧创造卡片，并更新信息
            GameObject go = Instantiate(songsInf, manifestParent, false);
             go.transform.SetParent(manifestParent);
-            go.GetComponent<SongsInf>().ApplyInf(list[i],mediaLoader.Sprite);
+            go.GetComponent<SongsInf>().ApplyInf(list[i],mediaLoader.GetImage());
        
         
             if(i == 0)
