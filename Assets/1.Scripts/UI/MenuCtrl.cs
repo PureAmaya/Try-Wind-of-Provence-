@@ -22,36 +22,50 @@ public class MenuCtrl : MonoBehaviour
     public TMP_Text StageName;
     public Image StageIcon;
     public TMP_Text StageInstruction;
+    public GameObject EnterGameButton;
 
+    private SongsInf OnselectedInf;
+
+    
+    
     private void Awake()
     {
         menuCtrl = this;
 
         CreateManifest();
+        
+        //初始化
+        StageName.text = "游戏加载中......";
+        EnterGameButton.SetActive(false);
     }
    
     /// <summary>
-    /// 创建清单
+    /// 创建清单列表
     /// </summary>
     [ContextMenu("创建清单")]
     public void CreateManifest()
     {
-        //先清楚清单
-        ClearManifest();
+        
         //获取清单列表，并加载所需的资源，并指定EventSystem的FirstSelected参数
         StartCoroutine(Load());      
     }
 
+   
 
     /// <summary>
-    /// 选择后播放preBGM，并在左侧显示信息
+    /// 选择后在左侧显示信息
     /// </summary>
     public void OnSelected(SongsInf songsInf)
     {
+        OnselectedInf = songsInf;
+      
         //更新左侧信息
-        StageIcon.sprite = songsInf.Icon.sprite;
-        StageName.text = songsInf.StagesName.text;
-        StageInstruction.text = songsInf.Instruction;
+        StageIcon.sprite = songsInf.GetImage();
+        StageName.text = songsInf.UsedManifestInf.StageName;
+        StageInstruction.text = songsInf.UsedManifestInf.Instruction;
+       
+        //激活进入游戏的按钮
+        EnterGameButton.SetActive(true);
     }
 
     /// <summary>
@@ -87,24 +101,32 @@ public class MenuCtrl : MonoBehaviour
            //不断循环，等到成功读取到媒体资源为止
             while (true)
             {
-                if (mediaLoader.ImageLoadStatue == 1)
+                if(mediaLoader.ImageLoadStatue == 1)
                 {
+                    StageName.text = "右面选一个→ ";
                     break;
                 }
-                else
+                else if (mediaLoader.ImageLoadStatue == 0)
                 {
+                    StageName.text = "加载中...... ";
                     yield return new WaitForEndOfFrame();
                 }
+                //出粗的情况 -1
+                else
+                {
+                    StageName.text = "载入错误，详细原因请看控制台";
+                    break;
+                }
+               
             }
-            //在右侧创造卡片，并更新信息
-           GameObject go = Instantiate(songsInf, manifestParent, false);
-            go.transform.SetParent(manifestParent);
-            go.GetComponent<SongsInf>().ApplyInf(list[i],mediaLoader.GetImage());
-       
-        
-            if(i == 0)
+            
+            //媒体资源可用才创建
+            if(mediaLoader.ImageLoadStatue == 1)
             {
-                PublicUI.publicUI.SetEventSystemFirstSelected(go);
+                //在右侧创造卡片，并更新信息
+                GameObject go = Instantiate(songsInf, manifestParent, false);
+                go.transform.SetParent(manifestParent);
+                go.GetComponent<SongsInf>().ApplyInf(list[i],mediaLoader.GetImage());
             }
         }
     }
@@ -122,4 +144,24 @@ public class MenuCtrl : MonoBehaviour
 
         }
     }
+    
+    
+    #region 外部UI交互，事件
+
+    public void EnterGame()
+    {
+        SceneLoader.AddressableAsyncLoadScene(string.Format("Stages/{0}/{1}/Assets/{1}.unity",OnselectedInf.UsedManifestInf.Author,OnselectedInf.UsedManifestInf.Name));
+    }
+    
+    /// <summary>
+    /// 按钮用。强制重新加载manifest
+    /// </summary>
+    public void ForceToReloadAllManifest()
+    {
+        //先清楚清单
+        ClearManifest();
+        CreateManifest();
+        
+    }
+    #endregion
 }

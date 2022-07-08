@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 游戏启动页的UI脚本
@@ -9,7 +10,7 @@ public class Opening : MonoBehaviour
 {
     private void Awake()
     {
-        
+        SceneLoader.LoadSceneSync("Menu",LoadSceneMode.Single);
     }
 
 

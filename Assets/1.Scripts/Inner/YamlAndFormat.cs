@@ -3,9 +3,7 @@ using UnityEngine;
 using System.IO;
 using YamlDotNet.Serialization;
 using UnityEngine.AddressableAssets;
-using UnityEngine.AddressableAssets.Initialization;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 
 /// <summary>
@@ -93,7 +91,7 @@ public static List<Manifest> AllManifestsReady = new List<Manifest>();
 
 
     /// <summary>
-    /// yaml读取（从yaml文件中读取）
+    /// yaml读取（从外部yaml文件中读取）
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="types">子文件夹类型</param>
@@ -132,7 +130,7 @@ public static List<Manifest> AllManifestsReady = new List<Manifest>();
     }
 
     /// <summary>
-    /// yaml读取（直接从文本读取）
+    /// yaml读取（直接从string读取）
     /// </summary>
     /// <param name="content"></param>
     /// <typeparam name="T"></typeparam>
@@ -144,7 +142,7 @@ public static List<Manifest> AllManifestsReady = new List<Manifest>();
     }
     
     /// <summary>
-    /// yaml写入
+    /// yaml外部写入
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="types">子文件夹类型</param>
@@ -219,7 +217,8 @@ public static List<Manifest> AllManifestsReady = new List<Manifest>();
                    {
                        AllManifestsReady.Add(YamlRead<Manifest>(asyncOperationHandle.Result[i].text));
                    }
-
+//卸载加载的yaml文件（反正已经保存成可用的类或者结构体了
+                   Addressables.Release(asyncOperationHandle);
                    ManifestLoadStatue = 1;
                    break;
                
