@@ -7,9 +7,7 @@ using UnityEngine.EventSystems;
 public class PublicUI : MonoBehaviour
 {
     public static PublicUI publicUI;
-
-    public EventSystem eventSystem;
-
+    
     AudioSource BGMPlayer;
     AudioSource preMusicPlayer;
     AudioSource SEPlayer;
@@ -39,15 +37,6 @@ public class PublicUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 设定EventSystem的FirstSelected参数
-    /// </summary>
-    /// <param name="go"></param>
-    public void SetEventSystemFirstSelected(GameObject go)
-    {
-        eventSystem.firstSelectedGameObject = go;
-    }
-
-    /// <summary>
     /// 应用音量
     /// </summary>
     /// <param name="index">0=BGM与preBGM 1=SE  其他值：静音</param>
@@ -56,16 +45,16 @@ public class PublicUI : MonoBehaviour
         switch (index)
         {
             case 0:
-                preMusicPlayer.volume = Settings.MasterVol * Settings.BGMvol;
+           //     preMusicPlayer.volume = Settings.MasterVol * Settings.BGMvol;
                 BGMPlayer.volume = preMusicPlayer.volume;
                 break;
 
             case 1:
-                SEPlayer.volume = Settings.MasterVol * Settings.SoundEffectsVol;
+             //   SEPlayer.volume = Settings.MasterVol * Settings.SoundEffectsVol;
                 break;
 
             default:
-                Settings.MasterVol = 0f;
+             //   Settings.MasterVol = 0f;
                 SEPlayer.volume = 0f;
                 BGMPlayer.volume = 0f;
                 preMusicPlayer.volume = 0f;

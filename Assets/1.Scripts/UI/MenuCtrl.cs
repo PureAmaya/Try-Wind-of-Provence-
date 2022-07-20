@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,26 +33,30 @@ public class MenuCtrl : MonoBehaviour
     {
         menuCtrl = this;
 
-        CreateManifest();
-        
         //初始化
         StageName.text = "游戏加载中......";
         EnterGameButton.SetActive(false);
     }
-   
-    /// <summary>
-    /// 创建清单列表
-    /// </summary>
-    [ContextMenu("创建清单")]
-    public void CreateManifest()
+
+    private void Start()
     {
+        //没有缓存，就从本地的addressable中重新获取
+        if (Cache.cache.CashForManifestsList.Count == 0)
+        {
+            GameDebug.Log("开始从Addressable中读取游戏列表...",GameDebug.Level.Information);
+            StartCoroutine(Load());  
+           
+        }
+        //有缓存的话，就读缓存
+        else
+        {
+            GameDebug.Log("开始从缓存中读取游戏列表...",GameDebug.Level.Information);
+            ShowManifestList();
+           }
         
-        //获取清单列表，并加载所需的资源，并指定EventSystem的FirstSelected参数
-        StartCoroutine(Load());      
+       
     }
-
-   
-
+    
     /// <summary>
     /// 选择后在左侧显示信息
     /// </summary>
@@ -69,13 +74,13 @@ public class MenuCtrl : MonoBehaviour
     }
 
     /// <summary>
-    /// 获取清单列表，并加载所需的资源，并指定EventSystem的FirstSelected参数
+    /// 获取清单列表和他的图标文件
     /// </summary>
     /// <returns></returns>
     IEnumerator Load()
     {
         //开始读取addressable，并得到准确的清单数据
-        YamlAndFormat.GetManifestList();
+        YamlAndFormat.GetManifestList();//这行执行之后，Cache.cache.CashForManifestsList里面就有东西了
         
         //获取清单列表
         while (true)
@@ -90,59 +95,73 @@ public class MenuCtrl : MonoBehaviour
             }
             
         }
-        var list = YamlAndFormat.AllManifestsReady;
+        
+        //获取清单的必要资源（图片）
+        var list = Cache.cache.CashForManifestsList;
+        //提示信息更新
+        StageName.text = "加载中...... ";
+        for (int i = 0; i < list.Count; i++)
+        {
+            //还原图标加载状态
+            mediaLoader.ClearLoadedImage();
+            //加载图标资源
+            yield return StartCoroutine(mediaLoader.LoadImage(string.Format("Assets/Stages/{0}/{1}/Assets/{2}", list[i].Author,
+                list[i].Name, list[i].Icon)));
+
+            while (true)
+            {
+                //加载成功
+                if (mediaLoader.GetImageLoadStatus() == 1)
+                {
+                    //总之，先给缓存上
+                    Cache.cache.CacheManifestImage.Add(mediaLoader.GetImage());
+                    break;
+                }
+                else if (mediaLoader.GetImageLoadStatus() == -1)
+                {
+                    //占位子，防止顺序错了
+                    Cache.cache.CacheManifestImage.Add(null);
+                    break;
+                }
+                else
+                {
+                    //还没加载完出结果，等到这一帧的结束
+                    yield return new WaitForEndOfFrame();
+                }
+
+            }
+            Cache.cache.CacheManifestImage.Add(mediaLoader.GetImage());
+        }
+        
+        //得到清单列表之后，进行展示（右侧）
+        ShowManifestList();
+
+      
+    }
+
+    /// <summary>
+    /// 已经得到清单列表之后，进行展示（右侧）
+    /// </summary>
+    /// <returns></returns>
+    private void ShowManifestList()
+    {
+        var list = Cache.cache.CashForManifestsList;
+        //提示信息更新
+        StageName.text = "加载中...... ";
+       
 
         //获取清单
         for (int i = 0; i < list.Count; i++)
         {
-            //加载媒体资源.icon
-            yield return StartCoroutine(mediaLoader.LoadImage(string.Format("Stages/{0}/{1}/Assets/{2}", list[i].Author,
-                list[i].Name, list[i].Icon)));
-           //不断循环，等到成功读取到媒体资源为止
-            while (true)
-            {
-                if(mediaLoader.ImageLoadStatue == 1)
-                {
-                    StageName.text = "右面选一个→ ";
-                    break;
-                }
-                else if (mediaLoader.ImageLoadStatue == 0)
-                {
-                    StageName.text = "加载中...... ";
-                    yield return new WaitForEndOfFrame();
-                }
-                //出粗的情况 -1
-                else
-                {
-                    StageName.text = "载入错误，详细原因请看控制台";
-                    break;
-                }
-               
-            }
-            
-            //媒体资源可用才创建
-            if(mediaLoader.ImageLoadStatue == 1)
-            {
+ 
                 //在右侧创造卡片，并更新信息
                 GameObject go = Instantiate(songsInf, manifestParent, false);
                 go.transform.SetParent(manifestParent);
-                go.GetComponent<SongsInf>().ApplyInf(list[i],mediaLoader.GetImage());
-            }
+                go.GetComponent<SongsInf>().ApplyInf(list[i],Cache.cache.CacheManifestImage[i]);
+            
         }
-    }
-
-    /// <summary>
-    /// 清楚清单
-    /// </summary>
-    [ContextMenu("清除清单")]
-    public void ClearManifest()
-    {
-
-        for (int i = manifestParent.childCount - 1; i >= 0; i--)
-        {
-          DestroyImmediate(manifestParent.GetChild(i).gameObject);
-
-        }
+        //提示信息
+        StageName.text = "右面选一个→ ";
     }
     
     
@@ -153,15 +172,7 @@ public class MenuCtrl : MonoBehaviour
         SceneLoader.AddressableAsyncLoadScene(string.Format("Stages/{0}/{1}/Assets/{1}.unity",OnselectedInf.UsedManifestInf.Author,OnselectedInf.UsedManifestInf.Name));
     }
     
-    /// <summary>
-    /// 按钮用。强制重新加载manifest
-    /// </summary>
-    public void ForceToReloadAllManifest()
-    {
-        //先清楚清单
-        ClearManifest();
-        CreateManifest();
-        
-    }
     #endregion
+    
+    
 }

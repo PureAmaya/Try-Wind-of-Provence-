@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
-  m_DefaultGroup: 8577ab0ff964cc540b615b0121bef92e
+  m_DefaultGroup: 33baf60e8d3b1ba4d90d02b7400de5b6
   m_CachedHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -42,7 +42,8 @@ MonoBehaviour:
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: e586d1db171cb8f41bb1abf092ddc8cf, type: 2}
-  - {fileID: 11400000, guid: 9d994b71805f99641a6564ba39a6056e, type: 2}
+  - {fileID: 11400000, guid: 9d53a1983552a2f44b4100d0dc6035c6, type: 2}
+  - {fileID: 11400000, guid: 2cd9124622d946b4da376ca1d6a6e63f, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -84,8 +85,9 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - Stages
     - Manifest
+    - Dll
+    - Stages
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9ac97d32d00496d43a58797eb8c64fa9, type: 2}

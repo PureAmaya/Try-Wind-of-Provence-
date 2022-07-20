@@ -968,8 +968,10 @@ GameObject:
   - component: {fileID: 603082099}
   - component: {fileID: 603082100}
   - component: {fileID: 603082098}
+  - component: {fileID: 603082101}
+  - component: {fileID: 603082102}
   m_Layer: 0
-  m_Name: PublicUI  should in Opening
+  m_Name: DontDestory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1085,7 +1087,6 @@ Transform:
   m_Children:
   - {fileID: 1201338529}
   - {fileID: 35391581}
-  - {fileID: 869403893}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1101,7 +1102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8448d51f387d444cae078ca5e9abb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSystem: {fileID: 869403892}
 --- !u!82 &603082099
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1294,6 +1294,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &603082101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603082095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dd82350aefd8824f86084ec98d7f0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CashForManifestsList: []
+  CacheManifestImage: []
+--- !u!114 &603082102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603082095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e075ac60cc3fd6c439adde3765dd992b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Settings: {fileID: 11400000, guid: 773cf3f6625973d4d922df3f169d610e, type: 2}
 --- !u!1 &612074059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,12 +1693,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 869403890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5256999, y: -0.8335781, z: -54.766865}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 603082097}
-  m_RootOrder: 2
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &904920761
 GameObject:
@@ -2861,4 +2888,3 @@ MonoBehaviour:
   StageIcon: {fileID: 553616706}
   StageInstruction: {fileID: 407917425}
   EnterGameButton: {fileID: 23396637}
-  StageNameOnlyForIdentitfication: {fileID: 76340073}
