@@ -77,10 +77,15 @@ public class MenuCtrl : MonoBehaviour
     /// 获取清单列表和他的图标文件
     /// </summary>
     /// <returns></returns>
-    IEnumerator Load()
+    private IEnumerator Load()
     {
+        //提示信息更新
+        StageName.text = "获取游戏清单.... ";
+        
         //开始读取addressable，并得到准确的清单数据
         YamlAndFormat.GetManifestList();//这行执行之后，Cache.cache.CashForManifestsList里面就有东西了
+        
+
         
         //获取清单列表
         while (true)
@@ -104,9 +109,9 @@ public class MenuCtrl : MonoBehaviour
         {
             //还原图标加载状态
             mediaLoader.ClearLoadedImage();
+            
             //加载图标资源
-            yield return StartCoroutine(mediaLoader.LoadImage(string.Format("Assets/Stages/{0}/{1}/Assets/{2}", list[i].Author,
-                list[i].Name, list[i].Icon)));
+            yield return StartCoroutine(mediaLoader.LoadImage(list[i].Icon));
 
             while (true)
             {

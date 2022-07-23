@@ -68,7 +68,7 @@ public class MediaLoader
     /// <param name="types"></param>
     /// <param name="fileName">文件名（不含拓展名）</param>
     /// <returns></returns>
-    public IEnumerator LoadSound()
+    public IEnumerator IELoadSound()
     {
         yield return null;
     }
@@ -76,9 +76,9 @@ public class MediaLoader
     /// <summary>
     /// 加载外部png图片
     /// </summary>
-    /// <param name="types"></param>
-    /// <param name="fileName">文件名（不含拓展名）</param>
-    public IEnumerator LoadImage(DefaultDirectory.SubdirectoryTypes types, string fileName)
+    /// <param name="types">子文件夹类型</param>
+    /// <param name="fileName">文件名（不含拓展名，仅支持png）</param>
+    public IEnumerator IELoadImage(DefaultDirectory.SubdirectoryTypes types, string fileName)
     {
         //还原为尚未加载完成的状态
         ImageLoadStatue = 0;
@@ -133,7 +133,7 @@ public class MediaLoader
    
    #region 内部方法
 
-   void LoadImageFromAddressable(AsyncOperationHandle<Texture2D> asyncOperationHandle)
+   private void LoadImageFromAddressable(AsyncOperationHandle<Texture2D> asyncOperationHandle)
    {
        switch (asyncOperationHandle.Status)
        {
