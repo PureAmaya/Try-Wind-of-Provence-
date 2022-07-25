@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 设置读取与应用（不涉及ui，仅修改读取文件，包含玩家可需改设置与不可修改的通用配置）
 /// </summary>
-[CreateAssetMenu(fileName ="Settings",menuName ="Tools/CreateSettingsAsset")]
+//[CreateAssetMenu(fileName ="Settings",menuName ="Tools/CreateSettingsAsset")]
 public class Settings :ScriptableObject
 {
     public static Settings GameSettings;

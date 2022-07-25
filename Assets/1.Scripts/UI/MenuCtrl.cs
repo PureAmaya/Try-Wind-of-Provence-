@@ -25,7 +25,10 @@ public class MenuCtrl : MonoBehaviour
     public TMP_Text StageInstruction;
     public GameObject EnterGameButton;
 
-    private SongsInf OnselectedInf;
+    /// <summary>
+    /// 被选择的关卡的信息
+    /// </summary>
+    private YamlAndFormat.Manifest OnselectedInf;
 
     
     
@@ -62,7 +65,7 @@ public class MenuCtrl : MonoBehaviour
     /// </summary>
     public void OnSelected(SongsInf songsInf)
     {
-        OnselectedInf = songsInf;
+        OnselectedInf = songsInf.UsedManifestInf;
       
         //更新左侧信息
         StageIcon.sprite = songsInf.GetImage();
@@ -174,7 +177,10 @@ public class MenuCtrl : MonoBehaviour
 
     public void EnterGame()
     {
-        SceneLoader.AddressableAsyncLoadScene(string.Format("Stages/{0}/{1}/Assets/{1}.unity",OnselectedInf.UsedManifestInf.Author,OnselectedInf.UsedManifestInf.Name));
+        //进入游戏，加载关卡的主场景
+      LoadStage.loadStage.StartGame(OnselectedInf);
+        
+     
     }
     
     #endregion

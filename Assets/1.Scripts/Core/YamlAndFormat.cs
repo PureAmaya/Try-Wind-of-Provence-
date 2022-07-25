@@ -27,42 +27,74 @@ public class YamlAndFormat
         /// <summary>
         /// 关卡名称。用于文件夹命名以及定位
         /// </summary>
+        #if UNITY_EDITOR
+        [InspectorReadOnly]
+        #endif
         public string Name = "Default Stages";
 
         /// <summary>
         /// 关卡名称。用于对玩家展示
         /// </summary>
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
         public string StageName = "默认关卡";
 
         /// <summary>
         /// 关卡图标。与与addressable里的address中一致（默认无拓展名，有路径进行区分）
         /// </summary>
-        [InspectorReadOnly] public string Icon = String.Empty;
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
+        public string Icon = String.Empty;
 
         /// <summary>
         /// 关卡作者名称。
         /// </summary>
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
         public string Author = "不愿透露姓名的大佬";
 
         /// <summary>
         /// 简单介绍。右侧关卡选择列表中，对本关卡进行简单的介绍
         /// </summary>
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
         public string ShortInstr = "介绍白给了";
 
         /// <summary>
         /// 详细的介绍。在左侧的面板中，对本关卡进行详细的介绍
         /// </summary>
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
         [TextArea] public string Instruction = "404 Not Found";
 
         /// <summary>
         /// 该关卡的版本。（用于对自己做的关卡进行版本控制）
         /// </summary>
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
         public string Version = "1.0.0";
 
         /// <summary>
         /// 所有dll二进制文件的名字（与addressable里的address一致，默认无拓展名）
         /// </summary>
-        public string[] DllBytesFileNames = new string[1];
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
+        public string[] DllBytesFileNames;
+
+        /// <summary>
+        /// 关卡中需要的场景（与addressable里的address一致，默认无拓展名）
+        /// </summary>
+#if UNITY_EDITOR
+        [InspectorReadOnly]
+#endif
+        public string[] sceneNames;
     }
 
     #endregion

@@ -16,7 +16,20 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 2bab6aaff41deab449ef1791abe553bf
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: ec60a25f040022542b55aa31f7c4b81f
+    m_Address: Stages/PureAmaya/pKaguya3rdED_Shoot/pKaguya3rdED_Shoot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9b470f6087d9ea7489b44478012c4617
+    m_Address: Manifest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Manifest
+  - m_GUID: 2cdebcc696bd956419e86c1bd67eb9a5
+    m_Address: Stages/PureAmaya/pKaguya3rdED_Shoot/Icon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 56301beb81ecee74d8d53df6b5f6ea05, type: 2}
   m_SchemaSet:

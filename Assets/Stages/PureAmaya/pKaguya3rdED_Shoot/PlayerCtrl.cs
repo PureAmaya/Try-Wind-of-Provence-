@@ -25,6 +25,6 @@ public class PlayerCtrl : MonoBehaviour
         moveX = Input.GetAxis("Horizontal") * 7f;
         moveY = Input.GetAxis("Vertical") * 7f;
 
-        rb.velocity = new Vector2(moveX, moveY);
+        rb.velocity = new Vector2(-moveX, -moveY);
     }
 }

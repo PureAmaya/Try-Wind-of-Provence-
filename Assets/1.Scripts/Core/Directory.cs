@@ -31,9 +31,9 @@ public static class DefaultDirectory
         /// </summary>
         Log,
         /// <summary>
-        /// 制作的Stages的脚本缓存，存放了dll、cs文件
+        /// 各类缓存
         /// </summary>
-        StagesCache,
+        Cache,
         Assets,
         
     }
@@ -46,6 +46,7 @@ public static class DefaultDirectory
         //缓存一个地址
         string unityButNotAssets = UnityButNotAssets;
 
+        //不要最后一个Assets
         for (int i = 0; i < 6; i++)
         {
             if (!Directory.Exists(string.Format("{0}/{1}", unityButNotAssets,

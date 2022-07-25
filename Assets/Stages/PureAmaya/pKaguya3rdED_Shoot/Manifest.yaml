@@ -3,10 +3,17 @@
 
 Name: pKaguya3rdED_Shoot
 StageName: 【2D】辉夜第三季ED平面射击
-Icon: Icon
+Icon: Stages/PureAmaya/pKaguya3rdED_Shoot/Icon
 Author: PureAmaya
 ShortInstr: 稍有崩坏的、玩梗较多的平面射击游戏
-Instruction: 404 Not Found
+Instruction: >-
+  404 Not Found
+
+  <b>粗体</b>
+
+  <color=red>红色</color>
 Version: 1.0.0
 DllBytesFileNames:
 - Stages.PureAmaya.Kaguya3rdEnding
+sceneNames:
+- pKaguya3rdED_Shoot

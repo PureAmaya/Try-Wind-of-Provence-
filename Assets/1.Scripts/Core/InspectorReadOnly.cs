@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 
 /// <summary>
-/// 使字段在检查视图中只读
+/// 使字段在检查视图中只读. Editor警告
 /// </summary>
 public class InspectorReadOnlyAttribute : PropertyAttribute
 {

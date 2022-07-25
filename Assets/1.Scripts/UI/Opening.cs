@@ -10,7 +10,7 @@ public class Opening : MonoBehaviour
 {
     private void Awake()
     {
-        SceneLoader.LoadSceneSync("Menu",LoadSceneMode.Single);
+      
     }
 
 

@@ -10,7 +10,7 @@ public class SongsInf : MonoBehaviour
     [SerializeField]private Image Icon;
   
 /// <summary>
-/// 这个信息卡片使用的manifest的所有信息都在这里面了
+/// 这个信息卡片使用的manifest的所有信息都在这里面了。这个用来传递信息
 /// </summary>
    public YamlAndFormat.Manifest UsedManifestInf;
    
@@ -20,6 +20,7 @@ public class SongsInf : MonoBehaviour
     /// <param name="manifest"></param>
     public void ApplyInf(YamlAndFormat.Manifest manifest,Sprite icon)
     {
+        //这些来更新UI
         StagesName.text =manifest.StageName;
         Author.text = string.Format("{0} - {1}",manifest.Version,manifest.Author);
         ShortInstr.text = manifest.ShortInstr;

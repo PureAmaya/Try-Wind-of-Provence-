@@ -6,9 +6,10 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 
-#if  UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditorInternal;
+using UnityEngine.SceneManagement;
 #endif
 
 [DisallowMultipleComponent]
@@ -16,55 +17,24 @@ public class StagesManager : MonoBehaviour
 {
     public YamlAndFormat.Manifest selfManifestText;
 
+    //仅仅用于写入manifest.
 #if UNITY_EDITOR
-    
-   
+
+    /// <summary>
+    /// 选择关卡的图标
+    /// </summary>
     public Sprite ManifestIcon;
-    
-    
+
+    /// <summary>
+    /// 关卡用到的场景
+    /// </summary>
+    public SceneAsset[] stageScenesStorage;
+
+    /// <summary>
+    /// 关卡用到的所有脚本的程序集
+    /// </summary>
     public AssemblyDefinitionAsset[] stageScriptsStorage;
 #endif
-
-    /*
-    /// <summary>
-    /// 把这个关卡的所有二进制文件还原为dll
-    /// </summary>
-    /// 
-    [ContextMenu("把二进制文件还原为dll")]
-    public void BytesToDll()
-    {
-        foreach (var VARIABLE in StageScripts)
-        {
-            StartCoroutine(DllBytesLoadFromAddressable(VARIABLE.name));
-        }
-    }
-*/
-    
-    /// <summary>
-    /// 创建manifest文件（同步）
-    /// </summary>
-    public void CreateManifest()
-    {
-        YamlAndFormat.YamlWrite(DefaultDirectory.SubdirectoryTypes.Assets, string
-                .Format("Stages/{0}/{1}", selfManifestText.Author, selfManifestText.Name), "Manifest",
-            selfManifestText);
-    }
-    
-    
-    
-
-    /// <summary>
-    /// 从ab中加载二进制文件
-    /// </summary>
-    /// <param name="assemblyName"></param>
-    /// <returns></returns>
-    IEnumerator DllBytesLoadFromAddressable(string assemblyName)
-    {
-        //异步加载二进制文件
-        yield return DllLoader.LoadFromAddressables(string.Format(
-            "Stages/{0}/{1}/Scripts/Stages.PureAmaya.Kaguya3rdED.DllBytes",
-            selfManifestText.Author, selfManifestText.Name));
-    }
 
 
     #region 私有

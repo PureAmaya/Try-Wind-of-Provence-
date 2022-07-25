@@ -504,14 +504,18 @@ MonoBehaviour:
   selfManifestText:
     Name: pKaguya3rdED_Shoot
     StageName: "\u30102D\u3011\u8F89\u591C\u7B2C\u4E09\u5B63ED\u5E73\u9762\u5C04\u51FB"
-    Icon: Icon
+    Icon: Stages/PureAmaya/pKaguya3rdED_Shoot/Icon
     Author: PureAmaya
     ShortInstr: "\u7A0D\u6709\u5D29\u574F\u7684\u3001\u73A9\u6897\u8F83\u591A\u7684\u5E73\u9762\u5C04\u51FB\u6E38\u620F"
-    Instruction: 404 Not Found
+    Instruction: "404 Not Found\n<b>\u7C97\u4F53</b>\n<color=red>\u7EA2\u8272</color>"
     Version: 1.0.0
     DllBytesFileNames:
-    - 
+    - Stages.PureAmaya.Kaguya3rdEnding
+    sceneNames:
+    - pKaguya3rdED_Shoot
   ManifestIcon: {fileID: 21300000, guid: 2cdebcc696bd956419e86c1bd67eb9a5, type: 3}
+  stageScenesStorage:
+  - {fileID: 102900000, guid: ec60a25f040022542b55aa31f7c4b81f, type: 3}
   stageScriptsStorage:
   - {fileID: 5897886265953266890, guid: 9a0582a78c8b75f4faa3a98637d0b216, type: 3}
 --- !u!4 &1848322764
@@ -541,7 +545,6 @@ GameObject:
   - component: {fileID: 2074884187}
   - component: {fileID: 2074884188}
   - component: {fileID: 2074884189}
-  - component: {fileID: 2074884190}
   m_Layer: 0
   m_Name: Shirogane
   m_TagString: Untagged
@@ -652,18 +655,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2074884190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074884185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec5c5adda0ea0aa4ea9a0db43a8c7bf0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  sr: {fileID: 0}
-  colorForText: {r: 1, g: 0, b: 0, a: 1}

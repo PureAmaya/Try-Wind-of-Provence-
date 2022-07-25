@@ -3,7 +3,6 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
-using UnityEditorInternal;
 using UnityEngine;
 
 [CustomEditor(typeof(StagesManager))]
@@ -22,8 +21,15 @@ public class StageManagerEditor : Editor
     /// </summary>
     private AddressableAssetGroup group;
 
+    /// <summary>
+    /// 记录了最后一次添加到ab包内的东西
+    /// </summary>
+    private AddressableAssetEntry manifestEntry;
    
     private SerializedProperty StageScripts;
+    private SerializedProperty stageScenes;
+
+
     
     #region 状态调整
 
@@ -35,20 +41,26 @@ public class StageManagerEditor : Editor
     /// dll转换为bytes用的折叠
     /// </summary>
     private bool foldOutForDllConvert = false;
-
-
+    /// <summary>
+    /// 场景选择进ab包那边的折叠
+    /// </summary>
+    private bool foldOutForSceneManagement = false;
+/// <summary>
+/// 最下方stageManager显示用的折叠
+/// </summary>
+    private bool foldOutForDebugStagemanger = false;
     #endregion
 
     private void Awake()
     {
         stagesManager = (StagesManager)target;
+        
 
     }
     
 
     public override void OnInspectorGUI()
     {
-        
         //先更新一下序列化的脚本
         serializedObject.Update();
         
@@ -72,18 +84,32 @@ public class StageManagerEditor : Editor
         EditorGUILayout.Space(15f);
 
         //将将程序集转换为二进制文件
-        ConvertAsmdefToBytesFile();
-        EditorGUILayout.Space(15f);
+     //   ConvertAsmdefToBytesFile();
+      //  EditorGUILayout.Space(15f);
 
+        //记录关卡用到的场景
+        RecordStageScenes();
+        EditorGUILayout.Space(15f);
+        
         //创建此关卡的manifest
         CreateThisStageManifest();
         EditorGUILayout.Space(40f);
 
         //跳转到指定目录
         JumpToDirectory();
+        EditorGUILayout.Space(40f);
+
+
+        foldOutForDebugStagemanger = EditorGUILayout.Foldout(foldOutForDebugStagemanger, "Debug");
+        if (foldOutForDebugStagemanger)
+        {
+            EditorGUILayout.HelpBox("最好是只看不改",MessageType.Warning);
+            
+            base.OnInspectorGUI();
+        }
         
-       
-       
+
+
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -95,7 +121,7 @@ public class StageManagerEditor : Editor
     /// </summary>
     private void InitializeAddressable()
     {
-        EditorGUILayout.HelpBox("创建的addressable group的配置与Default Local Group一致。本操作不会影响其他group", MessageType.Info);
+        EditorGUILayout.HelpBox("创建的addressable group的配置与Default Local Group一致。本操作不会影响其他group\n注意更改Build Path", MessageType.Info);
         
         if (GUILayout.Button("初始化Addressable"))
         {
@@ -128,22 +154,30 @@ public class StageManagerEditor : Editor
         foldOutForManifest = EditorGUILayout.Foldout(foldOutForManifest, "清单设置");
 
         if (foldOutForManifest)
-        {
+        {       
+            //初始化样式
+            GUIStyle InstructionStyle;
+            InstructionStyle = GUI.skin.textArea;
+            InstructionStyle.richText = true;
+
             
             //选定封面图片用的交互组件
             EditorGUILayout.LabelField("图标设置");
             stagesManager.ManifestIcon = EditorGUILayout.ObjectField(stagesManager.ManifestIcon, typeof(Sprite), false) as Sprite;
-            EditorGUILayout.Space(3f);
+
+            EditorGUILayout.Space(7f);
             EditorGUILayout.LabelField("其他设置");
  stagesManager.selfManifestText.StageName =
                 EditorGUILayout.TextField("关卡友好名称", stagesManager.selfManifestText.StageName);
             stagesManager.selfManifestText.ShortInstr =
                 EditorGUILayout.TextField("简短介绍", stagesManager.selfManifestText.ShortInstr);
-            EditorGUILayout.LabelField("详细介绍（不支持富文本）");
+            EditorGUILayout.LabelField("详细介绍（支持富文本，支持多行输入）");
             stagesManager.selfManifestText.Instruction =
-                EditorGUILayout.TextArea(stagesManager.selfManifestText.Instruction);
+                EditorGUILayout.TextArea(stagesManager.selfManifestText.Instruction,InstructionStyle);
            
-           
+          
+            
+            
             
             EditorGUILayout.Space(5f);
         }
@@ -152,10 +186,12 @@ public class StageManagerEditor : Editor
         if (GUILayout.Button("创建manifest文件"))
         {
             //按照选定的图片，先修改manifest的icon设置（默认无拓展名）
-            stagesManager.selfManifestText.Icon = stagesManager.ManifestIcon.name;
+            stagesManager.selfManifestText.Icon =String.Format("Stages/{0}/{1}/{2}",stagesManager.selfManifestText.Author,stagesManager.selfManifestText.Name,stagesManager.ManifestIcon.name); 
             
             //创建manifest
-            stagesManager.CreateManifest();
+            YamlAndFormat.YamlWrite(DefaultDirectory.SubdirectoryTypes.Assets, String
+                    .Format("Stages/{0}/{1}", stagesManager.selfManifestText.Author, stagesManager.selfManifestText.Name), "Manifest",
+                stagesManager.selfManifestText);
            
             AssetDatabase.Refresh();
 
@@ -164,12 +200,7 @@ public class StageManagerEditor : Editor
                 String.Format("Assets/Stages/{0}/{1}/Manifest.yaml", stagesManager.selfManifestText.Author,
                     stagesManager.selfManifestText.Name)), group);
 
-            Debug.Log(AssetDatabase.AssetPathToGUID(
-                String.Format("Assets/Stages/{0}/{1}/Manifest.yaml", stagesManager.selfManifestText.Author,
-                    stagesManager.selfManifestText.Name)));
-            Debug.Log(manifestEntry.MainAsset);
-            
-            
+
             //将manifest的address修正为规定的样式和label
           manifestEntry.SetAddress("Manifest");
            manifestEntry.SetLabel("Manifest", true);
@@ -184,6 +215,49 @@ public class StageManagerEditor : Editor
         }
     }
 
+    /// <summary>
+    /// 记录关卡用到的场景
+    /// </summary>
+    private void RecordStageScenes()
+    {
+       
+        foldOutForSceneManagement = EditorGUILayout.Foldout(foldOutForSceneManagement, "场景设置");
+        stageScenes = serializedObject.FindProperty("stageScenesStorage");
+        
+        if (foldOutForSceneManagement)
+        {
+            
+           
+            EditorGUILayout.PropertyField(stageScenes);
+            EditorGUILayout.HelpBox("数组的第一个视为本关卡的入口场景",MessageType.Info);
+        }
+        
+        
+        if (GUILayout.Button("确认场景"))
+        {
+            stagesManager.selfManifestText.sceneNames = new string[stagesManager.stageScenesStorage.Length];
+            for (int i = 0; i < stagesManager.stageScenesStorage.Length; i++)
+            {
+                //把记录的场景写入到manifest中
+                stagesManager.selfManifestText.sceneNames[i] = stagesManager.stageScenesStorage[i].name;
+            
+                //然后就是保存到ab包中
+                //把场景添加到ab包
+                manifestEntry = settings.CreateOrMoveEntry(
+                    AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(stagesManager.stageScenesStorage[i])), group);
+            
+                //修正名字key,Stages/{作者名称}/{关卡名称}/{场景名称}文件夹中
+                manifestEntry.SetAddress(string.Format("Stages/{0}/{1}/{2}",stagesManager.selfManifestText.Author,stagesManager.selfManifestText.Name,stagesManager.stageScenesStorage[i].name));
+
+            }
+        }
+        
+        
+       
+        
+    }
+    
+    
     /// <summary>
     /// 将程序集转化为二进制文件
     /// </summary>
@@ -220,18 +294,19 @@ public class StageManagerEditor : Editor
                 }
 
                 //补上文件名和拓展名
-                savePath = string.Format("{0}/{1}.DllBytes", savePath, VARIABLE.name);
+                savePath = string.Format("{0}/{1}.bytes", savePath, VARIABLE.name);
                 DllToBytes.DLLToBytesExternal(path, savePath);
                 Debug.Log(savePath);
                     
-                //把保存路径修正一下，把多余的头去掉，从Assets开始
-                savePath = string.Format("Stages/{0}/{1}/DllBytes/{2}.DllBytes",
+                //把保存路径修正一下
+                savePath = string.Format("Stages/{0}/{1}/DllBytes/{2}.bytes",
                     stagesManager.selfManifestText.Author, stagesManager.selfManifestText.Name, VARIABLE.name);
                 //将程序集转换成的二进制文件储存在ab包中
-                AddressableAssetEntry manifestEntry =
-                    settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(string.Format("Assets/{0}",savePath)), group);
+                manifestEntry =
+                    settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(string.Format("Assets/{0}", savePath)),
+                        group);
                 //更改为标准的address
-                 manifestEntry.SetAddress(savePath);
+                manifestEntry.SetAddress(savePath);
                 //保存到manifest中
                 stagesManager.selfManifestText.DllBytesFileNames[i] = VARIABLE.name;
 
