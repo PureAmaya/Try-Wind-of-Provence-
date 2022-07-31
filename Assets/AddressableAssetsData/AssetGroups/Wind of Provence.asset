@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Wind of Provence
+  m_EditorClassIdentifier: 
+  m_GroupName: Wind of Provence
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 21f6d6d8744dffe419a4069ef02738e2
+  m_SerializeEntries:
+  - m_GUID: aded93e3fc35cde4985ee446c5e8a089
+    m_Address: Stages/PureAmaya/Wind of Provence/Wind of Provence
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe5f13fecef41564eb0e53270010a8cc
+    m_Address: Manifest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Manifest
+  - m_GUID: 560a26ffd1b315946a0a9cc3a2b9bb49
+    m_Address: Stages/PureAmaya/Wind of Provence/Junna_nice
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 56301beb81ecee74d8d53df6b5f6ea05, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4d67f4610e5e00b478abdcd1c0b35077, type: 2}
+    - {fileID: 11400000, guid: 5cc77f77b07c99e4daf7a03aa0d69084, type: 2}

@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// µ÷ÊÔ¡£µ«²»¸ºÔğUIµÄÏÔÊ¾
+/// è°ƒè¯•ã€‚ä½†ä¸è´Ÿè´£UIçš„æ˜¾ç¤º
 /// </summary>
 public class GameDebug
 {
     /// <summary>
-    ///À´´¢´æËùÓĞµÄ¿ØÖÆÌ¨ĞÅÏ¢
+    ///æ¥å‚¨å­˜æ‰€æœ‰çš„æ§åˆ¶å°ä¿¡æ¯
     /// </summary>
     public static List<string> ConsoleContents = new List<string>();
 
     /// <summary>
-    /// ÈÕÖ¾µÈ¼¶
+    /// æ—¥å¿—ç­‰çº§
     /// </summary>
     public enum Level
     {
@@ -25,20 +25,20 @@ public class GameDebug
     }
 
     /// <summary>
-    /// ÄÜÊä³öµ½¿ØÖÆÌ¨µÄ×îµÍµÈ¼¶
+    /// èƒ½è¾“å‡ºåˆ°æ§åˆ¶å°çš„æœ€ä½ç­‰çº§
     /// </summary>
     public static Level ConsoleLevel = Level.Information;
     /// <summary>
-    /// ±£´æµ½ÈÕÖ¾ÎÄ¼şµÄ×îµÍµÈ¼¶
+    /// ä¿å­˜åˆ°æ—¥å¿—æ–‡ä»¶çš„æœ€ä½ç­‰çº§
     /// </summary>
     public static Level SaveLevel = Level.Error;
 
     /// <summary>
-    /// ³õÊ¼»¯µ÷ÊÔÌ¨
+    /// åˆå§‹åŒ–è°ƒè¯•å°
     /// </summary>
     public static void Initialization()
     {
-        //Çå³ı´¢´æµÄĞÅÏ¢
+        //æ¸…é™¤å‚¨å­˜çš„ä¿¡æ¯
         ConsoleContents = new List<string>();
 
 #if !UNITY_EDITOR
@@ -54,18 +54,18 @@ public class GameDebug
 #endif
 
 
-        //ÈÕÖ¾µÈ¼¶×ã¹»£¬ÄÜ¹»Êä³öµ½¿ØÖÆÌ¨
+        //æ—¥å¿—ç­‰çº§è¶³å¤Ÿï¼Œèƒ½å¤Ÿè¾“å‡ºåˆ°æ§åˆ¶å°
         if((int)level >= (int)ConsoleLevel)
         {
-            //Ìí¼ÓÒ»¸öÊ¶±ğÍ·¡£
-            content = string.Format("<{0}> {1}£º{2}",level.ToString() ,DateTime.Now, content);
-           //¼ÓÈëµ½¿ØÖÆÌ¨ÈÕÖ¾ÖĞ
+            //æ·»åŠ ä¸€ä¸ªè¯†åˆ«å¤´ã€‚
+            content = string.Format("<{0}> {1}ï¼š{2}",level.ToString() ,DateTime.Now, content);
+           //åŠ å…¥åˆ°æ§åˆ¶å°æ—¥å¿—ä¸­
             ConsoleContents.Add(content);
 
-            //µÈ¼¶¹»´¢´æÈÕÖ¾ÎÄ¼ş
+            //ç­‰çº§å¤Ÿå‚¨å­˜æ—¥å¿—æ–‡ä»¶
             if ((int)level >= (int)SaveLevel)
             {
-                //ÏÈ·ÅÔÚÕâ£¬ÒÔºóÔÙĞ´
+                //å…ˆæ”¾åœ¨è¿™ï¼Œä»¥åå†å†™
             }
 
         }

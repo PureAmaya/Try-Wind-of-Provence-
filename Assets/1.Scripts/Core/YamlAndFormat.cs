@@ -95,6 +95,8 @@ public class YamlAndFormat
         [InspectorReadOnly]
 #endif
         public string[] sceneNames;
+        
+
     }
 
     #endregion
@@ -162,6 +164,15 @@ public class YamlAndFormat
             GameDebug.Log(string.Format("{0} 不存在。", path), GameDebug.Level.Error);
             return default;
         }
+    }
+
+    /// <summary>
+    /// yaml读取。从文本文件
+    /// </summary>
+    /// <param name="textAsset"></param>
+    public static T YamlRead<T>(TextAsset textAsset)
+    {
+       return YamlRead<T>(textAsset.text);
     }
 
     /// <summary>

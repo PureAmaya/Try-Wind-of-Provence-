@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4125546365242614022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4125546365242614016}
+  - component: {fileID: 4125546365242614023}
+  m_Layer: 0
+  m_Name: StagesScriptAttach
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4125546365242614016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4125546365242614022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.481708, y: -1.0483454, z: -0.10838867}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4125546365242614023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4125546365242614022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c1b273c011b31e469389282939be037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfManifestText:
+    Name: Default Stages
+    StageName: "\u9ED8\u8BA4\u5173\u5361"
+    Icon: 
+    Author: "\u4E0D\u613F\u900F\u9732\u59D3\u540D\u7684\u5927\u4F6C"
+    ShortInstr: "\u4ECB\u7ECD\u767D\u7ED9\u4E86"
+    Instruction: 404 Not Found
+    Version: 1.0.0
+    DllBytesFileNames: []
+    sceneNames: []
+  ManifestIcon: {fileID: 0}
+  stageScenesStorage: []
+  stageScriptsStorage: []

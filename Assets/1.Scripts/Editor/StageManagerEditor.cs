@@ -28,8 +28,10 @@ public class StageManagerEditor : Editor
    
     private SerializedProperty StageScripts;
     private SerializedProperty stageScenes;
-
-
+/// <summary>
+/// 从Manifest读取的本关卡的信息
+/// </summary>
+    private string ManifestReadContent;
     
     #region 状态调整
 
@@ -45,10 +47,7 @@ public class StageManagerEditor : Editor
     /// 场景选择进ab包那边的折叠
     /// </summary>
     private bool foldOutForSceneManagement = false;
-/// <summary>
-/// 最下方stageManager显示用的折叠
-/// </summary>
-    private bool foldOutForDebugStagemanger = false;
+
     #endregion
 
     private void Awake()
@@ -95,18 +94,34 @@ public class StageManagerEditor : Editor
         CreateThisStageManifest();
         EditorGUILayout.Space(40f);
 
+        //确定最低核心版本
+     //   ConfirmMinCoreVersion();
+     //   EditorGUILayout.Space(40f);
+        
         //跳转到指定目录
-        JumpToDirectory();
-        EditorGUILayout.Space(40f);
-
-
-        foldOutForDebugStagemanger = EditorGUILayout.Foldout(foldOutForDebugStagemanger, "Debug");
-        if (foldOutForDebugStagemanger)
+      //  JumpToDirectory();
+      //  EditorGUILayout.Space(40f);
+        
+        //清除adressable旧资源缓存
+        if (GUILayout.Button("清除缓存"))
         {
-            EditorGUILayout.HelpBox("最好是只看不改",MessageType.Warning);
+            Caching.ClearCache();
             
-            base.OnInspectorGUI();
         }
+        
+        
+        EditorGUILayout.HelpBox("一切以manifest文件为准，下方方框修改无效",MessageType.Warning);
+        //显示manifest东西，用来debug
+      if (GUILayout.Button("显示manifest内容"))
+        {
+            ManifestReadContent = AssetDatabase.LoadAssetAtPath<TextAsset>(String
+                .Format("Assets/Stages/{0}/{1}/Manifest.yaml", stagesManager.selfManifestText.Author,
+                    stagesManager.selfManifestText.Name)).text;
+          
+            
+        }
+      EditorGUILayout.TextArea(ManifestReadContent);
+     
         
 
 
@@ -318,6 +333,22 @@ public class StageManagerEditor : Editor
 
     }
 
+
+    /// <summary>
+    /// 确定最低版本要求，用于版本控制
+    /// </summary>
+    private void ConfirmMinCoreVersion()
+    {
+        EditorGUILayout.HelpBox("推荐仅在游戏开始制作时点击本按钮，\n或是在版本控制失效时使用。\n本按钮会按照设定，重新生成manifest",MessageType.Warning);
+
+        if (GUILayout.Button("确定最低版本要求"))
+        {
+          //  stagesManager.selfManifestText.MinCoreVersion = Version.CoreVersion;
+            
+            CreateThisStageManifest();
+        }
+    }
+    
     /// <summary>
     /// 跳转到指定目录
     /// </summary>

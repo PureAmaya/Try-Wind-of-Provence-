@@ -1,0 +1,17 @@
+﻿# 请不要直接修改本文件
+# 如需修改，请使用游戏自带的编辑器
+
+Name: Wind of Provence
+StageName: 关西赛指定曲 顺菜+纱子 迷你音游
+Icon: Stages/PureAmaya/Wind of Provence/Junna_nice
+Author: PureAmaya
+ShortInstr: 敲击键盘，参与到两位的打击乐之中吧！
+Instruction: >-
+  来自《吹响吧！上低音号》剧场版2。
+     又是一部让我心动的番剧，所以我就想，能不能让大家也参与到这场吹奏盛宴之中。想来想去，觉得这两位最合适了。首先二位都是路人王，其次键盘也可以当作打击乐，不是吗~
+     
+     因为本人音乐白痴，手上的谱不是很全，加之考虑到大伙手头的是键盘不是乐器，所以部分片段与原曲有偏差，还望包涵，谢谢！
+Version: 1.0.0
+DllBytesFileNames: []
+sceneNames:
+- Wind of Provence
