@@ -108,6 +108,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3814447378686797101, guid: 599eebca838929f478b357af5188670d, type: 3}
+      propertyPath: m_Size.x
+      value: 0.44684827
+      objectReference: {fileID: 0}
+    - target: {fileID: 3814447378686797101, guid: 599eebca838929f478b357af5188670d, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.1693219
+      objectReference: {fileID: 0}
     - target: {fileID: 6189313219694304452, guid: 599eebca838929f478b357af5188670d, type: 3}
       propertyPath: spriteName
       value: Quarter note
