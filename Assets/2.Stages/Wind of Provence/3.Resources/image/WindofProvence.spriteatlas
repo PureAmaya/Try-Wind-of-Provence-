@@ -51,7 +51,7 @@ SpriteAtlas:
     - {fileID: 21300000, guid: 1e212724a0934a04c98cf64716bdb5a2, type: 3}
     - {fileID: 21300000, guid: 1a7fac1a4b5c60c4895ce758da5fe4e9, type: 3}
     - {fileID: 21300000, guid: 0bfd527827fad694e80b68ad3627e1c4, type: 3}
-    - {fileID: 21300000, guid: 568a7858c1695fb44aed5197d85b3e18, type: 3}
+    - {fileID: 2800000, guid: 58dec2b866c92af42b7bcb33ffb756ba, type: 3}
     - {fileID: 21300000, guid: aaba87d723b18e44f8978ba487de9615, type: 3}
     - {fileID: 21300000, guid: 47b9d812e23c05b47836c591f987853e, type: 3}
     bindAsDefault: 1
@@ -64,8 +64,8 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 28a5756309ceb284d8e06127e81cb9a8, type: 3}
   - {fileID: 21300000, guid: 1e212724a0934a04c98cf64716bdb5a2, type: 3}
   - {fileID: 21300000, guid: aaba87d723b18e44f8978ba487de9615, type: 3}
-  - {fileID: 21300000, guid: 568a7858c1695fb44aed5197d85b3e18, type: 3}
   - {fileID: 21300000, guid: 0bfd527827fad694e80b68ad3627e1c4, type: 3}
+  - {fileID: 7482667652216324306, guid: 58dec2b866c92af42b7bcb33ffb756ba, type: 3}
   - {fileID: 21300000, guid: 1a7fac1a4b5c60c4895ce758da5fe4e9, type: 3}
   - {fileID: 21300000, guid: 43d7d99e490d6d742afb0eea19df578f, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -74,8 +74,8 @@ SpriteAtlas:
   - Eighth note 1
   - Staff
   - Junna
-  - 44
   - Masako
+  - Square
   - Eighth note 2
   - clef
   m_RenderDataMap: {}

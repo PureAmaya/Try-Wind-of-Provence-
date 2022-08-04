@@ -14,7 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/3.Entry/3.Scenes/LoadStage.unity
     guid: fba61741dc464ff4abe4a34fb50ffe39
-  - enabled: 1
+  - enabled: 0
     path: Assets/2.Stages/Wind of Provence/2.Stages/Wind of Provence.unity
     guid: aded93e3fc35cde4985ee446c5e8a089
   m_configObjects:

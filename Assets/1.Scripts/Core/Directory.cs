@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using System.IO;
-using System.Runtime.Serialization;
 
 /// <summary>
 /// 默认设定的文件夹类型
