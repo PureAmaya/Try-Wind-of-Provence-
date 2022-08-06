@@ -16,6 +16,8 @@
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/PublicUI.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/1.Scripts/UI/SongsInf.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/3.Entry/UI/PublicUI.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/PureAmaya/1.Scripts/Core/MediaLoader.cs" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Assets/PureAmaya/1.Scripts/Core/YamlAndFormat.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/PureAmaya/General/ExMath.cs" charset="GBK" />
     <file url="file://$PROJECT_DIR$/Assets/PureAmaya/General/UpdateManager.cs" charset="GBK" />
   </component>

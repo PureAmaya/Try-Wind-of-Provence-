@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: PureAmaya
-  productName: Simple Game Kurabu
+  productName: "\u4E5D\u4E00\u5E74\u300C\u666E\u7F57\u65FA\u65AF\u4E4B\u98CE\u300D"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -140,8 +140,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   m_SupportedAspectRatios:
-    4:3: 1
-    5:4: 1
+    4:3: 0
+    5:4: 0
     16:10: 1
     16:9: 1
     Others: 1
@@ -284,7 +284,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: fb281785aa767c042ac03ba5af14ce3a, type: 3}
+      m_Icon: {fileID: 2800000, guid: 560a26ffd1b315946a0a9cc3a2b9bb49, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
