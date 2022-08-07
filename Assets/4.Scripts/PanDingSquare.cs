@@ -118,11 +118,11 @@ private int noteCount = 0;
        }
 
    /// <summary>
-   /// 按照每秒60次执行
+   /// 按照每秒30次执行
    /// </summary>
    public void FixedUpdate()
    {
-       rd.MovePosition(velocity[whichNote] + rd.position);
+       rd.MovePosition( 2 * velocity[whichNote] + rd.position);
        
        //到头之后，回到起始位置
        //whichNote != 0：防止到达终止位置之后，多次调用本方法
