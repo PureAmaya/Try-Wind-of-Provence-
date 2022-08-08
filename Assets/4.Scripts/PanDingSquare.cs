@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Video;
 
 public class PanDingSquare : MonoBehaviour
 {
@@ -56,13 +57,28 @@ private int noteCount = 0;
     /// 缓存触碰的音符碰撞箱（trigger）的变换组件
     /// </summary>
     private Transform noteTriggerTransform;
-    
+     
     private Rigidbody2D rd;
+
+#if UNITY_EDITOR
+    private float videoSpeed = 1;
+#endif
 
     private void Awake()
     {
         rd = GetComponent<Rigidbody2D>();
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 仅用于
+    /// </summary>
+    /// <param name="videoPlayer"></param>
+    public void OnlyForEditor(VideoPlayer videoPlayer)
+    {
+        videoSpeed = videoPlayer.playbackSpeed;
+    }
+#endif
 
 
 
@@ -122,8 +138,11 @@ private int noteCount = 0;
    /// </summary>
    public void FixedUpdate()
    {
+#if UNITY_EDITOR
+       rd.MovePosition(videoSpeed * 2 * velocity[whichNote] + rd.position);
+#else
        rd.MovePosition( 2 * velocity[whichNote] + rd.position);
-       
+#endif
        //到头之后，回到起始位置
        //whichNote != 0：防止到达终止位置之后，多次调用本方法
        if (rd.position.x >= endPosition.x && whichNote != 0)

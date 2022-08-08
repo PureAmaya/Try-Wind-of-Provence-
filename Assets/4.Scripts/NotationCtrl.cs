@@ -67,9 +67,10 @@ public class NotationCtrl : MonoBehaviour
     public Notes eighthNoteWithPoint;
     public Notes eighthNote;
 
-
-
-
+    public CanvasGroup percussionCanvas;
+    [Header("节拍器")] public Metronome metronome;
+    public CanvasGroup metronomeCanvas;
+    
 #if UNITY_EDITOR
     /// <summary>
     /// 要用哪一个时间点了 Junna Masaka
@@ -153,8 +154,17 @@ public class NotationCtrl : MonoBehaviour
     void Update()
     {
         
-//提前显示下一个（如果在时间区间较短）
+
         if (!videoPlayer.isPlaying) return;
+
+  
+
+        if (videoPlayer.frame >= 5025)
+        {
+            metronome.StartPlay();
+            return;
+        }
+        //提前显示下一个（如果在时间区间较短）
         ShowAheadForJunna();
         ShowAheadForMasako();
 
@@ -165,9 +175,48 @@ public class NotationCtrl : MonoBehaviour
         frameCount.text = string.Format("{0}\n{1}", videoPlayer.frame.ToString(), ((int)videoPlayer.time).ToString());
         //节奏判断，并更新下一个要判定的音符
         Rhythm();
+        //根据视频速度提高或者降低判定块的移动速度
+        panDingSquares[0].OnlyForEditor(videoPlayer);
+        panDingSquares[1].OnlyForEditor(videoPlayer);
 #endif
     }
 
+    /// <summary>
+    /// 游戏初始化
+    /// </summary>
+    private void Initialization()
+    {
+        //把友好的时间转化为电脑可读的（视频帧数 视频是60fps的录屏emmmmmmm）
+        //并且进行每一组的区分
+        ConvertFriendlyToReadable();
+
+
+        //初始化Junna大镲的音符
+        //Junna 除了第一个是四分音符（有线），第四小节八分音符（有点） ，最后一个八分音符（有点）以外，其余的都是八分音符（有线）
+        //所以，notesPoolForJunna中，第一个是四分音符（有线），第二个是八分音符（有点），剩下八个都是八分音符（有线） 
+        //Masaka就直接八个八分音符了。（junna十个）
+        notesPoolForJunna.Add(Instantiate(quarterNoteWithLine.gameObject).GetComponent<Notes>());
+        notesPoolForJunna[^1].Initialization(0);
+        notesPoolForJunna.Add(Instantiate(eighthNoteWithPoint.gameObject).GetComponent<Notes>());
+        notesPoolForJunna[^1].Initialization(0);
+        for (int i = 0; i < 8; i++)
+        {
+            notesPoolForJunna.Add(Instantiate(eighthNoteWithLine.gameObject).GetComponent<Notes>());
+            notesPoolForMasako.Add(Instantiate(eighthNote.gameObject).GetComponent<Notes>());
+
+            //初始化音符
+            notesPoolForJunna[^1].Initialization(0);
+            notesPoolForMasako[^1].Initialization(1);
+        }
+        
+        //判定方块回车设定
+        panDingSquares[0].SetEnterAndEnd(GetUIToWorldPos(panDingsInitialLocation[0]),
+            GetUIToWorldPos(JunnaNoteLocation[^1]) + Vector2.right * 0.4f);
+        panDingSquares[1].SetEnterAndEnd(GetUIToWorldPos(panDingsInitialLocation[1]),
+            GetUIToWorldPos(MasakoNoteLocation[^1]) + Vector2.right * 0.4f);
+
+        
+    }
     /// <summary>
     /// 将有好的时间线转化为电脑可以用的（视频帧数）
     /// </summary>
@@ -221,6 +270,9 @@ public class NotationCtrl : MonoBehaviour
         Masako.Time = null;
     }
 
+    
+    
+    
     /// <summary>
     /// 提前显示下一个（如果在时间区间较短）
     /// </summary>
@@ -375,7 +427,7 @@ public class NotationCtrl : MonoBehaviour
 
     
     /// <summary>
-    /// 判定节奏（要求游戏帧数大于等于60）
+    /// 判定节奏（要求游戏帧数大于等于60）（仅Editor）
     /// </summary>
     private void Rhythm()
     {
@@ -463,53 +515,9 @@ public class NotationCtrl : MonoBehaviour
         panDingSquares[character].SetVelocity(targetFrame,myFrame,targetLocation,myLocation);
     }
 
-    /// <summary>
-    /// 游戏初始化
-    /// </summary>
-    private void Initialization()
-    {
-        //把友好的时间转化为电脑可读的（视频帧数 视频是60fps的录屏emmmmmmm）
-        //并且进行每一组的区分
-        ConvertFriendlyToReadable();
 
 
-        //初始化Junna大镲的音符
-        //Junna 除了第一个是四分音符（有线），第四小节八分音符（有点） ，最后一个八分音符（有点）以外，其余的都是八分音符（有线）
-        //所以，notesPoolForJunna中，第一个是四分音符（有线），第二个是八分音符（有点），剩下八个都是八分音符（有线） 
-        //Masaka就直接八个八分音符了。（junna十个）
-        notesPoolForJunna.Add(Instantiate(quarterNoteWithLine.gameObject).GetComponent<Notes>());
-        notesPoolForJunna[^1].Initialization(0);
-        notesPoolForJunna.Add(Instantiate(eighthNoteWithPoint.gameObject).GetComponent<Notes>());
-        notesPoolForJunna[^1].Initialization(0);
-        for (int i = 0; i < 8; i++)
-        {
-            notesPoolForJunna.Add(Instantiate(eighthNoteWithLine.gameObject).GetComponent<Notes>());
-            notesPoolForMasako.Add(Instantiate(eighthNote.gameObject).GetComponent<Notes>());
 
-            //初始化音符
-            notesPoolForJunna[^1].Initialization(0);
-            notesPoolForMasako[^1].Initialization(1);
-        }
-        
-        //判定方块回车设定
-        panDingSquares[0].SetEnterAndEnd(GetUIToWorldPos(panDingsInitialLocation[0]),
-            GetUIToWorldPos(JunnaNoteLocation[^1]) + Vector2.right * 0.4f);
-        panDingSquares[1].SetEnterAndEnd(GetUIToWorldPos(panDingsInitialLocation[1]),
-            GetUIToWorldPos(MasakoNoteLocation[^1]) + Vector2.right * 0.4f);
-
-        
-    }
-
-    /// <summary>
-    /// UI坐标转世界坐标（2d)
-    /// </summary>
-    /// <param name="uiObject"></param>
-    /// <returns></returns>
-    private Vector2 GetUIToWorldPos(RectTransform uiObject)
-    {
-        Vector2 ptScreen = cameraUI.WorldToScreenPoint(uiObject.position);
-        return cameraUI.ScreenToWorldPoint(ptScreen);
-    }
 
     /// <summary>
     /// Masako的音符怎么显示
@@ -550,4 +558,20 @@ public class NotationCtrl : MonoBehaviour
               
         }
     }
+
+    private void Metronome()
+    {
+        
+    }
+        /// <summary>
+        /// UI坐标转世界坐标（2d)
+        /// </summary>
+        /// <param name="uiObject"></param>
+        /// <returns></returns>
+        private Vector2 GetUIToWorldPos(RectTransform uiObject)
+        {
+            Vector2 ptScreen = cameraUI.WorldToScreenPoint(uiObject.position);
+            return cameraUI.ScreenToWorldPoint(ptScreen);
+        }
+    
 }
