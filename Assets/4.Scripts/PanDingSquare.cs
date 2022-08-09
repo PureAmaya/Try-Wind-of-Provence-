@@ -32,7 +32,7 @@ public class PanDingSquare : MonoBehaviour
     /// <summary>
     /// 判定块最初的位置
     /// </summary>
-   [HideInInspector] public Vector2 initialPosition;
+   private Vector2 initialPosition;
 /// <summary>
 /// 判定块终止移动的位置
 /// </summary>
@@ -205,7 +205,7 @@ private int noteCount = 0;
     /// <summary>
     /// 回车
     /// </summary>
-    private void Enter()
+    public void Enter()
     {
         rd.position = initialPosition; 
         whichNote = 0;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Video;
 using YamlDotNet.Serialization;
 
@@ -30,7 +31,7 @@ public class NotationCtrl : MonoBehaviour
         public string[] Time;
     }
 
-    public VideoPlayer videoPlayer;
+    
     public Camera cameraUI;
 
     public RectTransform[] panDingsInitialLocation;
@@ -68,8 +69,8 @@ public class NotationCtrl : MonoBehaviour
     public Notes eighthNote;
 
     public CanvasGroup percussionCanvas;
-    [Header("节拍器")] public Metronome metronome;
-    public CanvasGroup metronomeCanvas;
+  
+    
     
 #if UNITY_EDITOR
     /// <summary>
@@ -118,7 +119,8 @@ public class NotationCtrl : MonoBehaviour
     private List<int> JunnaReadable;
     private List<int> MasakoReadable;
 
-#if UNITY_EDITOR
+    
+#if UNITY_EDITOR //后面得把yaml文件放到游戏外面，从游戏外面读取，就是说这段代码不能仅editor了
     public TextAsset yamlJunna;
     public TextAsset yamlMasako;
 
@@ -132,12 +134,30 @@ public class NotationCtrl : MonoBehaviour
     }
 #endif
 
+    /// <summary>
+    /// 第几个章节（一共三个）
+    /// </summary>
+    private int episode = 1;
+
+
+    /// <summary>
+    /// 第二乐章结束
+    /// </summary>
+    public UnityEvent EpisodeTwoEnd = new UnityEvent();
+    /// <summary>
+    /// 开始第二章节时的事件
+    /// </summary>
+    public UnityEvent StartEpisode2 = new();
+    /// <summary>
+    /// 开始第三章节时的事件
+    /// </summary>
+    public UnityEvent StartEpisode3 = new();
     private void Awake()
     {
         Application.targetFrameRate = 60;
         
         //先停止播放
-        videoPlayer.Stop();
+        StaticVideoPlayer.videoPlayer.Stop();
        
        
        
@@ -148,36 +168,53 @@ public class NotationCtrl : MonoBehaviour
         //游戏初始化（涉及到UI根据显示的分辨率变化位置，只能放到sstart中）
         Initialization();
         //准备就绪，开始播放
-        videoPlayer.Play();
+        StaticVideoPlayer.videoPlayer.Play();
         }
 
     void Update()
     {
-        
-
-        if (!videoPlayer.isPlaying) return;
-
-  
-
-        if (videoPlayer.frame >= 5025)
+        if (!StaticVideoPlayer.videoPlayer.isPlaying) return;
+      
+//到达第一章节与第二章节的交界处
+        if (StaticVideoPlayer.videoPlayer.frame >= 4880 && episode == 1)
         {
-            metronome.StartPlay();
-            return;
+            episode++;
+            foreach (var VARIABLE in panDingSquares)
+            {
+                VARIABLE.Enter();
+                StartEpisode2.Invoke(); //5025帧才是正式开始
+               return;
+            }
+            
         }
+
+        //到达第三章节与第二章节的交界处
+        if (StaticVideoPlayer.videoPlayer.frame >= 9315 && episode == 2)
+        {
+            episode++;
+            StartEpisode3.Invoke();
+            return;
+          
+        }
+
+        //第一第三乐章用的
         //提前显示下一个（如果在时间区间较短）
-        ShowAheadForJunna();
-        ShowAheadForMasako();
+        if(episode is 1 or 3)
+        {
+            ShowAheadForJunna();
+            ShowAheadForMasako();
+        }
 
        
 
 #if UNITY_EDITOR
         //debug用，记录时间与帧数
-        frameCount.text = string.Format("{0}\n{1}", videoPlayer.frame.ToString(), ((int)videoPlayer.time).ToString());
+        frameCount.text = string.Format("{0}\n{1}", StaticVideoPlayer.videoPlayer.frame.ToString(), ((int)StaticVideoPlayer.videoPlayer.time).ToString());
         //节奏判断，并更新下一个要判定的音符
         Rhythm();
         //根据视频速度提高或者降低判定块的移动速度
-        panDingSquares[0].OnlyForEditor(videoPlayer);
-        panDingSquares[1].OnlyForEditor(videoPlayer);
+        panDingSquares[0].OnlyForEditor(StaticVideoPlayer.videoPlayer);
+        panDingSquares[1].OnlyForEditor(StaticVideoPlayer.videoPlayer);
 #endif
     }
 
@@ -297,7 +334,7 @@ public class NotationCtrl : MonoBehaviour
                 notesPoolForJunna[1].GetTransform().position = GetUIToWorldPos(JunnaNoteLocation[3]);
 
                 //让判定滑块移动
-                MoveSquare(4, (int)videoPlayer.frame,0,0, JunnaReadable, JunnaNoteLocation, JunnaInterval,
+                MoveSquare(4, (int)StaticVideoPlayer.videoPlayer.frame,0,0, JunnaReadable, JunnaNoteLocation, JunnaInterval,
                     whichIntervalToUseForJunna, 0);
 
                 whichIntervalToUseForJunna++;
@@ -312,7 +349,7 @@ public class NotationCtrl : MonoBehaviour
         
         //最后一组单独的
         // notesPoolForJunna[2].position.y < -50f 防止多次调用(不过该return的还是得return，后面的不算了，音符消除也单独弄一个）
-        if (videoPlayer.frame >= JunnaReadable[JunnaInterval[^2] + 1] - 60)
+        if (StaticVideoPlayer.videoPlayer.frame >= JunnaReadable[JunnaInterval[^2] + 1] - 60)
         {
             if (notesPoolForJunna[2].GetTransform().position.y < -50f)
             {
@@ -331,7 +368,7 @@ public class NotationCtrl : MonoBehaviour
                 notesPoolForJunna[1].GetTransform().position = GetUIToWorldPos(JunnaNoteLocation[number]);
             
                 //让判定滑块移动 +1：从零开始
-                MoveSquare(number + 1,(int)videoPlayer.frame,0,0,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
+                MoveSquare(number + 1,(int)StaticVideoPlayer.videoPlayer.frame,0,0,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
             }
           
             return;
@@ -343,7 +380,7 @@ public class NotationCtrl : MonoBehaviour
          * -60：比本组第一个提前60帧（视频帧率）出来
          */
         // notesPoolForJunna[2].position.y < -50f 防止多次调用
-        if (videoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1] + 1] - 60 &&   notesPoolForJunna[2].GetTransform().position.y < -50f)
+        if (StaticVideoPlayer.videoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1] + 1] - 60 &&   notesPoolForJunna[2].GetTransform().position.y < -50f)
         {
             //这里的话就全都是八分音符（有线） 
             //算出来要几个八分音符
@@ -355,7 +392,7 @@ public class NotationCtrl : MonoBehaviour
             }
 
             //让判定滑块移动
-            MoveSquare(number,(int)videoPlayer.frame,0,0,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
+            MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,0,0,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
 
             //准备进行下一个了
             //最后一个，不再增加数值，防止数组溢出
@@ -366,7 +403,7 @@ public class NotationCtrl : MonoBehaviour
 
         //用于重置本组的音符，以备下一组（whichIntervalToUseForJunna这一组的时候加了一，要减去）
         //本组超时1s后重置
-        if (videoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1]] + 60)
+        if (StaticVideoPlayer.videoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1]] + 60)
         {
             foreach (var VARIABLE in notesPoolForJunna)
             {
@@ -377,8 +414,7 @@ public class NotationCtrl : MonoBehaviour
         }
     }
 
- 
-  [Obsolete("适用于亚组，但是现在亚组取消，所以可能不稳定",false)]
+    
     private void ShowAheadForMasako()
     {
         //Masako 除了第一个是四分音符（有线），第四小节八分音符（有点） ，最后一个八分音符（有点）以外，其余的都是八分音符（有线）
@@ -399,7 +435,7 @@ public class NotationCtrl : MonoBehaviour
          * MasakoInterval[whichIntervalToUseForMasako - 1] + 1 ： 定位到本组的第一个，即上一组的结尾然后往后推算了一个
          * -60：比本组第一个提前60帧（视频帧率）出来
          */
-        if (videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1] + 1] - 60)
+        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1] + 1] - 60)
         {
             //这里进行的是多次重复调用，为的就是把所有的亚组给显示出来
             //现在不用多次重复调用了。没有亚组了
@@ -413,7 +449,7 @@ public class NotationCtrl : MonoBehaviour
         //用于重置本组的音符，以备下一组（whichIntervalToUseForMasako这一组的时候加了一，要减去）
         //本组超时1s后重置
         //notesPoolForMasako[0].GetTransform().position.y > -50防止多次反复调用
-        if (videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1]] + 60 && notesPoolForMasako[0].GetTransform().position.y > -50f)
+        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1]] + 60 && notesPoolForMasako[0].GetTransform().position.y > -50f)
         {
             foreach (var VARIABLE in notesPoolForMasako)
             {
@@ -432,7 +468,7 @@ public class NotationCtrl : MonoBehaviour
     private void Rhythm()
     {
         //帧数匹配，节奏对上，那个判定的圆形移动到判定线，且中心与判定线重合
-        if ((int)videoPlayer.frame == MasakoReadable[timePointToUse[1]])
+        if ((int)StaticVideoPlayer.videoPlayer.frame == MasakoReadable[timePointToUse[1]])
         {
 
            go.Rotate(Vector3.forward, 30f); //到时候的判定 debug务必要保证游戏帧数大于60
@@ -444,7 +480,7 @@ public class NotationCtrl : MonoBehaviour
 
 
         //帧数匹配，节奏对上，那个判定的圆形移动到判定线，且中心与判定线重合
-        if ((int)videoPlayer.frame == JunnaReadable[timePointToUse[0]])
+        if ((int)StaticVideoPlayer.videoPlayer.frame == JunnaReadable[timePointToUse[0]])
         {
 
             //  go.Rotate(Vector3.forward, 30f); //到时候的判定 debug务必要保证游戏帧数大于60
@@ -535,7 +571,7 @@ public class NotationCtrl : MonoBehaviour
             case <= 8:
                 
                 //要移动方块了
-                MoveSquare(number,(int)videoPlayer.frame,0,0,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
+                MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,0,0,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
                 
                 for (int i = 0; i < number; i++)
                 {

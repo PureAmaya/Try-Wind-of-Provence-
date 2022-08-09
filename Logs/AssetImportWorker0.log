@@ -1,0 +1,344 @@
+Using pre-set license
+Built from '2021.3/china_unity/release' branch; Version is '2021.3.6f1c1 (07401303b748) revision 475155'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.22000) 64bit Core' Language: 'zh' Physical Memory: 7985 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+D:\Unity\EDITOR\2021.3.6f1c1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/Unity/PROJECT/RhythmicStg Lite
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+12808
+Successfully changed project path to: D:/Unity/PROJECT/RhythmicStg Lite
+D:/Unity/PROJECT/RhythmicStg Lite
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+AS: AutoStreaming module initializing.
+Refreshing native plugins compatible for Editor in 426.73 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.6f1c1 (07401303b748)
+[Subsystems] Discovering subsystems at path D:/Unity/EDITOR/2021.3.6f1c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Unity/PROJECT/RhythmicStg Lite/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1650 (ID=0x1f99)
+    Vendor:   NVIDIA
+    VRAM:     3962 MB
+    Driver:   30.0.15.1272
+Initialize mono
+Mono path[0] = 'D:/Unity/EDITOR/2021.3.6f1c1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity/EDITOR/2021.3.6f1c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/Unity/EDITOR/2021.3.6f1c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56920
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity/EDITOR/2021.3.6f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007025 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 68.30 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.833 seconds
+Domain Reload Profiling:
+	ReloadAssembly (834ms)
+		BeginReloadAssembly (167ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (512ms)
+			LoadAssemblies (159ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (139ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (31ms)
+			SetupLoadedEditorAssemblies (268ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (8ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (68ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (139ms)
+				ProcessInitializeOnLoadMethodAttributes (50ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.018771 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 63.41 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.385 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1386ms)
+		BeginReloadAssembly (153ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (20ms)
+		EndReloadAssembly (1076ms)
+			LoadAssemblies (200ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (213ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (59ms)
+			SetupLoadedEditorAssemblies (561ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (4ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (64ms)
+				BeforeProcessingInitializeOnLoad (109ms)
+				ProcessInitializeOnLoadAttributes (239ms)
+				ProcessInitializeOnLoadMethodAttributes (124ms)
+				AfterProcessingInitializeOnLoad (21ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.08 seconds
+Refreshing native plugins compatible for Editor in 0.67 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3610 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 47 unused Assets / (1.2 MB). Loaded Objects now: 4065.
+Memory consumption went from 167.1 MB to 165.9 MB.
+Total: 4.065600 ms (FindLiveObjects: 0.379600 ms CreateObjectMapping: 0.390200 ms MarkObjects: 2.750700 ms  DeleteObjects: 0.544100 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 43792.818209 seconds.
+  path: Assets/3.Resources/image/percussion.spriteatlas
+  artifactKey: Guid(98c639b57ace11e4ca16cfbdba1d5d89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/percussion.spriteatlas using Guid(98c639b57ace11e4ca16cfbdba1d5d89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00a7b6295ab7aa88b155de0da251ef31') in 0.445970 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.437328 seconds.
+  path: Assets/3.Resources/image/taki conductor
+  artifactKey: Guid(20f6dff8828d5a3438db97c667a90794) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor using Guid(20f6dff8828d5a3438db97c667a90794) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69947a24a5ffe16f3655e588ee9c7484') in 0.005405 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.112496 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 1.psd
+  artifactKey: Guid(6ce7b92a352c29f4086ba004c0d0c885) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 1.psd using Guid(6ce7b92a352c29f4086ba004c0d0c885) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69fd297607ad274b5270a927f9fd6b0e') in 0.330030 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 9.psd
+  artifactKey: Guid(3dce59afce48e7c428f48826840d95f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 9.psd using Guid(3dce59afce48e7c428f48826840d95f3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '794ea748f139c280fd584e2fc5e1d25b') in 0.065358 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 7.psd
+  artifactKey: Guid(6d588d082786bea49862f32b6e1f29a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 7.psd using Guid(6d588d082786bea49862f32b6e1f29a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59fad7da07ea1766844ca1dd985aedeb') in 0.030661 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 17.psd
+  artifactKey: Guid(b6310a1fddfa7d54a8c297e77b531d77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 17.psd using Guid(b6310a1fddfa7d54a8c297e77b531d77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c09d56e51335574cf907ed30df5134c4') in 0.027158 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 21.psd
+  artifactKey: Guid(7fc5492a2d49d4d41ae9b153caeeee77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 21.psd using Guid(7fc5492a2d49d4d41ae9b153caeeee77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae8e80fd44b4d79c6af7a8aecee2c85d') in 0.026040 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 26.psd
+  artifactKey: Guid(1c3366f6ba049a840a360db95f3e9e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 26.psd using Guid(1c3366f6ba049a840a360db95f3e9e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8678257e7a4817c2f10e09532fce8517') in 0.027736 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 27.psd
+  artifactKey: Guid(0b08e082f0263b64487c0454baa3036f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 27.psd using Guid(0b08e082f0263b64487c0454baa3036f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bce239a329aef5342081c357a60a56c3') in 0.034563 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 18.psd
+  artifactKey: Guid(62be58ac3b1925542a846d3c8af605cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 18.psd using Guid(62be58ac3b1925542a846d3c8af605cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af9dabcc3c304779964b356ef2cc7741') in 0.027508 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 4.psd
+  artifactKey: Guid(223b50302f1a89b4b8e224aafd3a8450) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 4.psd using Guid(223b50302f1a89b4b8e224aafd3a8450) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9549f8571d0096d55a53e69c88c5f12e') in 0.025962 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 15.psd
+  artifactKey: Guid(59eeaeddbc1d8074f9e2e962856c99c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 15.psd using Guid(59eeaeddbc1d8074f9e2e962856c99c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f529cd7bbd40aa284564492548a255a') in 0.029193 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000060 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 23.psd
+  artifactKey: Guid(f3bcb653736b45c40a0c33a28ee31e98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 23.psd using Guid(f3bcb653736b45c40a0c33a28ee31e98) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '671614c87223f29fd4f6d6746b81e126') in 0.032620 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 5.psd
+  artifactKey: Guid(edcacbf4265e2874eb8c3208338d6671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 5.psd using Guid(edcacbf4265e2874eb8c3208338d6671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5437787c10f581130fdbe657c7acd63') in 0.027354 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 19.psd
+  artifactKey: Guid(b3c12f009ba0cfd4c8c0409d03bec650) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 19.psd using Guid(b3c12f009ba0cfd4c8c0409d03bec650) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b24678e76aeeac0667dbba45d5cd9296') in 0.025507 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 10.psd
+  artifactKey: Guid(b22a348f58b81494a954b374df17d6d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 10.psd using Guid(b22a348f58b81494a954b374df17d6d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23c8a1940cdca80ee6c8ad69fc82085e') in 0.034181 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 22.psd
+  artifactKey: Guid(76cce680d05f1ab4ebd2e0658ea1e19c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 22.psd using Guid(76cce680d05f1ab4ebd2e0658ea1e19c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5356b9b678eb66648dfdab80a79d86bd') in 0.038014 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000050 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 25.psd
+  artifactKey: Guid(2203a362eaedd2c46b10e423dd237a7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 25.psd using Guid(2203a362eaedd2c46b10e423dd237a7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8325e1f425ee92d02dc0795491323f11') in 0.036520 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 14.psd
+  artifactKey: Guid(847bf0c51da5d4e40b4d429df4195030) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 14.psd using Guid(847bf0c51da5d4e40b4d429df4195030) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f729eb8c464d73e820c9a19ee447eb7a') in 0.027666 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 12.psd
+  artifactKey: Guid(1b733357eacb3d24d990f4d2832ae78e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 12.psd using Guid(1b733357eacb3d24d990f4d2832ae78e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd79aad77e43e476ea5d953637243c069') in 0.028116 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 11.psd
+  artifactKey: Guid(a7ca4de51d4aa5447bd5cb5aa772c06b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 11.psd using Guid(a7ca4de51d4aa5447bd5cb5aa772c06b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41cb69b782312aea5c0a86822e5f9833') in 0.028747 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 23.668817 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 1.psd
+  artifactKey: Guid(6ce7b92a352c29f4086ba004c0d0c885) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 1.psd using Guid(6ce7b92a352c29f4086ba004c0d0c885) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4281d1d0a166785cb81c4f981ce23e6') in 0.026011 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 7.psd
+  artifactKey: Guid(6d588d082786bea49862f32b6e1f29a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 7.psd using Guid(6d588d082786bea49862f32b6e1f29a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0963e15f5369df2cf7ed71f302096ec1') in 0.019219 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000055 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 26.psd
+  artifactKey: Guid(1c3366f6ba049a840a360db95f3e9e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 26.psd using Guid(1c3366f6ba049a840a360db95f3e9e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33a05350eefb397d858e39dcaf016a67') in 0.018637 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 27.psd
+  artifactKey: Guid(0b08e082f0263b64487c0454baa3036f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 27.psd using Guid(0b08e082f0263b64487c0454baa3036f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9639225c73f2cf649c28c645978b8543') in 0.024943 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 15.psd
+  artifactKey: Guid(59eeaeddbc1d8074f9e2e962856c99c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 15.psd using Guid(59eeaeddbc1d8074f9e2e962856c99c2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b8ebf81001bfa4b1f7fe0d18afdcfa2') in 0.020755 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 19.psd
+  artifactKey: Guid(b3c12f009ba0cfd4c8c0409d03bec650) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 19.psd using Guid(b3c12f009ba0cfd4c8c0409d03bec650) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fe3304551292e6d7ef69966b7d7f2e1') in 0.021185 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000042 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 24.psd
+  artifactKey: Guid(0d6bfe6bc9630754187f9351a84657ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 24.psd using Guid(0d6bfe6bc9630754187f9351a84657ba) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23dfb764bc60edcfa6858b7e6cb655eb') in 0.018921 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 25.psd
+  artifactKey: Guid(2203a362eaedd2c46b10e423dd237a7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 25.psd using Guid(2203a362eaedd2c46b10e423dd237a7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1688d64d95698b9ae040abb382bbd68') in 0.020532 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 6.psd
+  artifactKey: Guid(88ec99e1a784491469ec47aa75e8eb0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 6.psd using Guid(88ec99e1a784491469ec47aa75e8eb0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f8703968740fa738916ffa80ff39d9b') in 0.018051 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/3.Resources/image/taki conductor/taki conductor 11.psd
+  artifactKey: Guid(a7ca4de51d4aa5447bd5cb5aa772c06b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3.Resources/image/taki conductor/taki conductor 11.psd using Guid(a7ca4de51d4aa5447bd5cb5aa772c06b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fedc6531f932ffa0ed7ba75ae25fa758') in 0.020318 seconds 

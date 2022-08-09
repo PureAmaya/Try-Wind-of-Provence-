@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Metronome : MonoBehaviour
 {
@@ -20,8 +21,14 @@ public class Metronome : MonoBehaviour
     /// </summary>
     public AudioClip sound;
 
-    
-    
+    /// <summary>
+    /// 节拍器准备开始工作时的事件（startTimeOffset秒之后开始第一次滴答）
+    /// </summary>
+    public UnityEvent OnReady = new();
+/// <summary>
+/// 每次滴答一下后调用的事件
+/// </summary>
+    public UnityEvent<float> AfterTick = new();
     
     private bool isPlaying;
     
@@ -29,6 +36,7 @@ public class Metronome : MonoBehaviour
     {
         if(isPlaying) return;
         isPlaying = true;
+        OnReady.Invoke();
         InvokeRepeating("Play",startTimeOffset,60f / bpm);
     }
 
@@ -44,6 +52,7 @@ public class Metronome : MonoBehaviour
     void Play()
     {
         audioSource.PlayOneShot(sound,volume);
+        AfterTick.Invoke(Time.timeSinceLevelLoad);
     }
 
    
