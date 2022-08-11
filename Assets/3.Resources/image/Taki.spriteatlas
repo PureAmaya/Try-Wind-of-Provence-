@@ -24,7 +24,7 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 1024
+      m_MaxTextureSize: 4096
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
       m_TextureCompression: 1
@@ -55,21 +55,22 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b3c12f009ba0cfd4c8c0409d03bec650, type: 3}
   - {fileID: 21300000, guid: 223b50302f1a89b4b8e224aafd3a8450, type: 3}
   - {fileID: 21300000, guid: 76cce680d05f1ab4ebd2e0658ea1e19c, type: 3}
+  - {fileID: 21300000, guid: 53cca2d09f1ea734ba31507d3173f278, type: 3}
   - {fileID: 21300000, guid: 88ec99e1a784491469ec47aa75e8eb0f, type: 3}
   - {fileID: 21300000, guid: 347abd52a153a3c459c6633042353deb, type: 3}
   - {fileID: 21300000, guid: 2203a362eaedd2c46b10e423dd237a7d, type: 3}
-  - {fileID: 21300000, guid: 0b08e082f0263b64487c0454baa3036f, type: 3}
+  - {fileID: 21300000, guid: 014531e27e5c94042a9bb9d90506ed46, type: 3}
   - {fileID: 21300000, guid: f3bcb653736b45c40a0c33a28ee31e98, type: 3}
   - {fileID: 21300000, guid: 3dbb93440a5acdf4b8e1a40dbf0fb943, type: 3}
-  - {fileID: 21300000, guid: edcacbf4265e2874eb8c3208338d6671, type: 3}
   - {fileID: 21300000, guid: 0850489559ccb5f4aa98cf0e4424c6b1, type: 3}
   - {fileID: 21300000, guid: 6688b6b512e51d746a97c0a7ab3d77da, type: 3}
   - {fileID: 21300000, guid: 847bf0c51da5d4e40b4d429df4195030, type: 3}
   - {fileID: 21300000, guid: a7ca4de51d4aa5447bd5cb5aa772c06b, type: 3}
-  - {fileID: 21300000, guid: 1c3366f6ba049a840a360db95f3e9e5e, type: 3}
   - {fileID: 21300000, guid: 1b733357eacb3d24d990f4d2832ae78e, type: 3}
   - {fileID: 21300000, guid: 482641779c7cb0c4f98632b4393a82f4, type: 3}
+  - {fileID: 21300000, guid: e6ec99a7f2233f84f83c69d4e69ccff6, type: 3}
   - {fileID: 21300000, guid: 6d588d082786bea49862f32b6e1f29a9, type: 3}
+  - {fileID: 21300000, guid: c53260e86d676db4abf06518587ef103, type: 3}
   - {fileID: 21300000, guid: 40a7bc0926f2a5049a5e729384379677, type: 3}
   - {fileID: 21300000, guid: 7fc5492a2d49d4d41ae9b153caeeee77, type: 3}
   - {fileID: 21300000, guid: 6ce7b92a352c29f4086ba004c0d0c885, type: 3}
@@ -77,38 +78,41 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 62be58ac3b1925542a846d3c8af605cb, type: 3}
   - {fileID: 21300000, guid: e164644d4ff9ee643a46d4b6abcf04a0, type: 3}
   - {fileID: 21300000, guid: 59eeaeddbc1d8074f9e2e962856c99c2, type: 3}
+  - {fileID: 21300000, guid: eef39f0f67003a946a8b7df4689104e7, type: 3}
   - {fileID: 21300000, guid: b6310a1fddfa7d54a8c297e77b531d77, type: 3}
   - {fileID: 21300000, guid: b22a348f58b81494a954b374df17d6d4, type: 3}
   - {fileID: 21300000, guid: 3dce59afce48e7c428f48826840d95f3, type: 3}
   m_PackedSpriteNamesToIndex:
-  - taki conductor 19
+  - taki conductor 1
+  - taki conductor 11
   - taki conductor 4
-  - taki conductor 22
-  - taki conductor 6
-  - taki conductor 8
-  - taki conductor 25
-  - taki conductor 27
-  - taki conductor 23
-  - taki conductor 20
+  - taki conductor 12
+  - taki conductor 13
+  - taki conductor 15
+  - taki conductor 7
+  - 1
   - taki conductor 5
   - taki conductor 2
-  - taki conductor 16
-  - taki conductor 14
-  - taki conductor 11
-  - taki conductor 26
-  - taki conductor 12
-  - taki conductor 3
-  - taki conductor 7
-  - taki conductor 13
-  - taki conductor 21
-  - taki conductor 1
-  - taki conductor 24
-  - taki conductor 18
-  - Taki
-  - taki conductor 15
-  - taki conductor 17
-  - taki conductor 10
   - taki conductor 9
+  - taki conductor 23
+  - taki conductor 21
+  - taki conductor 18
+  - taki conductor 19
+  - taki conductor 10
+  - 2
+  - taki conductor 14
+  - 4
+  - taki conductor 20
+  - taki conductor 3
+  - taki conductor 8
+  - taki conductor 6
+  - taki conductor 25
+  - Taki
+  - taki conductor 22
+  - 3
+  - taki conductor 24
+  - taki conductor 17
+  - taki conductor 16
   m_RenderDataMap: {}
   m_Tag: Taki
   m_IsVariant: 0

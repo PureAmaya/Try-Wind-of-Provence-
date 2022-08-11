@@ -12,7 +12,12 @@ public class PanDingSquare : MonoBehaviour
     /// 这个判定方块，判定玩家按下了哪个键
     /// </summary>
    [SerializeField]private KeyCode keyToApply = KeyCode.LeftControl;
-  
+
+    /// <summary>
+    /// 对外缓存的组件
+    /// </summary>
+    [HideInInspector] public GameObject go;
+
     /// <summary>
     /// 判定超时，没有在与音符碰撞的期间内按下规定按键
     /// </summary>
@@ -60,12 +65,14 @@ private int noteCount = 0;
      
     private Rigidbody2D rd;
 
+    
 #if UNITY_EDITOR
     private float videoSpeed = 1;
 #endif
 
     private void Awake()
     {
+        go = gameObject;
         rd = GetComponent<Rigidbody2D>();
     }
 

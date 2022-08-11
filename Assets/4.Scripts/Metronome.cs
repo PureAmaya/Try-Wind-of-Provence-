@@ -1,6 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// 44拍子的节拍器
+/// </summary>
 public class Metronome : MonoBehaviour
 {
     [Range(30,244)]
@@ -13,8 +17,12 @@ public class Metronome : MonoBehaviour
     /// 开始时间偏移（仅推迟）
     /// </summary>
     public float startTimeOffset = 0f;
-    
 
+    /// <summary>
+    /// 对外缓存一个gameobject
+    /// </summary>
+  [HideInInspector]  public GameObject go;
+    
     public AudioSource audioSource;
     /// <summary>
     /// 节拍器的音效
@@ -24,20 +32,38 @@ public class Metronome : MonoBehaviour
     /// <summary>
     /// 节拍器准备开始工作时的事件（startTimeOffset秒之后开始第一次滴答）
     /// </summary>
+    [Header("节拍器准备开始工作时的事件")]
     public UnityEvent OnReady = new();
 /// <summary>
 /// 每次滴答一下后调用的事件
 /// </summary>
-    public UnityEvent<float> AfterTick = new();
+   [Header("每次滴答一下后调用的事件")]
+    public UnityEvent<int> AfterTick = new();
     
     private bool isPlaying;
-    
+
+    /// <summary>
+    /// 节拍  0表示尚未开始打拍子
+    /// </summary>
+    public int meter = 0;
+
+    private void Awake()
+    {
+        go = gameObject;
+       
+    }
+
+    private void Start()
+    {
+        StartPlay();
+    }
+
     public void StartPlay()
     {
         if(isPlaying) return;
         isPlaying = true;
         OnReady.Invoke();
-        InvokeRepeating("Play",startTimeOffset,60f / bpm);
+        InvokeRepeating(nameof(Play),startTimeOffset,60f / bpm);
     }
 
     public void Stop()
@@ -49,10 +75,14 @@ public class Metronome : MonoBehaviour
    /// <summary>
    /// 按照拍子播放音效
    /// </summary>
-    void Play()
-    {
-        audioSource.PlayOneShot(sound,volume);
-        AfterTick.Invoke(Time.timeSinceLevelLoad);
+   private void Play()
+   {
+       //因为是从0开始的，所以一上来就要加一个
+      if(meter == 4) meter = 0;
+      meter++;
+   
+     if(audioSource != null && sound != null)    audioSource.PlayOneShot(sound,volume);
+        AfterTick.Invoke(meter);
     }
 
    

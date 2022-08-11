@@ -69,7 +69,13 @@ public class NotationCtrl : MonoBehaviour
     public Notes eighthNote;
 
     public CanvasGroup percussionCanvas;
-  
+
+    [Header("第二部分用的")] 
+    public Metronome metronome;
+/// <summary>
+/// 节拍器在UI上的位置
+/// </summary>
+    public RectTransform metronomeLocation;
     
     
 #if UNITY_EDITOR
@@ -139,32 +145,23 @@ public class NotationCtrl : MonoBehaviour
     /// </summary>
     private int episode = 1;
 
-
-    /// <summary>
-    /// 第二乐章结束
-    /// </summary>
-    public UnityEvent EpisodeTwoEnd = new UnityEvent();
-    /// <summary>
-    /// 开始第二章节时的事件
-    /// </summary>
-    public UnityEvent StartEpisode2 = new();
-    /// <summary>
-    /// 开始第三章节时的事件
-    /// </summary>
-    public UnityEvent StartEpisode3 = new();
+    public UnityEvent initiaized = new UnityEvent();
+    public UnityEvent startEpisode3 = new();
+    public UnityEvent startEpisode2 = new();
+    
     private void Awake()
     {
         Application.targetFrameRate = 60;
         
-        //先停止播放
-        StaticVideoPlayer.videoPlayer.Stop();
-       
+      
        
        
         }
 
     private void Start()
     {
+        //先停止播放
+        StaticVideoPlayer.videoPlayer.Stop();
         //游戏初始化（涉及到UI根据显示的分辨率变化位置，只能放到sstart中）
         Initialization();
         //准备就绪，开始播放
@@ -174,27 +171,37 @@ public class NotationCtrl : MonoBehaviour
     void Update()
     {
         if (!StaticVideoPlayer.videoPlayer.isPlaying) return;
-      
-//到达第一章节与第二章节的交界处
-        if (StaticVideoPlayer.videoPlayer.frame >= 4880 && episode == 1)
-        {
-            episode++;
-            foreach (var VARIABLE in panDingSquares)
-            {
-                VARIABLE.Enter();
-                StartEpisode2.Invoke(); //5025帧才是正式开始
-               return;
-            }
-            
-        }
 
-        //到达第三章节与第二章节的交界处
-        if (StaticVideoPlayer.videoPlayer.frame >= 9315 && episode == 2)
+        switch (StaticVideoPlayer.videoPlayer.frame)
         {
-            episode++;
-            StartEpisode3.Invoke();
-            return;
-          
+            //到达第一章节与第二章节的交界处
+            case >= 4880 when episode == 1:
+            {
+                episode++;
+                metronome.go.SetActive(true); //5025帧才是正式开始，已经在节拍器那边设置好了
+
+                foreach (var VARIABLE in panDingSquares)
+                {
+                    VARIABLE.Enter();
+                    VARIABLE.go.SetActive(false);
+                }
+
+                startEpisode2.Invoke();
+                return;
+            }
+            //到达第三章节与第二章节的交界处
+            case >= 9315 when episode == 2 :
+            {
+                episode++;
+                metronome.go.SetActive(false); 
+            
+                foreach (var VARIABLE in panDingSquares)
+                {
+                    VARIABLE.go.SetActive(true);
+                }
+                startEpisode3.Invoke();
+                return;
+            }
         }
 
         //第一第三乐章用的
@@ -245,14 +252,24 @@ public class NotationCtrl : MonoBehaviour
             notesPoolForJunna[^1].Initialization(0);
             notesPoolForMasako[^1].Initialization(1);
         }
-        
+
+        //实例化判定块块
+        panDingSquares[0] = Instantiate(panDingSquares[0].gameObject).GetComponent<PanDingSquare>();
+        panDingSquares[1] = Instantiate(panDingSquares[1].gameObject).GetComponent<PanDingSquare>();
         //判定方块回车设定
         panDingSquares[0].SetEnterAndEnd(GetUIToWorldPos(panDingsInitialLocation[0]),
             GetUIToWorldPos(JunnaNoteLocation[^1]) + Vector2.right * 0.4f);
         panDingSquares[1].SetEnterAndEnd(GetUIToWorldPos(panDingsInitialLocation[1]),
             GetUIToWorldPos(MasakoNoteLocation[^1]) + Vector2.right * 0.4f);
 
+        //第二部分用的节拍器
+        metronome = Instantiate(metronome.gameObject).GetComponent<Metronome>();
+        metronome.gameObject.SetActive(false);
+        metronome.transform.position = GetUIToWorldPos(metronomeLocation);
         
+        
+        initiaized.Invoke();
+
     }
     /// <summary>
     /// 将有好的时间线转化为电脑可以用的（视频帧数）
