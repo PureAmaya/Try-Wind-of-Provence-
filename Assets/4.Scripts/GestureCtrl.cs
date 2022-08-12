@@ -9,17 +9,6 @@ public class GestureCtrl : MonoBehaviour
     public Metronome metronome;
 
     public SpriteRenderer spriteRenderer;
-    
-    
-    /// <summary>
-    /// 判定成功，在相应节拍显示的期间内按下规定按键
-    /// </summary>
-    public UnityEvent<int> rightConduction = new UnityEvent<int>();
-
-    /// <summary>
-    /// 判定超时，没有在相应节拍显示的期间内按下规定按键
-    /// </summary>
-    public UnityEvent<int> wrongConduction = new UnityEvent<int>();
 
     /// <summary>
     /// 滴答的时间
@@ -76,7 +65,8 @@ public class GestureCtrl : MonoBehaviour
         {
             //终止Update
             tickTime = -1f;
-            wrongConduction.Invoke(-3000);
+            TextUI.textUI.ScoreAndRank(-3000);
+           
             spriteRenderer.color = miss;
             return;
         }
@@ -107,7 +97,7 @@ public class GestureCtrl : MonoBehaviour
     {
         //终止Update
         tickTime = -1f;
-        rightConduction.Invoke(1500);
+        TextUI.textUI.ScoreAndRank(1500);
         spriteRenderer.color = pressed;
     }
 }

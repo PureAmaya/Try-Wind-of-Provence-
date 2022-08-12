@@ -1,31 +1,20 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Video;
 using YamlDotNet.Serialization;
 
-public class NotationCtrl : MonoBehaviour
+public class NotationCtrl : MonoBehaviour,IUpdate
 {
     
+ 
     
-#if UNITY_EDITOR
-
-    #region EDBUG用。用完了记得删了
-
-    [Header("UI与屏幕内容")]
-    public Transform go;
-    public TMP_Text frameCount;
-
-    #endregion
-
-#endif
-
     /// <summary>
     /// 储存两位路人王时间的结构体
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public struct Timeline
     {
         public string[] Time;
@@ -46,12 +35,11 @@ public class NotationCtrl : MonoBehaviour
     public Timeline Junna;
     public Timeline Masako;
 
-    
+
     /// <summary>
     /// 铺面滞后数。越大铺面开始的时间越晚。负数则提前出现
     /// </summary>
-    [Header("设置")]
-    public int lag = 0;
+    [Header("设置")] public int lag;
    
 
     /// <summary>
@@ -76,11 +64,17 @@ public class NotationCtrl : MonoBehaviour
 /// 节拍器在UI上的位置
 /// </summary>
     public RectTransform metronomeLocation;
-    
-    
+/// <summary>
+/// 倒计时
+/// </summary>
+public TMP_Text countdown;
+
+public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
+
+
 #if UNITY_EDITOR
     /// <summary>
-    /// 要用哪一个时间点了 Junna Masaka
+    /// 要用哪一个时间点了 Junna Masaka 
     /// </summary>
     private int[] timePointToUse = { 0, 0 };
 #endif
@@ -109,12 +103,12 @@ public class NotationCtrl : MonoBehaviour
     /// <summary>
     /// 接下来该用Junna的哪一组间隔符号了
     /// </summary>
-    private int whichIntervalToUseForJunna = 0;
+    private int whichIntervalToUseForJunna ;
 
     /// <summary>
     /// 接下来该用Masako的哪一组间隔符号了
     /// </summary>
-    private int whichIntervalToUseForMasako = 0;
+    private int whichIntervalToUseForMasako ;
 
     /// <summary>
     /// Masako间隔分组内，每8个为一个亚组，该用那个亚组了
@@ -126,7 +120,7 @@ public class NotationCtrl : MonoBehaviour
     private List<int> MasakoReadable;
 
     
-#if UNITY_EDITOR //后面得把yaml文件放到游戏外面，从游戏外面读取，就是说这段代码不能仅editor了
+
     public TextAsset yamlJunna;
     public TextAsset yamlMasako;
 
@@ -138,7 +132,16 @@ public class NotationCtrl : MonoBehaviour
         Masako = read.Deserialize<Timeline>(yamlMasako.text);
        
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("导出到yaml")]
+    public void ExportYaml()
+    {
+        
+    }
 #endif
+
+
 
     /// <summary>
     /// 第几个章节（一共三个）
@@ -151,7 +154,7 @@ public class NotationCtrl : MonoBehaviour
     
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = -1;
         
       
        
@@ -160,6 +163,9 @@ public class NotationCtrl : MonoBehaviour
 
     private void Start()
     {
+        //注册Update
+        UpdateManager.updateManager.Updates.Add(this);
+      
         //先停止播放
         StaticVideoPlayer.videoPlayer.Stop();
         //游戏初始化（涉及到UI根据显示的分辨率变化位置，只能放到sstart中）
@@ -168,10 +174,12 @@ public class NotationCtrl : MonoBehaviour
         StaticVideoPlayer.videoPlayer.Play();
         }
 
-    void Update()
+   public void FastUpdate()
     {
+        
         if (!StaticVideoPlayer.videoPlayer.isPlaying) return;
 
+        
         switch (StaticVideoPlayer.videoPlayer.frame)
         {
             //到达第一章节与第二章节的交界处
@@ -179,7 +187,8 @@ public class NotationCtrl : MonoBehaviour
             {
                 episode++;
                 metronome.go.SetActive(true); //5025帧才是正式开始，已经在节拍器那边设置好了
-
+                StartCoroutine(Countdown());
+                
                 foreach (var VARIABLE in panDingSquares)
                 {
                     VARIABLE.Enter();
@@ -197,6 +206,7 @@ public class NotationCtrl : MonoBehaviour
             
                 foreach (var VARIABLE in panDingSquares)
                 {
+                    VARIABLE.Enter();
                     VARIABLE.go.SetActive(true);
                 }
                 startEpisode3.Invoke();
@@ -215,10 +225,6 @@ public class NotationCtrl : MonoBehaviour
        
 
 #if UNITY_EDITOR
-        //debug用，记录时间与帧数
-        frameCount.text = string.Format("{0}\n{1}", StaticVideoPlayer.videoPlayer.frame.ToString(), ((int)StaticVideoPlayer.videoPlayer.time).ToString());
-        //节奏判断，并更新下一个要判定的音符
-        Rhythm();
         //根据视频速度提高或者降低判定块的移动速度
         panDingSquares[0].OnlyForEditor(StaticVideoPlayer.videoPlayer);
         panDingSquares[1].OnlyForEditor(StaticVideoPlayer.videoPlayer);
@@ -322,6 +328,9 @@ public class NotationCtrl : MonoBehaviour
         //节省内存，将友好型的时间线消除
         Junna.Time = null;
         Masako.Time = null;
+        yamlJunna = null;
+        yamlMasako = null;
+
     }
 
     
@@ -477,37 +486,7 @@ public class NotationCtrl : MonoBehaviour
             //subGroupToUse = 0;
         }
     }
-
     
-    /// <summary>
-    /// 判定节奏（要求游戏帧数大于等于60）（仅Editor）
-    /// </summary>
-    private void Rhythm()
-    {
-        //帧数匹配，节奏对上，那个判定的圆形移动到判定线，且中心与判定线重合
-        if ((int)StaticVideoPlayer.videoPlayer.frame == MasakoReadable[timePointToUse[1]])
-        {
-
-           go.Rotate(Vector3.forward, 30f); //到时候的判定 debug务必要保证游戏帧数大于60
-
-
-            //准备读取下一个时间点
-            if (timePointToUse[1] != MasakoReadable.Count - 1) timePointToUse[1]++;
-        }
-
-
-        //帧数匹配，节奏对上，那个判定的圆形移动到判定线，且中心与判定线重合
-        if ((int)StaticVideoPlayer.videoPlayer.frame == JunnaReadable[timePointToUse[0]])
-        {
-
-            //  go.Rotate(Vector3.forward, 30f); //到时候的判定 debug务必要保证游戏帧数大于60
-            
-
-            //准备读取下一个时间点
-            if (timePointToUse[0] != JunnaReadable.Count - 1) timePointToUse[0]++;
-        }
-    }
- 
     /// <summary>
   /// 让判定方块移动（性能消耗大：Editor模式下有个Debug）
   /// </summary>
@@ -612,10 +591,24 @@ public class NotationCtrl : MonoBehaviour
         }
     }
 
-    private void Metronome()
+    /// <summary>
+    /// 泷升指挥给个倒计时，不然太突兀了
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Countdown()
     {
         
+        countdown.text = "3";
+        yield return countdownInterval;
+        countdown.text = "2";
+        yield return countdownInterval;
+        countdown.text = "1";
+        yield return countdownInterval;
+        countdown.text = "Go!";
+        yield return new WaitForSeconds(0.6f);
+        Destroy(countdown);
     }
+   
         /// <summary>
         /// UI坐标转世界坐标（2d)
         /// </summary>

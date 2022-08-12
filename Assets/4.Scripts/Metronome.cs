@@ -12,6 +12,11 @@ public class Metronome : MonoBehaviour
 
     [Range(0f,1f)]
     public float volume = 1f;
+  
+    /// <summary>
+    /// 节拍  0表示尚未开始打拍子
+    /// </summary>
+    [HideInInspector]  public int meter = 0;
    
     /// <summary>
     /// 开始时间偏移（仅推迟）
@@ -42,10 +47,7 @@ public class Metronome : MonoBehaviour
     
     private bool isPlaying;
 
-    /// <summary>
-    /// 节拍  0表示尚未开始打拍子
-    /// </summary>
-    public int meter = 0;
+   
 
     private void Awake()
     {

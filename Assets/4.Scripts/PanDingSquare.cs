@@ -17,17 +17,7 @@ public class PanDingSquare : MonoBehaviour
     /// 对外缓存的组件
     /// </summary>
     [HideInInspector] public GameObject go;
-
-    /// <summary>
-    /// 判定超时，没有在与音符碰撞的期间内按下规定按键
-    /// </summary>
-    public UnityEvent<int> noteNotCaught = new UnityEvent<int>();
-
-    /// <summary>
-    /// 判定成功，成功在与音符碰撞的期间内按下规定按键
-    /// </summary>
-    public UnityEvent<int> noteWasCaught = new UnityEvent<int>();
-
+    
 
     /// <summary>
     /// 移动速度（向右水平），每个音符各有一个。以 帧 作为时间单位
@@ -177,7 +167,7 @@ private int noteCount = 0;
         {
             thisNoteKeyDown = true;
             //成了，加分
-            noteWasCaught.Invoke(1000);
+            TextUI.textUI.ScoreAndRank(1000);
         }
 
       
@@ -201,7 +191,7 @@ private int noteCount = 0;
         if (!thisNoteKeyDown)
         { 
             //扣分
-            noteNotCaught.Invoke(-2500);
+            TextUI.textUI.ScoreAndRank(-2500);
         }
         
         //回复没有按下的状态，迎接下一个
