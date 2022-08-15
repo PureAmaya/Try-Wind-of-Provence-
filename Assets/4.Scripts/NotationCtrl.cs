@@ -87,18 +87,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
     /// 接下来该用Masako的哪一组间隔符号了
     /// </summary>
     private int whichIntervalToUseForMasako ;
-
     
-#if UNITY_EDITOR
-    [ContextMenu("导出到yaml")]
-    public void ExportYaml()
-    {
-        Settings.Default();
-        Settings.SaveSettings();
-    }
-#endif
-
-
 
     /// <summary>
     /// 第几个章节（一共三个）
@@ -108,21 +97,12 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
     public UnityEvent initiaized = new UnityEvent();
     public UnityEvent startEpisode3 = new();
     public UnityEvent startEpisode2 = new();
-    
+    public UnityEvent VideoEnd = new UnityEvent();
+
     private void Awake()
     {
-        //editor专用读取游戏设置
-#if UNITY_EDITOR
-        Settings.ReadSettings();
-#endif
-        
-        
-        Application.targetFrameRate = -1;
-
         //读取两位的时间点
         ReadYamlAndApply();
-
-
     }
 
     private void Start()
@@ -176,6 +156,24 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 startEpisode3.Invoke();
                 return;
             }
+            
+            case  12750:
+                VideoEnd.Invoke();
+                //消除判定蓝块
+                foreach (var VARIABLE in panDingSquares)
+                {
+                  VARIABLE.Enter();
+                }
+                foreach (var VARIABLE in notesPoolForJunna)
+                {
+                    VARIABLE.BackToInitialNotePoint();
+                }
+                foreach (var VARIABLE in notesPoolForMasako)
+                {
+                    VARIABLE.BackToInitialNotePoint();
+                }
+                Debug.Log("完事咯");
+                break;
         }
 
         //第一第三乐章用的

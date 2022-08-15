@@ -22,8 +22,6 @@ public class TextUI : MonoBehaviour, IUpdate
 
     public TMP_Text score;
 
-    public Image RankIcon;
-
     public TMP_Text matchName;
 
     /// <summary>
@@ -105,7 +103,7 @@ public class TextUI : MonoBehaviour, IUpdate
         //没正确按下，权重为2
         else
         {
-            total -= score;
+            total += 3;
         }
 
 
@@ -116,14 +114,15 @@ public class TextUI : MonoBehaviour, IUpdate
         {
             //府赛没有得到名次
             case < 0.3f:
-                matchName.text = "京都府 吹奏楽コンクール\n<b>预测</b>";
-                RankIcon = null;
+                matchName.text = "京都府 吹奏楽コンクール";
+                atlasRead.spriteName = "clear";
+                atlasRead.GetSpriteFromAtlas();
                 Rank = 0;
                 break;
 
             //府赛金奖（废金）
             case >= 0.3f and <= 0.4f:
-                matchName.text = "京都府 吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "京都府 吹奏楽コンクール";
                 atlasRead.spriteName = "gold";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 1;
@@ -131,7 +130,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
             //府赛金奖（晋级）
             case > 0.4f and <= 0.5f:
-                matchName.text = "京都府 吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "京都府 吹奏楽コンクール";
                 atlasRead.spriteName = "representative";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 2;
@@ -139,7 +138,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
             //关西废金
             case > 0.5f and <= 0.7f:
-                matchName.text = "関西 吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "関西 吹奏楽コンクール";
                 atlasRead.spriteName = "gold";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 3;
@@ -147,7 +146,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
             //关西金奖（晋级）
             case > 0.7f and <= 0.9f:
-                matchName.text = "関西 吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "関西 吹奏楽コンクール";
                 atlasRead.spriteName = "representative";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 4;
@@ -155,7 +154,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
             //全国赛 铜奖
             case > 0.9f and <= 0.96f:
-                matchName.text = "全日本吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "全日本 吹奏楽コンクール";
                 atlasRead.spriteName = "bronze";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 5;
@@ -163,7 +162,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
             //全国赛 银奖
             case > 0.96f and < 0.99f:
-                matchName.text = "全日本吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "全日本 吹奏楽コンクール";
                 atlasRead.spriteName = "sliver";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 6;
@@ -171,7 +170,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
             ////全国赛 金奖
             case >= 0.99f:
-                matchName.text = "全日本吹奏楽コンクール\n<b>预测</b>";
+                matchName.text = "全日本 吹奏楽コンクール";
                 atlasRead.spriteName = "gold";
                 atlasRead.GetSpriteFromAtlas();
                 Rank = 7;

@@ -8,10 +8,11 @@ public class Loading : MonoBehaviour
 
 
     // Start is called before the first frame update
-   private IEnumerator Start()
+    private IEnumerator Start()
     {
-       yield return Resources.UnloadUnusedAssets();
-      yield return SceneManager.LoadSceneAsync("Wind of Provence - Copy");
+        Settings.SaveSettings();
+        yield return Resources.UnloadUnusedAssets();
+        yield return SceneManager.LoadSceneAsync("Wind of Provence - Copy");
     }
 
 

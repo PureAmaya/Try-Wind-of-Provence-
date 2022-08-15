@@ -13,26 +13,39 @@ public class AtlasRead : MonoBehaviour
     public string spriteName;
 
     public bool destroyWhenGetSprite = true;
-    
+    private bool isimageRenderNotNull;
+    private bool isspriteRendererNotNull;
+
+    private void Start()
+    {
+      
+    }
+
     [ContextMenu("获取图片")]
     public virtual void Awake()
     {
+       
         imageRender = GetComponent<Image>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+        
+        isimageRenderNotNull = imageRender != null;
+        isspriteRendererNotNull = spriteRenderer != null;
         GetSpriteFromAtlas(); 
+        
        if(Application.isPlaying && destroyWhenGetSprite) Destroy(this);
     }
 
+    /// <summary>
+    /// 从图集中得到图片
+    /// </summary>
     public void GetSpriteFromAtlas()
     {
-        if (imageRender != null)
+        if (isimageRenderNotNull)
         {
             imageRender.sprite = spriteAtlas.GetSprite(spriteName);
-          
         }
-        
-        if (spriteRenderer != null)
+
+        if (isspriteRendererNotNull)
         {
             spriteRenderer.sprite = spriteAtlas.GetSprite(spriteName);
         }

@@ -27,6 +27,7 @@ public class PublicAudioSource : MonoBehaviour
         //停止播放
         Music.Stop();
     }
+    
 
     // Start is called before the first frame update
     public static void PlayBackgroundMusic(AudioClip clip)
@@ -34,8 +35,13 @@ public class PublicAudioSource : MonoBehaviour
         //停止之前的播放
         StopMusicPlaying();
         Music.clip = clip;
-        Music.volume = Settings.SettingsContent.MusicVolume;
+        UpdateMusicVolume();
         Music.Play();
+    }
+
+    public static void UpdateMusicVolume()
+    {
+        Music.volume = Settings.SettingsContent.MusicVolume;
     }
 
     public static void StopMusicPlaying()
