@@ -65,7 +65,7 @@ public class GestureCtrl : MonoBehaviour
         {
             //终止Update
             tickTime = -1f;
-            TextUI.textUI.ScoreAndRank(-3000);
+            TextUI.textUI.ScoreAndRank(-2);
            
             spriteRenderer.color = miss;
             return;
@@ -97,7 +97,7 @@ public class GestureCtrl : MonoBehaviour
     {
         //终止Update
         tickTime = -1f;
-        TextUI.textUI.ScoreAndRank(1500);
+        TextUI.textUI.ScoreAndRank(1);
         spriteRenderer.color = pressed;
     }
 }

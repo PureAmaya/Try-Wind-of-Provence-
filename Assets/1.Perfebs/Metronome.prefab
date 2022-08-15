@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 131
-  volume: 0.15
+  volume: 0
+  meter: 0
   startTimeOffset: 3.6327
   go: {fileID: 0}
   audioSource: {fileID: 7879667826239382400}
@@ -95,7 +96,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  meter: 0
 --- !u!82 &7879667826239382400
 AudioSource:
   m_ObjectHideFlags: 0
@@ -289,10 +289,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35134d2f5e1ec4f4aac7f0a852670130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageRender: {fileID: 0}
   spriteRenderer: {fileID: 1010527723282626433}
   spriteAtlas: {fileID: 4343727234628468602, guid: d3ad18249a0f1b7409cc58202f9be50d, type: 2}
   spriteName: taki conductor 0
+  destroyWhenGetSprite: 1
   AnimationName: taki conductor
   Range: 0100000019000000
   format: '{0} {1}'
@@ -395,10 +395,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35134d2f5e1ec4f4aac7f0a852670130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageRender: {fileID: 0}
   spriteRenderer: {fileID: 1010527724312250251}
   spriteAtlas: {fileID: 4343727234628468602, guid: d3ad18249a0f1b7409cc58202f9be50d, type: 2}
   spriteName: 
+  destroyWhenGetSprite: 1
   AnimationName: 
   Range: 0100000004000000
   format: '{1}'
@@ -417,9 +417,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   metronome: {fileID: 1010527723028761879}
   spriteRenderer: {fileID: 1010527724312250251}
-  rightConduction:
-    m_PersistentCalls:
-      m_Calls: []
-  wrongConduction:
-    m_PersistentCalls:
-      m_Calls: []

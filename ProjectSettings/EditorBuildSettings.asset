@@ -6,16 +6,22 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/PureAmaya/3.Entry/3.Scenes/Opening.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/PureAmaya/3.Entry/3.Scenes/Menu.unity
-    guid: f45090e8c445ca2468273b1d96a7e40a
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/PureAmaya/3.Entry/3.Scenes/LoadStage.unity
-    guid: fba61741dc464ff4abe4a34fb50ffe39
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Opening.unity
+    guid: ca2d1ca2d2589d04897b1777744da86e
   - enabled: 1
     path: Assets/Wind of Provence - Copy.unity
     guid: aded93e3fc35cde4985ee446c5e8a089
+  - enabled: 1
+    path: Assets/LOADING.unity
+    guid: f315d4f70aeee6b4085694e17bfb8e47
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 34167c88d19d4de418a37a59b1644bb9, type: 2}

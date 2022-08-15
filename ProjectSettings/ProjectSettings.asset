@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: PureAmaya
-  productName: "\u4E5D\u4E00\u5E74\u300C\u666E\u7F57\u65FA\u65AF\u4E4B\u98CE\u300D"
+  productName: "\u8BD5\u8BD5\u300C\u666E\u7F57\u65FA\u65AF\u4E4B\u98CE\u300D\uFF01"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}

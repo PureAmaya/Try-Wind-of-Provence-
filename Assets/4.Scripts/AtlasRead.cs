@@ -7,17 +7,21 @@ using UnityEngine.UI;
 
 public class AtlasRead : MonoBehaviour
 {
-    public Image imageRender;
-    public SpriteRenderer spriteRenderer;
+    private Image imageRender;
+    [HideInInspector]public SpriteRenderer spriteRenderer;
     public SpriteAtlas spriteAtlas;
     public string spriteName;
 
+    public bool destroyWhenGetSprite = true;
+    
     [ContextMenu("获取图片")]
     public virtual void Awake()
     {
+        imageRender = GetComponent<Image>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         GetSpriteFromAtlas(); 
-       if(Application.isPlaying) Destroy(this);
+       if(Application.isPlaying && destroyWhenGetSprite) Destroy(this);
     }
 
     public void GetSpriteFromAtlas()

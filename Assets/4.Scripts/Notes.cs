@@ -22,7 +22,7 @@ public class Notes : MonoBehaviour
     /// <summary>
     /// 是否被判定块摸着
     /// </summary>
-    private bool SquareIsCovering = false;
+    private bool squareIsCovering;
     
     /// <summary>
     /// 外部获取Transform
@@ -47,7 +47,7 @@ public class Notes : MonoBehaviour
     }
 
     /// <summary>
-    /// 初始化音符  
+    /// 初始化音符   
     /// </summary>
     public void Initialization(int character)
     {
@@ -61,33 +61,36 @@ public class Notes : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        SquareIsCovering = true;
+        squareIsCovering = true;
     }
 
     /// <summary>
     /// 判定方块与音符的层都是Note，只有他俩之间能碰撞。这个就是碰撞判定用的。判定负责变色
     /// </summary>
-    /// <param name="other"></param>
     public void Update()
     {
     
         //如果此时与音符碰上了，并且玩家按下了按键
-        if (!Input.GetKeyDown(keyToApply) || !SquareIsCovering) return;
+        if (!Input.GetKeyDown(keyToApply) || !squareIsCovering) return;
         //变成绿色
         foreach (var spriteRenderer in spriteRenderers)
         {
             spriteRenderer.color = Color.green; 
+            //成了，加分
+            TextUI.textUI.ScoreAndRank(1);
         }
     }
 
     public void OnTriggerExit2D(Collider2D other)
     {
         //如果判定方块都走了，还是白色，说明没按上按键，变红
-        SquareIsCovering = false;
+        squareIsCovering = false;
         if (spriteRenderers[0].color != Color.white) return;
         foreach (var spriteRenderer in spriteRenderers)
         {
             spriteRenderer.color = Color.red; 
         }
+        //扣分
+        TextUI.textUI.ScoreAndRank(-2);
     }
 }

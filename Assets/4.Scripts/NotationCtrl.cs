@@ -1,25 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using YamlDotNet.Serialization;
+
 
 public class NotationCtrl : MonoBehaviour,IUpdate
 {
     
  
     
-    /// <summary>
-    /// 储存两位路人王时间的结构体
-    /// </summary>
-    [Serializable]
-    public struct Timeline
-    {
-        public string[] Time;
-    }
-
+ 
     
     public Camera cameraUI;
 
@@ -30,19 +21,8 @@ public class NotationCtrl : MonoBehaviour,IUpdate
     /// 两位的判定方块
     /// </summary>
     public PanDingSquare[] panDingSquares;
-    
-    //友好的显示音符出现的时间
-    public Timeline Junna;
-    public Timeline Masako;
 
-
-    /// <summary>
-    /// 铺面滞后数。越大铺面开始的时间越晚。负数则提前出现
-    /// </summary>
-    [Header("设置")] public int lag;
-   
-
-    /// <summary>
+   /// <summary>
     /// Junna的音符显示的位置
     /// </summary>
     [Header("UI与屏幕内容")]
@@ -56,8 +36,6 @@ public class NotationCtrl : MonoBehaviour,IUpdate
     public Notes eighthNoteWithPoint;
     public Notes eighthNote;
 
-    public CanvasGroup percussionCanvas;
-
     [Header("第二部分用的")] 
     public Metronome metronome;
 /// <summary>
@@ -69,17 +47,17 @@ public class NotationCtrl : MonoBehaviour,IUpdate
 /// </summary>
 public TMP_Text countdown;
 
-public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
+public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
 
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// 要用哪一个时间点了 Junna Masaka 
-    /// </summary>
-    private int[] timePointToUse = { 0, 0 };
-#endif
    
+    //友好的显示音符出现的时间
+    private YamlReadWrite.Timeline Junna;
+    private YamlReadWrite.Timeline Masako;
     
+    //将友好型Timeline，转化为的以0.1s为单位的协程可用的时间
+    private List<int> JunnaReadable;
+    private List<int> MasakoReadable;
+
     /// <summary>
     /// (Junna)生成的音符池
     /// </summary>
@@ -110,34 +88,13 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
     /// </summary>
     private int whichIntervalToUseForMasako ;
 
-    /// <summary>
-    /// Masako间隔分组内，每8个为一个亚组，该用那个亚组了
-    /// </summary>
-  //  private int subGroupToUse = 0;
-
-    //将友好型Timeline，转化为的以0.1s为单位的协程可用的时间
-    private List<int> JunnaReadable;
-    private List<int> MasakoReadable;
-
     
-
-    public TextAsset yamlJunna;
-    public TextAsset yamlMasako;
-
-    [ContextMenu("读取yaml")]
-    public void ReadYamlAndApply()
-    {
-        Deserializer read = new();
-        Junna = read.Deserialize<Timeline>(yamlJunna.text);
-        Masako = read.Deserialize<Timeline>(yamlMasako.text);
-       
-    }
-
 #if UNITY_EDITOR
     [ContextMenu("导出到yaml")]
     public void ExportYaml()
     {
-        
+        Settings.Default();
+        Settings.SaveSettings();
     }
 #endif
 
@@ -154,12 +111,19 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
     
     private void Awake()
     {
-        Application.targetFrameRate = -1;
+        //editor专用读取游戏设置
+#if UNITY_EDITOR
+        Settings.ReadSettings();
+#endif
         
-      
-       
-       
-        }
+        
+        Application.targetFrameRate = -1;
+
+        //读取两位的时间点
+        ReadYamlAndApply();
+
+
+    }
 
     private void Start()
     {
@@ -292,8 +256,8 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
             //按照冒号分开。长度为4(有的是5）. 0 =1舍弃 =2有改动 .1是分钟（1min=60s=3600)  2是秒（1s=60） 3则可以视为帧数
             string[] fix = Junna.Time[i].Split(':');
 
-            //lag * 10对于整体的滞后性进行修复
-            JunnaReadable.Add(int.Parse(fix[3]) + int.Parse(fix[2]) * 60 + int.Parse(fix[1]) * 3600 + lag * 10);
+            //lag对于整体的滞后性进行修复
+            JunnaReadable.Add(int.Parse(fix[3]) + int.Parse(fix[2]) * 60 + int.Parse(fix[1]) * 3600 +  Settings.SettingsContent.lag);
           
             //按照预制的分隔符（fix 4 = D）记录音符间隔分组符号
             if (fix.Length == 5)
@@ -315,8 +279,8 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 
             }
             
-            //lag * 10对于整体的滞后性进行修复
-            MasakoReadable.Add(int.Parse(fix[3]) + int.Parse(fix[2]) * 60 + int.Parse(fix[1]) * 3600 + lag * 10);
+            //lag对于整体的滞后性进行修复
+            MasakoReadable.Add(int.Parse(fix[3]) + int.Parse(fix[2]) * 60 + int.Parse(fix[1]) * 3600 + Settings.SettingsContent.lag);
          
             //按照预制的分隔符（fix 4 = D）记录音符间隔分组符号
             if (fix.Length == 5)
@@ -328,9 +292,6 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
         //节省内存，将友好型的时间线消除
         Junna.Time = null;
         Masako.Time = null;
-        yamlJunna = null;
-        yamlMasako = null;
-
     }
 
     
@@ -360,15 +321,13 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 notesPoolForJunna[1].GetTransform().position = GetUIToWorldPos(JunnaNoteLocation[3]);
 
                 //让判定滑块移动
-                MoveSquare(4, (int)StaticVideoPlayer.videoPlayer.frame,0,0, JunnaReadable, JunnaNoteLocation, JunnaInterval,
+                MoveSquare(4, (int)StaticVideoPlayer.videoPlayer.frame, JunnaReadable, JunnaNoteLocation, JunnaInterval,
                     whichIntervalToUseForJunna, 0);
 
                 whichIntervalToUseForJunna++;
 
             }
-            
-            Debug.Log(GetUIToWorldPos(JunnaNoteLocation[0]));
-           
+
             return;
         }
 
@@ -379,8 +338,7 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
         {
             if (notesPoolForJunna[2].GetTransform().position.y < -50f)
             {
-                Debug.Log("W");
-            
+              
                 //算出来要几个八分音符（从0开始）
                 int number = JunnaInterval[whichIntervalToUseForJunna] - JunnaInterval[whichIntervalToUseForJunna - 1] - 1;
 
@@ -393,14 +351,15 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 //第四小节的八分音符（有点）
                 notesPoolForJunna[1].GetTransform().position = GetUIToWorldPos(JunnaNoteLocation[number]);
             
-                //让判定滑块移动 +1：从零开始
-                MoveSquare(number + 1,(int)StaticVideoPlayer.videoPlayer.frame,0,0,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
+                //让判定滑块移动 +1：从零开始，上面减了1
+                MoveSquare(number + 1,(int)StaticVideoPlayer.videoPlayer.frame,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
             }
           
             return;
         }
 
 
+        //中间部分
         /*我在这讲两句
          * JunnaInterval[whichIntervalToUseForJunna - 1] + 1 ： 定位到本组的第一个，即上一组的结尾然后往后推算了一个
          * -60：比本组第一个提前60帧（视频帧率）出来
@@ -418,7 +377,7 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
             }
 
             //让判定滑块移动
-            MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,0,0,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
+            MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
 
             //准备进行下一个了
             //最后一个，不再增加数值，防止数组溢出
@@ -440,50 +399,96 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
         }
     }
 
-    
+    //至于这俩为啥一样。。。。是个历史遗留问题，不想改了（
     private void ShowAheadForMasako()
     {
-        //Masako 除了第一个是四分音符（有线），第四小节八分音符（有点） ，最后一个八分音符（有点）以外，其余的都是八分音符（有线）
-        //所以，notesPoolForMasako中，第一个是四分音符（有线），第二个是八分音符（有点），剩下八个都是八分音符（有线） 
+       
         //第一组单独的
-        // notesPoolForMasako[0].position.y < -50f 防止多次调用，该return还得return
-        if (whichIntervalToUseForMasako == 0 )
+        // notesPoolForMasako[2].position.y  < -50f 防止多次调用
+        if (whichIntervalToUseForMasako == 0) 
         {
-            //这里进行的是多次重复调用，为的就是把所有的亚组给显示出来
-            //现在不用多次重复调用了。没有亚组了
-         if(notesPoolForMasako[0].GetTransform().position.y < -50f) HowMasakoNoteShow(MasakoInterval[0] + 1, true);
+            if (notesPoolForMasako[2].GetTransform().position.y < -50f)
+            {
+                //按照数目要求，把八分音符放上去
+                for (int i = 0; i < 4; i++)
+                {
+                    notesPoolForMasako[i].GetTransform().position = GetUIToWorldPos(MasakoNoteLocation[i]);
+                }
+
+                //让判定滑块移动
+                MoveSquare(4, (int)StaticVideoPlayer.videoPlayer.frame,MasakoReadable, MasakoNoteLocation, MasakoInterval,
+                    whichIntervalToUseForMasako, 1);
+
+                whichIntervalToUseForMasako++;
+
+            }
             return;
         }
+        
+        //最后一组单独的
+        // notesPoolForMasako[2].position.y < -50f 防止多次调用(不过该return的还是得return，后面的不算了，音符消除也单独弄一个）
+        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[^2] + 1] - 60)
+        {
+            if (notesPoolForMasako[0].GetTransform().position.y < -50f)
+            {
+              
+                //算出来要几个八分音符（从0开始）
+                int number = MasakoInterval[whichIntervalToUseForMasako] - MasakoInterval[whichIntervalToUseForMasako - 1];
+
+                //按照数目要求，把八分音符放上去
+                for (int i = 0; i < number; i++)
+                {
+                    notesPoolForMasako[i].GetTransform().position = GetUIToWorldPos(MasakoNoteLocation[i]);
+                }
+                
+            
+                //让判定滑块移动
+                MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
+            }
+          
+            return;
+        }
+
      
        
         
+        //中间部分
         /*我在这讲两句
          * MasakoInterval[whichIntervalToUseForMasako - 1] + 1 ： 定位到本组的第一个，即上一组的结尾然后往后推算了一个
          * -60：比本组第一个提前60帧（视频帧率）出来
          */
-        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1] + 1] - 60)
+        // notesPoolForMasako[2].position.y < -50f 防止多次调用
+        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1] + 1] - 60 &&   notesPoolForMasako[0].GetTransform().position.y < -50f)
         {
-            //这里进行的是多次重复调用，为的就是把所有的亚组给显示出来
-            //现在不用多次重复调用了。没有亚组了
-            if(notesPoolForMasako[0].GetTransform().position.y < -50f) HowMasakoNoteShow(MasakoInterval[whichIntervalToUseForMasako] -
-                                                                          MasakoInterval[whichIntervalToUseForMasako - 1]);
+            //这里的话就全都是八分音符（有线） 
+            //算出来要几个八分音符
+            int number = MasakoInterval[whichIntervalToUseForMasako] - MasakoInterval[whichIntervalToUseForMasako - 1];
+//按照数目要求，把八分音符放上去
+            for (int i = 0; i < number; i++)
+            {
+                notesPoolForMasako[i].GetTransform().position = GetUIToWorldPos(MasakoNoteLocation[i]);
+            }
+
+            //让判定滑块移动
+            MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
+
+            //准备进行下一个了
+            //最后一个，不再增加数值，防止数组溢出
+            if (whichIntervalToUseForMasako != MasakoInterval.Count - 1) whichIntervalToUseForMasako++;
             return;
-            
         }
-    
+
 
         //用于重置本组的音符，以备下一组（whichIntervalToUseForMasako这一组的时候加了一，要减去）
         //本组超时1s后重置
-        //notesPoolForMasako[0].GetTransform().position.y > -50防止多次反复调用
-        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1]] + 60 && notesPoolForMasako[0].GetTransform().position.y > -50f)
+        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1]] + 60)
         {
             foreach (var VARIABLE in notesPoolForMasako)
             {
                 VARIABLE.BackToInitialNotePoint();
             }
-
-            //亚组重置
-            //subGroupToUse = 0;
+            
+           
         }
     }
     
@@ -494,7 +499,7 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
   /// <param name="initialFrame">为这一组（亚组）的第一个音符的触碰设定初始视频帧率（计算时间，一般是这一组或亚组显示时的视频帧数）</param>
   /// <param name="subGroupIndex">第几个（完整的）亚组，Junna = 0，不分亚组也为0 有亚组的话，从1开始</param>
   /// <param name="leftNotes">所有的完整亚组弄完之后，剩下的不足八个的，Junna = 0，仍然是完整的亚组，也为0</param>
-    private void MoveSquare(int noteCount,int initialFrame,int subGroupIndex,int leftNotes,List<int> characterReadable,RectTransform[] characterNoteLocation,List<int> characterInterval,int whichIntervalToUseForCharacter,int character)
+    private void MoveSquare(int noteCount,int initialFrame,List<int> characterReadable,RectTransform[] characterNoteLocation,List<int> characterInterval,int whichIntervalToUseForCharacter,int character)
     { 
        
         //为判定方块移动提前弄好数组的长度
@@ -552,46 +557,6 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
 
 
     /// <summary>
-    /// Masako的音符怎么显示
-    /// </summary>
-    /// <param name="number">算出来一共要几个八分音符</param>
-    /// <param name="isFirst">是第一个分组吗</param>
-    [Obsolete("适用于亚组，但是现在亚组取消了",false)]
-    private void HowMasakoNoteShow(int number,bool isFirst = false)
-    {
-        //这里的话就全都是八分音符
-    
-        switch (number)
-        {
-            //数目少于等于8（一共就8个坑），直接放上去
-            case <= 8:
-                
-                //要移动方块了
-                MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,0,0,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
-                
-                for (int i = 0; i < number; i++)
-                {
-                    notesPoolForMasako[i].GetTransform().position = GetUIToWorldPos(MasakoNoteLocation[i]);
-                }
-
-                //准备进行下一个了
-                //最后一个，不再增加数值，防止数组溢出
-                //增加这个之后，也能终止ShowAheadForMasako对本函数的反复调用
-                if (whichIntervalToUseForMasako != MasakoInterval.Count - 1) whichIntervalToUseForMasako++;
-              
-                break; 
-
-            //数目大于8（一共就8个坑），8个8个的往上放
-            default:
-
-                Debug.LogError("亚组取消");
-                break;
-               
-              
-        }
-    }
-
-    /// <summary>
     /// 泷升指挥给个倒计时，不然太突兀了
     /// </summary>
     /// <returns></returns>
@@ -608,7 +573,18 @@ public WaitForSeconds countdownInterval = new WaitForSeconds(1f);
         yield return new WaitForSeconds(0.6f);
         Destroy(countdown);
     }
-   
+    
+    /// <summary>
+    /// 读取两位角色的yaml
+    /// </summary>
+    public void ReadYamlAndApply()
+    {
+
+        Junna = YamlReadWrite.Read<YamlReadWrite.Timeline>(YamlReadWrite.FileName.JunnaTimeline);
+        Masako = YamlReadWrite.Read<YamlReadWrite.Timeline>(YamlReadWrite.FileName.MasakoTimeline);
+       
+    }
+    
         /// <summary>
         /// UI坐标转世界坐标（2d)
         /// </summary>
