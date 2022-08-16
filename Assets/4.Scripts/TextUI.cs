@@ -1,17 +1,17 @@
-using System;
-using System.Net.Mime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// 负责游戏中文字的动态变化和成果记录
+/// </summary>
 public class TextUI : MonoBehaviour, IUpdate
 {
     public static TextUI textUI;
 
     /// <summary>
-    /// 根据成绩得到的排名
+    /// 记录本次成绩用（顺便保存到saves)
     /// </summary>
-    public static int Rank;
+    public YamlReadWrite.Achievement achievement;
 
     [Header("UI与屏幕内容")] public AtlasRead atlasRead;
 
@@ -56,7 +56,6 @@ public class TextUI : MonoBehaviour, IUpdate
         textUI = this;
         total = 0;
         right = 0;
-        Rank = 0;
         score.text = $"技术评定：1.000";
     }
 
@@ -106,8 +105,10 @@ public class TextUI : MonoBehaviour, IUpdate
             total += 3;
         }
 
-
-        this.score.text = $"技术评定：{((float)right / total).ToString("F3")}";
+        //记录成绩
+        achievement.score = ((float)right / total).ToString("F3");
+//展示实时成绩
+        this.score.text = $"技术评定：{achievement.score}";
 
         //根据正确率获取排名
         switch ((float)right / total)
@@ -117,7 +118,7 @@ public class TextUI : MonoBehaviour, IUpdate
                 matchName.text = "京都府 吹奏楽コンクール";
                 atlasRead.spriteName = "clear";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 0;
+                achievement.RankLevel = 0;
                 break;
 
             //府赛金奖（废金）
@@ -125,7 +126,7 @@ public class TextUI : MonoBehaviour, IUpdate
                 matchName.text = "京都府 吹奏楽コンクール";
                 atlasRead.spriteName = "gold";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 1;
+                achievement.RankLevel = 1;
                 break;
 
             //府赛金奖（晋级）
@@ -133,7 +134,7 @@ public class TextUI : MonoBehaviour, IUpdate
                 matchName.text = "京都府 吹奏楽コンクール";
                 atlasRead.spriteName = "representative";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 2;
+                achievement.RankLevel = 2;
                 break;
 
             //关西废金
@@ -141,7 +142,7 @@ public class TextUI : MonoBehaviour, IUpdate
                 matchName.text = "関西 吹奏楽コンクール";
                 atlasRead.spriteName = "gold";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 3;
+                achievement.RankLevel = 3;
                 break;
 
             //关西金奖（晋级）
@@ -149,23 +150,23 @@ public class TextUI : MonoBehaviour, IUpdate
                 matchName.text = "関西 吹奏楽コンクール";
                 atlasRead.spriteName = "representative";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 4;
+                achievement.RankLevel = 4;
                 break;
 
             //全国赛 铜奖
-            case > 0.9f and <= 0.96f:
+            case > 0.9f and <= 0.97f:
                 matchName.text = "全日本 吹奏楽コンクール";
                 atlasRead.spriteName = "bronze";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 5;
+                achievement.RankLevel = 5;
                 break;
 
             //全国赛 银奖
-            case > 0.96f and < 0.99f:
+            case > 0.97f and < 0.99f:
                 matchName.text = "全日本 吹奏楽コンクール";
                 atlasRead.spriteName = "sliver";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 6;
+                achievement.RankLevel = 6;
                 break;
 
             ////全国赛 金奖
@@ -173,7 +174,7 @@ public class TextUI : MonoBehaviour, IUpdate
                 matchName.text = "全日本 吹奏楽コンクール";
                 atlasRead.spriteName = "gold";
                 atlasRead.GetSpriteFromAtlas();
-                Rank = 7;
+                achievement.RankLevel = 7;
                 break;
         }
     }

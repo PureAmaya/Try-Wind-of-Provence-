@@ -292,7 +292,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1010527723282626433}
   spriteAtlas: {fileID: 4343727234628468602, guid: d3ad18249a0f1b7409cc58202f9be50d, type: 2}
   spriteName: taki conductor 0
-  destroyWhenGetSprite: 1
+  destroyWhenGetSprite: 0
   AnimationName: taki conductor
   Range: 0100000019000000
   format: '{0} {1}'
@@ -372,7 +372,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 014531e27e5c94042a9bb9d90506ed46, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 0.21723409, g: 0.8784314, b: 0.1764706, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -380,7 +380,7 @@ SpriteRenderer:
   m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &1010527724312250252
@@ -397,8 +397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1010527724312250251}
   spriteAtlas: {fileID: 4343727234628468602, guid: d3ad18249a0f1b7409cc58202f9be50d, type: 2}
-  spriteName: 
-  destroyWhenGetSprite: 1
+  spriteName: 1
+  destroyWhenGetSprite: 0
   AnimationName: 
   Range: 0100000004000000
   format: '{1}'

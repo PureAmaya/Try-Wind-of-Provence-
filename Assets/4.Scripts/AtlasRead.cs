@@ -18,7 +18,7 @@ public class AtlasRead : MonoBehaviour
 
     private void Start()
     {
-      
+        if(Application.isPlaying && destroyWhenGetSprite) Destroy(this);
     }
 
     [ContextMenu("获取图片")]
@@ -32,7 +32,7 @@ public class AtlasRead : MonoBehaviour
         isspriteRendererNotNull = spriteRenderer != null;
         GetSpriteFromAtlas(); 
         
-       if(Application.isPlaying && destroyWhenGetSprite) Destroy(this);
+       
     }
 
     /// <summary>

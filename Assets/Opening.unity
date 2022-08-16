@@ -750,14 +750,14 @@ Sprite:
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
-      x: 1028.0762
-      y: 862.0761
+      x: 1032.0762
+      y: 866.0761
       width: 444.89713
       height: 430.84778
     textureRectOffset: {x: 22.07612, y: 36.076122}
-    atlasRectOffset: {x: 1006, y: 826}
+    atlasRectOffset: {x: 1010, y: 830}
     settingsRaw: 65
-    uvTransform: {x: 100, y: 1262, z: 100, w: 1082}
+    uvTransform: {x: 100, y: 1266, z: 100, w: 1086}
     downscaleMultiplier: 1
   m_PhysicsShape:
   - - {x: -1.1899999, y: -1.7099999}
@@ -2098,13 +2098,13 @@ Sprite:
     textureRect:
       serializedVersion: 2
       x: 0
-      y: 862
+      y: 866
       width: 1024
       height: 576
     textureRectOffset: {x: 0, y: 0}
-    atlasRectOffset: {x: 0, y: 862}
+    atlasRectOffset: {x: 0, y: 866}
     settingsRaw: 65
-    uvTransform: {x: 64, y: 512, z: 64, w: 1150}
+    uvTransform: {x: 64, y: 512, z: 64, w: 1154}
     downscaleMultiplier: 1
   m_PhysicsShape:
   - - {x: -8, y: 4.5}
@@ -3386,14 +3386,14 @@ Sprite:
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
-      x: 876.0429
-      y: 684.0761
+      x: 1705.043
+      y: 136.07613
       width: 49.880974
       height: 119.89713
     textureRectOffset: {x: 39.042908, y: 4.0761204}
-    atlasRectOffset: {x: 837, y: 680}
+    atlasRectOffset: {x: 1666, y: 132}
     settingsRaw: 65
-    uvTransform: {x: 100, y: 901, z: 100, w: 744}
+    uvTransform: {x: 100, y: 1730, z: 100, w: 196}
     downscaleMultiplier: 1
   m_PhysicsShape:
   - - {x: 0.12, y: 0.24}

@@ -162,7 +162,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 //消除判定蓝块
                 foreach (var VARIABLE in panDingSquares)
                 {
-                  VARIABLE.Enter();
+                 Destroy(VARIABLE.gameObject);
                 }
                 foreach (var VARIABLE in notesPoolForJunna)
                 {

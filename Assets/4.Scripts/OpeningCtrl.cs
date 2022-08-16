@@ -17,6 +17,7 @@ public class OpeningCtrl : MonoBehaviour
     
     private void Awake()
     {
+        Application.targetFrameRate = -1;
         //读取设置文件
         Settings.ReadSettings();
     }

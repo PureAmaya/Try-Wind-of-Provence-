@@ -62,6 +62,7 @@ SpriteAtlas:
     - {fileID: 1454274670, guid: 66ce0c8f76f036c47aaf019087b20699, type: 3}
     - {fileID: -1949743138, guid: 66ce0c8f76f036c47aaf019087b20699, type: 3}
     - {fileID: -1749008338, guid: 0ba1a05764612ea448b7465337febf0d, type: 3}
+    - {fileID: 387700764, guid: 0ba1a05764612ea448b7465337febf0d, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -73,6 +74,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ada2be13d63922f4894664ae3e671755, type: 3}
   - {fileID: 21300000, guid: 28a5756309ceb284d8e06127e81cb9a8, type: 3}
   - {fileID: 21300000, guid: 1e212724a0934a04c98cf64716bdb5a2, type: 3}
+  - {fileID: 387700764, guid: 0ba1a05764612ea448b7465337febf0d, type: 3}
   - {fileID: -1749008338, guid: 0ba1a05764612ea448b7465337febf0d, type: 3}
   - {fileID: 21300000, guid: aaba87d723b18e44f8978ba487de9615, type: 3}
   - {fileID: 21300000, guid: 0bfd527827fad694e80b68ad3627e1c4, type: 3}
@@ -91,6 +93,7 @@ SpriteAtlas:
   - kitauji logo
   - Eighth note 1
   - Staff
+  - match logo
   - clear
   - Junna
   - Masako

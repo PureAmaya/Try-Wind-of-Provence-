@@ -23,6 +23,8 @@ public class AtlasAnimation : AtlasRead
 
     public override void Awake()
     {
+        
+        base.Awake();
         go = gameObject;
         index = Range[0];
         groupIndex = 0;

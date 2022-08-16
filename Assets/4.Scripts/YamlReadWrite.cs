@@ -12,9 +12,9 @@ public static class YamlReadWrite
         JunnaTimeline,
         MasakoTimeline,
         /// <summary>
-        /// 游戏排名
+        /// 游戏成果
         /// </summary>
-        Ranks,
+        Achievement,
     }
  
   
@@ -110,9 +110,11 @@ public static T Read<T>(FileName fileName)
     /// 游戏排名（本地多次成绩排名）
     /// </summary>
     [Serializable]
-    public struct Rank
+    public struct Achievement
     {
-        
+        public int RankLevel;
+        public string score;
+
     }
 
     /// <summary>
