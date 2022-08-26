@@ -46,7 +46,7 @@ public class OpeningCtrl : MonoBehaviour
 
     public void ExitGame()
     {
-        
+        Settings.SaveSettings();  
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
