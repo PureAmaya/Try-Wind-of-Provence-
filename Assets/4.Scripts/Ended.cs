@@ -8,11 +8,6 @@ public class Ended : MonoBehaviour
 {
 
     /// <summary>
-    /// 按钮点击的音效
-    /// </summary>
-    public AudioClip ClickEffect;
-
-    /// <summary>
     /// 全国大赛得奖用的bgm
     /// </summary>
     /// <returns></returns>
@@ -37,18 +32,7 @@ public class Ended : MonoBehaviour
 #endif
     }
 
-    public void ReturnToTitle()
-    {
-        PublicAudioSource.PlaySoundEffect(ClickEffect);
-        PublicAudioSource.StopMusicPlaying();
-        SceneManager.LoadScene("Opening");
-    }
-
-    public void PlayAgain()
-    {
-        PublicAudioSource.PlaySoundEffect(ClickEffect);
-        SceneManager.LoadScene("LOADING");
-    }
+  
 
     /// <summary>
     /// 结果结算
@@ -86,22 +70,22 @@ public class Ended : MonoBehaviour
           //全国赛 铜奖
             case 5:
                 achievement.text = $"本次演奏评价为{TextUI.textUI.achievement.score}\n祝贺，全国大赛取得<color={Bronze}><size=150%>铜奖</size></color>！";
-                PublicAudioSource.PlayBackgroundMusic(Music);
+                PublicAudioSource.publicAudioSource.PlayBackgroundMusic(Music);
                 break;
             
           //全国赛 银奖
           case 6:
               achievement.text = $"本次演奏评价为{TextUI.textUI.achievement.score}\n祝贺，全国大赛取得<color={Sliver}><size=150%>银奖</size></color>！";
-              PublicAudioSource.PlayBackgroundMusic(Music);
+              PublicAudioSource.publicAudioSource.PlayBackgroundMusic(Music);
               break;
           
           //全国赛 金奖
           case 7:
               achievement.text = $"本次演奏评价为{TextUI.textUI.achievement.score}\n祝贺，全国大赛取得<color={Gold}><size=150%>金奖</size></color>！";
-              PublicAudioSource.PlayBackgroundMusic(Music);
+              PublicAudioSource.publicAudioSource.PlayBackgroundMusic(Music);
               break;
               
-        }
+        } 
         
         //然后存个档
         YamlReadWrite.Write(TextUI.textUI.achievement,YamlReadWrite.FileName.Achievement,"#上一次演奏的成绩");

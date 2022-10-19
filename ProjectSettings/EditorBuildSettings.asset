@@ -15,13 +15,25 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/initialization.unity
+    guid: bcdafb6f22345df40980253cb5a9d792
+  - enabled: 0
+    path: Assets/KitaujiGameDesignClub/Example/GameInitialization.unity
+    guid: f3eb51e023a006e41959177c775d2e3c
+  - enabled: 1
     path: Assets/Opening.unity
     guid: ca2d1ca2d2589d04897b1777744da86e
   - enabled: 1
     path: Assets/Wind of Provence - Copy.unity
     guid: aded93e3fc35cde4985ee446c5e8a089
-  - enabled: 1
+  - enabled: 0
+    path: Assets/KitaujiGameDesignClub/Example/load.unity
+    guid: 26a8095154073604c9daa612ab9fd215
+  - enabled: 0
     path: Assets/LOADING.unity
     guid: f315d4f70aeee6b4085694e17bfb8e47
+  - enabled: 1
+    path: Assets/load.unity
+    guid: b6dbaf8e84eac2642a89a189af718681
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 34167c88d19d4de418a37a59b1644bb9, type: 2}

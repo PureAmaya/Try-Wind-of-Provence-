@@ -108,23 +108,23 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
     private void Start()
     {
         //注册Update
-        UpdateManager.updateManager.Updates.Add(this);
+       UpdateManager.RegisterUpdate(this);
       
         //先停止播放
-        StaticVideoPlayer.videoPlayer.Stop();
+        StaticVideoPlayer.staticVideoPlayer.VideoPlayer.Stop();
         //游戏初始化（涉及到UI根据显示的分辨率变化位置，只能放到sstart中）
         Initialization();
         //准备就绪，开始播放
-        StaticVideoPlayer.videoPlayer.Play();
+         StaticVideoPlayer.staticVideoPlayer.VideoPlayer.Play();
         }
 
    public void FastUpdate()
     {
         
-        if (!StaticVideoPlayer.videoPlayer.isPlaying) return;
+        if (!  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.isPlaying) return;
 
         
-        switch (StaticVideoPlayer.videoPlayer.frame)
+        switch (  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame)
         {
             //到达第一章节与第二章节的交界处
             case >= 4880 when episode == 1:
@@ -188,8 +188,8 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
 
 #if UNITY_EDITOR
         //根据视频速度提高或者降低判定块的移动速度
-        panDingSquares[0].OnlyForEditor(StaticVideoPlayer.videoPlayer);
-        panDingSquares[1].OnlyForEditor(StaticVideoPlayer.videoPlayer);
+        panDingSquares[0].OnlyForEditor(  StaticVideoPlayer.staticVideoPlayer.VideoPlayer);
+        panDingSquares[1].OnlyForEditor(  StaticVideoPlayer.staticVideoPlayer.VideoPlayer);
 #endif
     }
 
@@ -319,7 +319,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 notesPoolForJunna[1].GetTransform().position = GetUIToWorldPos(JunnaNoteLocation[3]);
 
                 //让判定滑块移动
-                MoveSquare(4, (int)StaticVideoPlayer.videoPlayer.frame, JunnaReadable, JunnaNoteLocation, JunnaInterval,
+                MoveSquare(4, (int)  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame, JunnaReadable, JunnaNoteLocation, JunnaInterval,
                     whichIntervalToUseForJunna, 0);
 
                 whichIntervalToUseForJunna++;
@@ -332,7 +332,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
         
         //最后一组单独的
         // notesPoolForJunna[2].position.y < -50f 防止多次调用(不过该return的还是得return，后面的不算了，音符消除也单独弄一个）
-        if (StaticVideoPlayer.videoPlayer.frame >= JunnaReadable[JunnaInterval[^2] + 1] - 60)
+        if (  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame >= JunnaReadable[JunnaInterval[^2] + 1] - 60)
         {
             if (notesPoolForJunna[2].GetTransform().position.y < -50f)
             {
@@ -350,7 +350,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 notesPoolForJunna[1].GetTransform().position = GetUIToWorldPos(JunnaNoteLocation[number]);
             
                 //让判定滑块移动 +1：从零开始，上面减了1
-                MoveSquare(number + 1,(int)StaticVideoPlayer.videoPlayer.frame,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
+                MoveSquare(number + 1,(int)  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
             }
           
             return;
@@ -363,7 +363,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
          * -60：比本组第一个提前60帧（视频帧率）出来
          */
         // notesPoolForJunna[2].position.y < -50f 防止多次调用
-        if (StaticVideoPlayer.videoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1] + 1] - 60 &&   notesPoolForJunna[2].GetTransform().position.y < -50f)
+        if (  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1] + 1] - 60 &&   notesPoolForJunna[2].GetTransform().position.y < -50f)
         {
             //这里的话就全都是八分音符（有线） 
             //算出来要几个八分音符
@@ -375,7 +375,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
             }
 
             //让判定滑块移动
-            MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
+            MoveSquare(number,(int)  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame,JunnaReadable,JunnaNoteLocation,JunnaInterval,whichIntervalToUseForJunna,0);
 
             //准备进行下一个了
             //最后一个，不再增加数值，防止数组溢出
@@ -386,7 +386,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
 
         //用于重置本组的音符，以备下一组（whichIntervalToUseForJunna这一组的时候加了一，要减去）
         //本组超时1s后重置
-        if (StaticVideoPlayer.videoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1]] + 60)
+        if (  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame >= JunnaReadable[JunnaInterval[whichIntervalToUseForJunna - 1]] + 60)
         {
             foreach (var VARIABLE in notesPoolForJunna)
             {
@@ -414,7 +414,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 }
 
                 //让判定滑块移动
-                MoveSquare(4, (int)StaticVideoPlayer.videoPlayer.frame,MasakoReadable, MasakoNoteLocation, MasakoInterval,
+                MoveSquare(4, (int)  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame,MasakoReadable, MasakoNoteLocation, MasakoInterval,
                     whichIntervalToUseForMasako, 1);
 
                 whichIntervalToUseForMasako++;
@@ -425,7 +425,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
         
         //最后一组单独的
         // notesPoolForMasako[2].position.y < -50f 防止多次调用(不过该return的还是得return，后面的不算了，音符消除也单独弄一个）
-        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[^2] + 1] - 60)
+        if (StaticVideoPlayer.staticVideoPlayer.frame >= MasakoReadable[MasakoInterval[^2] + 1] - 60)
         {
             if (notesPoolForMasako[0].GetTransform().position.y < -50f)
             {
@@ -441,7 +441,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
                 
             
                 //让判定滑块移动
-                MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
+                MoveSquare(number,(int)  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
             }
           
             return;
@@ -456,7 +456,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
          * -60：比本组第一个提前60帧（视频帧率）出来
          */
         // notesPoolForMasako[2].position.y < -50f 防止多次调用
-        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1] + 1] - 60 &&   notesPoolForMasako[0].GetTransform().position.y < -50f)
+        if (  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1] + 1] - 60 &&   notesPoolForMasako[0].GetTransform().position.y < -50f)
         {
             //这里的话就全都是八分音符（有线） 
             //算出来要几个八分音符
@@ -468,7 +468,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
             }
 
             //让判定滑块移动
-            MoveSquare(number,(int)StaticVideoPlayer.videoPlayer.frame,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
+            MoveSquare(number,(int)  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame,MasakoReadable,MasakoNoteLocation,MasakoInterval,whichIntervalToUseForMasako,1);
 
             //准备进行下一个了
             //最后一个，不再增加数值，防止数组溢出
@@ -479,7 +479,7 @@ public readonly WaitForSeconds countdownInterval = new WaitForSeconds(1f);
 
         //用于重置本组的音符，以备下一组（whichIntervalToUseForMasako这一组的时候加了一，要减去）
         //本组超时1s后重置
-        if (StaticVideoPlayer.videoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1]] + 60)
+        if (  StaticVideoPlayer.staticVideoPlayer.VideoPlayer.frame >= MasakoReadable[MasakoInterval[whichIntervalToUseForMasako - 1]] + 60)
         {
             foreach (var VARIABLE in notesPoolForMasako)
             {

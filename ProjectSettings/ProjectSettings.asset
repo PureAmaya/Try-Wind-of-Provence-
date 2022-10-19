@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: PureAmaya
+  companyName: "\u5317\u5B87\u6CBB\u9AD8\u6821\u6E38\u620F\u8BBE\u8BA1\u90E8"
   productName: "\u8BD5\u8BD5\u300C\u666E\u7F57\u65FA\u65AF\u4E4B\u98CE\u300D\uFF01"
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -145,7 +145,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0.1
+  bundleVersion: 1.1.0
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -166,9 +166,9 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.PureAmaya.---------------------------------
+    Standalone: com.------------------------------.---------------------------------
   buildNumber:
-    Standalone: 0
+    Standalone: 2
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
@@ -284,7 +284,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 560a26ffd1b315946a0a9cc3a2b9bb49, type: 3}
+      m_Icon: {fileID: 2800000, guid: aaba87d723b18e44f8978ba487de9615, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -723,7 +723,7 @@ PlayerSettings:
   cloudServicesEnabled:
     Build: 0
     Collab: 0
-    Game Performance: 1
+    Game Performance: 0
     Legacy Analytics: 0
     Purchasing: 0
     UDP: 0
@@ -741,11 +741,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: b7a71d6d-8f96-4d5f-b5ae-2b10f8983920
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: "Try\u300CWind of Provence\u300D!"
-  organizationId: yxs111
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

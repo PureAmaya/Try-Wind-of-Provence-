@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 负责游戏中文字的动态变化和成果记录
 /// </summary>
-public class TextUI : MonoBehaviour, IUpdate
+public class TextUI : MonoBehaviour
 {
     public static TextUI textUI;
 
@@ -15,11 +15,7 @@ public class TextUI : MonoBehaviour, IUpdate
 
     [Header("UI与屏幕内容")] public AtlasRead atlasRead;
 
-    /// <summary>
-    /// 记录视频帧数与帧率
-    /// </summary>
-    public TMP_Text frameCount;
-
+  
     public TMP_Text score;
 
     public TMP_Text matchName;
@@ -34,12 +30,7 @@ public class TextUI : MonoBehaviour, IUpdate
     /// </summary>
     private int total;
 
-    private int fps;
-
-    /// <summary>
-    /// 多长时间更新一次fps
-    /// </summary>
-    private const float fpsUpdateTime = 0.5f;
+  
 
     /// <summary>
     /// fps显示之前累积的RealTimeDelta
@@ -60,32 +51,7 @@ public class TextUI : MonoBehaviour, IUpdate
     }
 
     // Start is called before the first frame update
-    private void Start()
-    {
-        frameCount.text = string.Empty;
-        //注册Update
-        UpdateManager.updateManager.Updates.Add(this);
-    }
-
-    // Update is called once per frame
-    public void FastUpdate()
-    {
-        //时间够了，显示一次fps
-        if (totalRealTimeDeltaBeforeFpsShow >= fpsUpdateTime)
-        {
-            fps = (int)(countTimeDelta / totalRealTimeDeltaBeforeFpsShow);
-            countTimeDelta = 0;
-            totalRealTimeDeltaBeforeFpsShow = 0f;
-        }
-        else
-        {
-            countTimeDelta++;
-            totalRealTimeDeltaBeforeFpsShow += Time.unscaledDeltaTime;
-        }
-
-        frameCount.text = $"fps:{fps.ToString()}\nframe:{StaticVideoPlayer.videoPlayer.frame}";
-    }
-
+  
 
     /// <summary>
     /// 计算分数与排名
