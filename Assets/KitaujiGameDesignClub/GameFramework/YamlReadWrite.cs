@@ -33,7 +33,7 @@ public class YamlReadWrite
             return done;
         }
 
-        #elif  UNITY_ANDROID
+        #else 
         get
         {
             return Application.persistentDataPath;
@@ -71,7 +71,7 @@ public class YamlReadWrite
         StreamWriter streamWriter =
             new StreamWriter($"{UnityButNotAssets}/saves/{fileName.ToString()}.yaml", false, Encoding.UTF8);
 
-#elif UNITY_ANDROID
+#else
            StreamWriter streamWriter =
             new StreamWriter($"{Application.persistentDataPath}/saves/{fileName.ToString()}.yaml", false,
                 Encoding.UTF8);
@@ -104,7 +104,7 @@ public class YamlReadWrite
         streamReader.Dispose();
         streamReader.Close();
        return content;
-#elif UNITY_ANDROID
+#else
             if (fileName == FileName.Settings)
         {
             StreamReader streamReader =
@@ -156,7 +156,7 @@ public class YamlReadWrite
            
           
         }
-#elif UNITY_ANDROID
+#else
             var manifests = Resources.LoadAll("Dialogue/yaml");
        Dialogue[] dialogues = new Dialogue[manifests.Length];
        Deserializer deserializer = new Deserializer();
@@ -196,7 +196,7 @@ public class YamlReadWrite
             Directory.CreateDirectory($"{UnityButNotAssets}/Dialogue");
         }
         
-#elif UNITY_ANDROID
+#else
 //安卓这边不允许小剧场外部储存
           if (!Directory.Exists($"{Application.persistentDataPath}/saves"))
         {
